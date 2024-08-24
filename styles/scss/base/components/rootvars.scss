@@ -1,0 +1,5 @@
+@use '../../tools/vars' as vars;
+
+:root {
+  --default-text-color: #{vars.$defaultTextColor};
+}

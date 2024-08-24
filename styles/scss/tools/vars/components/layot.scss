@@ -1,0 +1,21 @@
+// Размер текста по-умолчанию
+$defaultTextSize: 14px;
+
+// Размеры полотна макета
+$layoutWidth: 1536px;
+$layoutMinWidth: 320px;
+
+// Ширина ограничивающего контейнера (0 = нет ограничения)
+$container: 1150px;
+
+// Включить адаптив без брейк-поинтов:
+// true = да,
+// false = нет
+$responsiveType: true;
+
+// Общий отступ у контейнера
+// (30 = по 15px слева и справа, 0 = нет отступа)
+$containerPadding: 30;
+
+// Ширина контейнера с отступами
+$containerWidth: $container + $containerPadding;

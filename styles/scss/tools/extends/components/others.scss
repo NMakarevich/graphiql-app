@@ -1,0 +1,40 @@
+@use '../../mixins' as mix;
+
+// Счетчик для списка
+%listCounter {
+  list-style-type: none;
+  counter-reset: item;
+
+  li {
+    position: relative;
+    &:before {
+      counter-increment: item;
+      content: counter(item);
+      position: absolute;
+      left: 0;
+      top: 0;
+    }
+  }
+}
+
+// Зеркальное отображение
+%mirror {
+  transform: scale(-1, 1);
+}
+
+// Фоновый костыль для картинок
+%imgbg {
+  position: relative;
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+
+  & img {
+    position: absolute;
+    width: 0 !important;
+    height: 0 !important;
+    top: 0;
+    left: 0;
+    @include mix.opvis(0, hidden);
+  }
+}

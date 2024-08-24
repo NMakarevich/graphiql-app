@@ -1,0 +1,43 @@
+//==========================================Цвета====================================================//
+
+$black: #000000;
+$white: #ffffff;
+$whiteLux: #e4e4e4;
+$grayLight: #e0e0e0;
+$aquaTurquoise: #88d6d6;
+$blueLight: #33cccc;
+$blueDark: #006363;
+$lineageColor: #009999;
+$lineageLight: #2ba9c0;
+$lineageLux: #0698a5;
+$grey: #333333;
+$brownRed: #4f4f4f;
+$blueLight: #009dff;
+$pink: #ff00de;
+$blackTransparent: rgba(0, 0, 0, 0.4);
+$lightBlackTransparent: rgba(5, 5, 5, 0.502);
+
+//==========================================Настройки===============================================//
+
+// Цвет текста по-умолчанию
+$defaultTextColor: $black;
+
+// Цвет бургера
+$burgerColor: $blueDark;
+
+// Цвет фона меню
+$menuBg: $lightBlackTransparent;
+
+// Цвет текста меню
+$menuText: $lineageColor;
+
+// Цвет фона мобильного меню
+$burgerMenuBg: $lineageLight;
+
+// Цвет рамки мобильного меню
+$burgerMenuBorder: $blueDark;
+
+// Цвет фона модальнеого окна
+$modalBg: $blackTransparent;
+$modalContentBg: $lightBlackTransparent;
+$modalBorder: $brownRed;

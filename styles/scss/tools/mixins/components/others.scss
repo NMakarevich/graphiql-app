@@ -1,0 +1,154 @@
+@use '../../functions' as f;
+@use '../../vars' as vars;
+@use 'sass:math';
+
+// Цвета фона и текста
+@mixin colors($tc: black, $bgc: white) {
+  color: $tc;
+  background-color: $bgc;
+}
+
+// Видимость
+@mixin opvis($op: 1, $vis: visible) {
+  opacity: $op;
+  visibility: $vis;
+}
+
+// Обрезка по краю
+@mixin ovxy($ox: auto, $oy: $ox) {
+  overflow-x: $ox;
+  overflow-y: $oy;
+}
+
+// Стили фокусировки
+@mixin focused {
+  @supports not selector(:focus-visible) {
+    &:focus {
+      @content;
+    }
+  }
+
+  @supports selector(:focus-visible) {
+    &:focus-visible {
+      @content;
+    }
+  }
+}
+
+// Стили наведения
+@mixin hover {
+  @media (any-hover: hover) {
+    &:hover {
+      @content;
+    }
+  }
+}
+
+// mobile viewport bug fix
+@mixin available($property) {
+  #{$property}: -moz-available;
+  #{$property}: -webkit-fill-available;
+  #{$property}: fill-available;
+}
+
+// Адаптивное свойство
+@mixin adaptiveValue($property, $start, $end, $from: vars.$containerWidth, $to: vars.$layoutMinWidth, $keepSize: 0) {
+  $startSize: f.parseInt($start);
+  $minSize: f.parseInt($end);
+  $widthFrom: f.parseInt($from);
+  $widthTo: f.parseInt($to);
+  $container: f.parseInt(vars.$container);
+  $containerWidth: f.parseInt(vars.$containerWidth);
+  $layoutWidth: f.parseInt(vars.$layoutWidth);
+  $layoutMinWidth: f.parseInt(vars.$layoutMinWidth);
+  $divider: 16;
+
+  @if ($startSize==0) {
+    $startSize: 0.000001;
+  }
+
+  @if ($minSize==0) {
+    $minSize: 0.000001;
+  }
+
+  // Для calc();
+  $addSize: math.div($startSize - $minSize, $divider);
+
+  @if ($widthFrom == $containerWidth and $container == 0) {
+    $widthFrom: $layoutWidth;
+  }
+
+  // Брейк-поинты в EM
+  $widthFromMedia: f.em($widthFrom);
+  $widthToMedia: f.em($widthTo);
+
+  // Формула плавающего значения
+  // Источник: https://css-tricks.com/linearly-scale-font-size-with-css-clamp-based-on-the-viewport/
+  $slope: math.div(($startSize - $minSize), ($widthFrom - $widthTo));
+  $yIntersection: -$widthTo * $slope + $minSize;
+
+  @if ($yIntersection==0) {
+    $yIntersection: 0.000001;
+  }
+
+  $flyValue: #{f.rem($yIntersection)}' + ' #{$slope * 100}vw;
+
+  // Получение значения свойства
+  $propertyValue: #{'clamp(' f.rem($minSize) ',' $flyValue ',' f.rem($startSize) ')'};
+
+  // Если отрицательные значения
+  @if ($minSize > $startSize) {
+    $propertyValue: #{'clamp(' f.rem($startSize) ',' $flyValue ',' f.rem($minSize) ')'};
+  }
+
+  // Если поддерживается clamp();
+  @supports (#{$property}: $propertyValue) {
+    #{$property}: $propertyValue;
+  }
+
+  // Если не поддерживается clamp();
+  @supports not (#{$property}: $propertyValue) {
+    #{$property}: calc(
+      #{f.rem($minSize)} + #{$addSize} * (100vw - #{f.rem($widthTo)}) / #{math.div($widthFrom, $divider) - math.div(
+          $widthTo,
+          $divider
+        )}
+    );
+  }
+
+  // Устанавливаем значения по умолчанию
+  @if $widthFrom != $containerWidth and $widthFrom != $layoutWidth and $keepSize != 1 and $keepSize != 2 {
+    @media (min-width: $widthFromMedia) {
+      #{$property}: inherit;
+    }
+  }
+
+  @if $widthTo != $layoutMinWidth and $keepSize != 1 and $keepSize != 3 {
+    @media (max-width: $widthToMedia) {
+      #{$property}: inherit;
+    }
+  }
+}
+
+// Стили для IE9+
+@mixin iestyles {
+  @media all and (-ms-high-contrast: none), (-ms-high-contrast: active), (min-width: 0\0) {
+    @content;
+  }
+}
+
+// Плавный скролл
+@mixin scrollbehavior($scr: smooth, $ovscr: null) {
+  @media (prefers-reduced-motion: no-preference) {
+    scroll-behavior: $scr;
+  }
+
+  overscroll-behavior: $ovscr;
+}
+
+// Стили темной темы
+@mixin isDark {
+  @media (prefers-color-scheme: dark) {
+    @content;
+  }
+}
