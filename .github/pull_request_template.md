@@ -4,14 +4,14 @@
 
 _Briefly describe the proposed changes introduced in this pull request._
 
-### Done:
+#### Done:
 
 - [ ] Statement 1
 - [ ] Statement 2
 - [ ] Statement 3
 - [ ] Statement 4
 
-### Describe more if needed
+#### Describe more if needed:
 
 - [ ] Feature/Enhancement
 - [ ] Bug Fix
