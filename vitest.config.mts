@@ -19,6 +19,7 @@ export default defineConfig({
         'dist/**',
         'dict/**',
         'vitest.config.mts',
+        '.lintstagedrc.mjs',
         'next.config.mjs',
         'next-env.d.ts',
         'svgr.d.ts',
