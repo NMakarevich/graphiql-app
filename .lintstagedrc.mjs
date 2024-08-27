@@ -7,5 +7,5 @@ const buildEslintCommand = (filenames) =>
 
 export default {
   './src/**/*': 'npm run prettier:fix',
-  '*.{js,jsx,ts,tsx}': [buildEslintCommand],
+  './src/**/*.{tsx,jsx,ts}': [buildEslintCommand],
 };
