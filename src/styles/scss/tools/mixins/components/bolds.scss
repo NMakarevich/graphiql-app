@@ -1,0 +1,34 @@
+// Имитация жирного шрифта
+@mixin lbold($color: black) {
+  text-shadow: 0 0 0.65px $color;
+}
+
+@mixin lboldb($color: black) {
+  text-shadow: 0 0 0.9px $color;
+}
+
+@mixin dbold($color: black) {
+  text-shadow:
+    0 0 0.65px $color,
+    0 0 0.65px $color;
+}
+
+@mixin dboldb($color: black) {
+  text-shadow:
+    0 0 0.9px $color,
+    0 0 0.9px $color;
+}
+
+@mixin ubold($color: black) {
+  text-shadow:
+    0 0 0.65px $color,
+    0 0 0.65px $color,
+    0 0 0.65px $color;
+}
+
+@mixin uboldb($color: black) {
+  text-shadow:
+    0 0 0.9px $color,
+    0 0 0.9px $color,
+    0 0 0.9px $color;
+}

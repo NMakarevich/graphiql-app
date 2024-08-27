@@ -1,0 +1,26 @@
+{
+   "root": true,
+   "env": { "browser": true, "es2020": true, "node": true },
+   "ignorePatterns": ["dist", ".eslintrc.cjs"],
+   "parserOptions": {
+      "ecmaVersion": 2020,
+      "sourceType": "module",
+      "ecmaFeatures": {
+         "jsx": true
+      }
+   },
+   "rules": {
+      "max-lines-per-function": "off",
+      "no-undef":"off"
+   },
+   "overrides": [
+      {
+         "files": ["*.tsx"],
+         "rules": {
+            "max-lines-per-function": ["off"],
+            "no-undef": "off"
+         }
+      }
+   ],
+   "extends": ["eslint:recommended", "next", "prettier"]
+}

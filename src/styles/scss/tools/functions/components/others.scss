@@ -1,0 +1,6 @@
+@use 'sass:math';
+
+// Получение целочисленного значения
+@function parseInt($value) {
+  @return math.div($value, $value * 0 + 1);
+}

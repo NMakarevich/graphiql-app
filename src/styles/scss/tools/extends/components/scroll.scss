@@ -1,0 +1,23 @@
+// Плавный скролл
+%smoothscroll {
+  @media (prefers-reduced-motion: no-preference) {
+    scroll-behavior: smooth;
+  }
+}
+
+// Импульсный скролл
+%impulsetouchscroll {
+  -webkit-overflow-scrolling: touch;
+}
+
+// Стабильный скролл
+%stablescroll {
+  overscroll-behavior: none;
+}
+
+// Скрыть скролл
+%hidescroll {
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
