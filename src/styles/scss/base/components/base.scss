@@ -11,7 +11,7 @@ html {
 .wrapper {
   height: 100%;
   // @include mix.flex(null, null, column);
-  @extend %layot;
+  @extend %layout;
   overflow-x: hidden;
 
   // Фикс для слайдеров
