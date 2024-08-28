@@ -1,0 +1,30 @@
+// Размеры
+@mixin fullwh {
+  width: 100vw;
+  height: 100vh;
+}
+
+@mixin mfullwh {
+  min-width: 100vw;
+  min-height: 100vh;
+}
+
+@mixin maxfullwh {
+  max-width: 100vw;
+  max-height: 100vh;
+}
+
+@mixin fullwhp {
+  width: 100%;
+  height: 100%;
+}
+
+@mixin miwh($mw: 100%, $mh: $mw) {
+  min-width: $mw;
+  min-height: $mh;
+}
+
+@mixin mawh($mw: 100%, $mh: $mw) {
+  max-width: $mw;
+  max-height: $mh;
+}

@@ -1,0 +1,5 @@
+%layout {
+  display: grid;
+  grid-auto-flow: column;
+  grid-template-rows: minmax(75px, auto) 1fr minmax(25px, auto);
+}

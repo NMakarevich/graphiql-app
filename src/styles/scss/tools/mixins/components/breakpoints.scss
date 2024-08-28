@@ -1,0 +1,42 @@
+// Брейкпоинты
+@mixin desktop {
+  @media (min-width: (1025px)) {
+    @content;
+  }
+}
+
+@mixin bigdesktop {
+  @media (max-width: (1440.5px)) {
+    @content;
+  }
+}
+
+@mixin tablet {
+  @media (max-width: (1024.5px)) {
+    @content;
+  }
+}
+
+@mixin smalltablet {
+  @media (max-width: (768.5px)) {
+    @content;
+  }
+}
+
+@mixin mobile {
+  @media (max-width: (576.5px)) {
+    @content;
+  }
+}
+
+@mixin smallmobile {
+  @media (max-width: (414.5px)) {
+    @content;
+  }
+}
+
+@mixin oversmalltablet {
+  @media (min-width: (769px)) {
+    @content;
+  }
+}

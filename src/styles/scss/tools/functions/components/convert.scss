@@ -1,0 +1,18 @@
+@use 'sass:math';
+@use 'others' as o;
+@use '../../vars' as vars;
+
+// Перевод в rem-ы
+@function rem($pixels, $context: vars.$defaultTextSize) {
+  @return #{math.div(o.parseInt($pixels), o.parseInt($context))}rem;
+}
+
+// Перевод в em-ы
+@function em($pixels, $context: vars.$defaultTextSize) {
+  @return #{math.div(o.parseInt($pixels), o.parseInt($context))}em;
+}
+
+// Перевод в проценты
+@function percent($pixels, $size) {
+  @return math.div(math.percentage(o.parseInt($pixels)), o.parseInt($size));
+}
