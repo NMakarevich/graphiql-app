@@ -9,23 +9,6 @@ const montserrat = Montserrat({
 });
 
 export const theme = createTheme({
-  components: {
-    MuiSwitch: {
-      styleOverrides: {
-        colorPrimary: {
-          '&.Mui-checked': {
-            color: '#4F378B',
-          },
-        },
-        track: {
-          '.Mui-checked.Mui-checked + &': {
-            backgroundColor: '#381E72',
-            opacity: 0.6,
-          },
-        },
-      },
-    },
-  },
   palette: {
     primary: {
       main: '#D0BCFF',
