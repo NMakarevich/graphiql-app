@@ -1,0 +1,43 @@
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: v.$modalBg;
+  padding: 10px;
+  transition: all 0.2s ease 0s;
+  z-index: 25;
+  cursor: pointer;
+  @include m.flex(center);
+
+  &-body {
+    color: v.$snow;
+    background-color: v.$modalContentBg;
+    border: 1px solid v.$modalBorder;
+    backdrop-filter: blur(7px);
+    border-radius: 5px;
+    font-family: Questrial, Arial, Helvetica, sans-serif;
+    line-height: 1.4;
+    letter-spacing: 0.25ex;
+    text-align: center;
+    max-width: 50%;
+    padding: 15px;
+    cursor: auto;
+    overflow: hidden;
+
+    @include m.tablet {
+      max-width: 65%;
+    }
+
+    @include m.smalltablet {
+      max-width: 75%;
+    }
+
+    @include m.mobile {
+      max-width: 85%;
+    }
+
+    @include m.adaptiveValue('font-size', 24px, 18px);
+  }
+}
