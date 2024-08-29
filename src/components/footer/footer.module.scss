@@ -1,0 +1,32 @@
+@import 'src/styles/scss/tools/mixins/components/breakpoints';
+@import 'src/styles/scss/tools/vars/components/colors';
+
+.Footer {
+  background-color: #d0bcff;
+}
+
+.Toolbar {
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  padding: 10px;
+  color: rgba(0, 0, 0, 0.87);
+}
+
+.Contributors {
+  flex: 0;
+  display: flex;
+  gap: 15px;
+
+  @include mobile {
+    flex-direction: column;
+    gap: 10px;
+  }
+}
+
+.Image {
+  @include mobile {
+    width: 64px;
+    height: 64px;
+  }
+}
