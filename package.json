@@ -16,6 +16,12 @@
       "prepare": "husky .husky"
    },
    "dependencies": {
+      "@emotion/cache": "^11.13.1",
+      "@emotion/react": "^11.13.3",
+      "@emotion/styled": "^11.13.0",
+      "@mui/icons-material": "^6.0.0",
+      "@mui/material": "^6.0.0",
+      "@mui/material-nextjs": "^6.0.0",
       "next": "14.2.5",
       "react": "^18",
       "react-dom": "^18"
