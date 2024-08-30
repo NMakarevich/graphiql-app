@@ -1,11 +1,8 @@
 import { FC } from 'react';
 import Button from '@mui/material/Button';
+import { IAuthProps } from './types';
 
-interface Props {
-  isAuth: boolean;
-}
-
-const Auth: FC<Props> = (props): JSX.Element => {
+const Auth: FC<IAuthProps> = (props): JSX.Element => {
   const { isAuth } = props;
 
   function signOut() {}

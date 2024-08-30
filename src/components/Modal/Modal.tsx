@@ -1,4 +1,5 @@
 'use client';
+
 import {
   FC,
   PropsWithChildren,
@@ -12,11 +13,7 @@ import { createPortal } from 'react-dom';
 import { useClickOutside } from '@hooks/useClickOutside';
 import { useLockScroll } from '@hooks/useLockScroll';
 import styles from './Modal.module.scss';
-
-interface IModalProps {
-  isOpenModal: boolean;
-  onClose: () => void;
-}
+import { IModalProps } from './types';
 
 const modalCloseKeysCodes = ['Escape'];
 

@@ -1,6 +1,7 @@
 import { Box, Button, Container, Typography } from '@mui/material';
 import styles from './not-found.module.scss';
 import Link from 'next/link';
+import { ROUTES } from '@/utils/constants/routes';
 
 function Custom404(): JSX.Element {
   return (
@@ -29,7 +30,7 @@ function Custom404(): JSX.Element {
         variant="contained"
         className={styles.container__button}
       >
-        <Link href="/">Go to Home</Link>
+        <Link href={ROUTES.HOME_PATH}>Go to Home</Link>
       </Button>
     </Container>
   );

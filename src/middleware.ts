@@ -1,12 +1,11 @@
 import { isAuthenticated } from '@/utils/auth/auth';
-import {
-  GRAPHIQL_PATH,
-  HOME_PATH,
-  RESTFUL_CLIENT_PATH,
-} from './utils/constants/routes';
+import { ROUTES } from '@/utils/constants/routes';
 import { NextRequest, NextResponse } from 'next/server';
 
-const protectedRoutes = [RESTFUL_CLIENT_PATH, GRAPHIQL_PATH];
+const protectedRoutes: string[] = [
+  ROUTES.RESTFUL_CLIENT_PATH,
+  ROUTES.GRAPHIQL_PATH,
+];
 
 export default async function middleware(
   request: NextRequest
@@ -15,7 +14,7 @@ export default async function middleware(
     const authenticated = await isAuthenticated;
 
     if (!authenticated && protectedRoutes.includes(request.nextUrl.pathname)) {
-      const absoluteURL = new URL(HOME_PATH, request.nextUrl.origin);
+      const absoluteURL = new URL(ROUTES.HOME_PATH, request.nextUrl.origin);
       return NextResponse.redirect(absoluteURL.toString());
     }
 

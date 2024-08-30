@@ -1,18 +1,16 @@
 import { FC } from 'react';
 import styles from './contributor.module.scss';
-import { IContributor } from '@components/footer/footer.tsx';
 import { Link, Typography } from '@mui/material';
 import GitHubIcon from '@mui/icons-material/GitHub';
-
-interface Props {
-  contributor: IContributor;
-}
+import { IContributorProps } from './types';
 
 function getNameFromURL(url: string) {
   return new URL(url).pathname.slice(1);
 }
 
-const Contributor: FC<Props> = (props: Props): JSX.Element => {
+const Contributor: FC<IContributorProps> = (
+  props: IContributorProps
+): JSX.Element => {
   const { contributor } = props;
   return (
     <Link

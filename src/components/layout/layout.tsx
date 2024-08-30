@@ -1,9 +1,10 @@
-import { FC, ReactNode } from 'react';
+import { FC } from 'react';
 import Header from '@/components/header/header';
 import Footer from '@/components/footer/footer';
 import { Container } from '@/components/Container/Container';
+import { ILayout } from './types';
 
-const Layout: FC<{ children: ReactNode }> = ({ children }): JSX.Element => {
+const Layout: FC<ILayout> = ({ children }): JSX.Element => {
   return (
     <>
       <Header />

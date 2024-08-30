@@ -2,15 +2,9 @@ import { FC, useEffect, useState } from 'react';
 import styles from './language-toggle.module.scss';
 import Switch from '@mui/material/Switch';
 import { Typography } from '@mui/material';
+import { ILanguageToggleProps } from './types';
 
-interface Props {
-  languages: {
-    firstLanguage: string;
-    secondLanguage: string;
-  };
-}
-
-const LanguageToggle: FC<Props> = (props): JSX.Element => {
+const LanguageToggle: FC<ILanguageToggleProps> = (props): JSX.Element => {
   const { firstLanguage, secondLanguage } = props.languages;
   const [language, setLanguage] = useState<string>(firstLanguage);
   const [checked, setChecked] = useState<boolean>(false);

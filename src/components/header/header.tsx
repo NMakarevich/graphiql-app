@@ -5,7 +5,7 @@ import useScrollTrigger from '@mui/material/useScrollTrigger';
 import { AppBar, Toolbar, IconButton, Menu, MenuItem } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import CloseIcon from '@mui/icons-material/Close';
-import LanguageToggle from '@components/language-toggle/language-toggle.tsx';
+import LanguageToggle from '@/components/languageToggle/languageToggle';
 import Box from '@mui/material/Box';
 import Auth from '@components/auth/auth.tsx';
 import Image from 'next/image';
