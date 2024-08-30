@@ -18,7 +18,7 @@ const Footer: FC = (): JSX.Element => {
           </div>
           <div className={styles.Team}>2024</div>
           <div className={styles.Course}>
-            <Link href={'https://rs.school/react/'}>
+            <Link href={'https://rs.school/courses/reactjs'} target="_blank">
               <Image
                 className={styles.Image}
                 width={32}
