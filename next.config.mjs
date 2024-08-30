@@ -14,7 +14,7 @@ const nextConfig = {
     includePaths: [path.join(__dirname, 'styles')],
     prependData: `@use "./src/styles/scss/tools/vars" as v;@use "./src/styles/scss/tools/mixins" as m;@use "./src/styles/scss/tools/functions" as f;@use "./src/styles/scss/tools/extends";`,
   },
-  output: 'export',
+  output: 'standalone',
   distDir: './dist',
 };
 

@@ -5,7 +5,7 @@ import useScrollTrigger from '@mui/material/useScrollTrigger';
 import { AppBar, Toolbar, IconButton, Menu, MenuItem } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import CloseIcon from '@mui/icons-material/Close';
-import LanguageToggle from '@components/language-toggle/language-toggle.tsx';
+import LanguageToggle from '@/components/languageToggle/languageToggle';
 import Box from '@mui/material/Box';
 import Auth from '@components/auth/auth.tsx';
 import Image from 'next/image';
@@ -42,23 +42,23 @@ function Scroll({ children }: { children: ReactElement }) {
   });
 }
 
-const Header: FC = () => {
+const Header: FC = (): JSX.Element => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const isMenuOpen = Boolean(anchorEl);
   const isAuth = false;
 
-  const handleMenuOpen = (event: MouseEvent<HTMLElement>) => {
+  const handleMenuOpen = (event: MouseEvent<HTMLElement>): void => {
     setAnchorEl(event.currentTarget);
   };
 
-  const handleMenuClose = () => {
+  const handleMenuClose = (): void => {
     setAnchorEl(null);
   };
 
   return (
     <>
       <Scroll>
-        <AppBar color={'primary'}>
+        <AppBar color={'primary'} position="sticky">
           <Toolbar>
             <Box sx={{ display: { xs: 'block', sm: 'none' } }}>
               <IconButton

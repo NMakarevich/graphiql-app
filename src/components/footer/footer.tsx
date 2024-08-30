@@ -4,28 +4,9 @@ import { Container } from '@components/Container/Container.tsx';
 import { Link, Toolbar } from '@mui/material';
 import Contributor from '@components/contributor/contributor.tsx';
 import Image from 'next/image';
+import { contributors } from '@/utils/constants/contributors';
 
-export interface IContributor {
-  name: string;
-  url: string;
-}
-
-const contributors: IContributor[] = [
-  {
-    name: 'Tatyana Antipova',
-    url: 'https://github.com/L1senochek',
-  },
-  {
-    name: 'Maxim Ravinskiy',
-    url: 'https://github.com/GreyAdmiral',
-  },
-  {
-    name: 'Nikolay Makarevich',
-    url: 'https://github.com/NMakarevich',
-  },
-];
-
-const Footer: FC = () => {
+const Footer: FC = (): JSX.Element => {
   return (
     <footer className={styles.Footer}>
       <Container>

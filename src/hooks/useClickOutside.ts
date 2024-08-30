@@ -3,8 +3,8 @@ import { MutableRefObject, useEffect } from 'react';
 export const useClickOutside = (
   ref: MutableRefObject<HTMLTemplateElement | null>,
   callback: () => void
-) => {
-  const handleClick = (e: Event) => {
+): void => {
+  const handleClick = (e: Event): void => {
     e.stopPropagation();
     const target = e.target as HTMLTemplateElement;
 
@@ -13,10 +13,10 @@ export const useClickOutside = (
     }
   };
 
-  useEffect(() => {
+  useEffect((): (() => void) => {
     document.addEventListener('click', handleClick);
 
-    return () => {
+    return (): void => {
       document.removeEventListener('click', handleClick);
     };
   });

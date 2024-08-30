@@ -1,7 +1,9 @@
 'use client';
+
 import {
   FC,
   PropsWithChildren,
+  ReactPortal,
   useCallback,
   useEffect,
   useMemo,
@@ -11,11 +13,7 @@ import { createPortal } from 'react-dom';
 import { useClickOutside } from '@hooks/useClickOutside';
 import { useLockScroll } from '@hooks/useLockScroll';
 import styles from './Modal.module.scss';
-
-interface IModalProps {
-  isOpenModal: boolean;
-  onClose: () => void;
-}
+import { IModalProps } from './types';
 
 const modalCloseKeysCodes = ['Escape'];
 
@@ -24,7 +22,7 @@ export const Modal: FC<PropsWithChildren & IModalProps> = ({
   onClose,
   children,
   ...props
-}) => {
+}): ReactPortal | null => {
   const modalRef = useRef(null);
   const modalRoot = useMemo(() => {
     const element = document.createElement('div');

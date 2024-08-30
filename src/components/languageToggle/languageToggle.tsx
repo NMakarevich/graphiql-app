@@ -2,24 +2,18 @@ import { FC, useEffect, useState } from 'react';
 import styles from './language-toggle.module.scss';
 import Switch from '@mui/material/Switch';
 import { Typography } from '@mui/material';
+import { ILanguageToggleProps } from './types';
 
-interface Props {
-  languages: {
-    firstLanguage: string;
-    secondLanguage: string;
-  };
-}
-
-const LanguageToggle: FC<Props> = (props) => {
+const LanguageToggle: FC<ILanguageToggleProps> = (props): JSX.Element => {
   const { firstLanguage, secondLanguage } = props.languages;
-  const [language, setLanguage] = useState(firstLanguage);
-  const [checked, setChecked] = useState(false);
+  const [language, setLanguage] = useState<string>(firstLanguage);
+  const [checked, setChecked] = useState<boolean>(false);
 
-  useEffect(() => {
+  useEffect((): void => {
     language === firstLanguage ? setChecked(false) : setChecked(true);
   }, [language, firstLanguage, secondLanguage]);
 
-  useEffect(() => {
+  useEffect((): void => {
     checked ? setLanguage(secondLanguage) : setLanguage(firstLanguage);
   }, [checked, firstLanguage, secondLanguage]);
 
@@ -34,14 +28,14 @@ const LanguageToggle: FC<Props> = (props) => {
     <div className={styles.Toggle}>
       <Typography
         className={styles.Language}
-        onClick={() => toggleLanguage(firstLanguage)}
+        onClick={(): void => toggleLanguage(firstLanguage)}
       >
         {firstLanguage}
       </Typography>
-      <Switch onChange={() => toggleLanguage()} checked={checked} />
+      <Switch onChange={(): void => toggleLanguage()} checked={checked} />
       <Typography
         className={styles.Language}
-        onClick={() => toggleLanguage(secondLanguage)}
+        onClick={(): void => toggleLanguage(secondLanguage)}
       >
         {secondLanguage}
       </Typography>
