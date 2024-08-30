@@ -1,4 +1,4 @@
-function GraphiQL() {
+function GraphiQL(): JSX.Element {
   return <div>GraphiQL</div>;
 }
 

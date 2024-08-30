@@ -19,7 +19,9 @@ export const metadata: Metadata = {
   keywords: 'RESTful, GraphQL, REST/GraphiQL, App',
 };
 
-export default function RootLayout({ children }: PropsWithChildren) {
+export default function RootLayout({
+  children,
+}: PropsWithChildren): JSX.Element {
   return (
     <html lang="ru">
       <body className={montserrat.className}>

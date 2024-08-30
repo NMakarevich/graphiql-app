@@ -2,7 +2,7 @@ import { Box, Button, Container, Typography } from '@mui/material';
 import styles from './not-found.module.scss';
 import Link from 'next/link';
 
-function Custom404() {
+function Custom404(): JSX.Element {
   return (
     <Container component="section" maxWidth="sm" className={styles.container}>
       <Typography

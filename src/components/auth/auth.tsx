@@ -5,7 +5,7 @@ interface Props {
   isAuth: boolean;
 }
 
-const Auth: FC<Props> = (props) => {
+const Auth: FC<Props> = (props): JSX.Element => {
   const { isAuth } = props;
 
   function signOut() {}

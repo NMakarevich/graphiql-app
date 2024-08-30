@@ -8,7 +8,9 @@ import { NextRequest, NextResponse } from 'next/server';
 
 const protectedRoutes = [RESTFUL_CLIENT_PATH, GRAPHIQL_PATH];
 
-export default async function middleware(request: NextRequest) {
+export default async function middleware(
+  request: NextRequest
+): Promise<NextResponse<unknown>> {
   try {
     const authenticated = await isAuthenticated;
 

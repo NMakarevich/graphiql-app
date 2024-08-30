@@ -42,23 +42,23 @@ function Scroll({ children }: { children: ReactElement }) {
   });
 }
 
-const Header: FC = () => {
+const Header: FC = (): JSX.Element => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const isMenuOpen = Boolean(anchorEl);
   const isAuth = false;
 
-  const handleMenuOpen = (event: MouseEvent<HTMLElement>) => {
+  const handleMenuOpen = (event: MouseEvent<HTMLElement>): void => {
     setAnchorEl(event.currentTarget);
   };
 
-  const handleMenuClose = () => {
+  const handleMenuClose = (): void => {
     setAnchorEl(null);
   };
 
   return (
     <>
       <Scroll>
-        <AppBar color={'primary'}>
+        <AppBar color={'primary'} position="sticky">
           <Toolbar>
             <Box sx={{ display: { xs: 'block', sm: 'none' } }}>
               <IconButton

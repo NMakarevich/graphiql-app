@@ -12,7 +12,7 @@ function getNameFromURL(url: string) {
   return new URL(url).pathname.slice(1);
 }
 
-const Contributor: FC<Props> = (props: Props) => {
+const Contributor: FC<Props> = (props: Props): JSX.Element => {
   const { contributor } = props;
   return (
     <Link

@@ -8,7 +8,7 @@ interface ContainerProps {
 export const Container: FC<PropsWithChildren & ContainerProps> = ({
   children,
   className,
-}) => {
+}): JSX.Element => {
   return (
     <div className={className ? `${className}_container` : 'container'}>
       {children}

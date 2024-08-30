@@ -1,8 +1,10 @@
-export const isAuthenticated = new Promise((resolve, reject) => {
-  try {
-    const isAuthenticated = false;
-    resolve(isAuthenticated);
-  } catch (error) {
-    reject(error);
+export const isAuthenticated: Promise<boolean> = new Promise(
+  (resolve, reject): void => {
+    try {
+      const isAuthenticated = false;
+      setTimeout((): void => resolve(isAuthenticated), 1000);
+    } catch (error) {
+      reject(error);
+    }
   }
-});
+);

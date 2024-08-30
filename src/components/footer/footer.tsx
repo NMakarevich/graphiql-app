@@ -25,7 +25,7 @@ const contributors: IContributor[] = [
   },
 ];
 
-const Footer: FC = () => {
+const Footer: FC = (): JSX.Element => {
   return (
     <footer className={styles.Footer}>
       <Container>

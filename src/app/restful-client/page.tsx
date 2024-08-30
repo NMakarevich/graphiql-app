@@ -1,4 +1,4 @@
-function RESTfullClient() {
+function RESTfullClient(): JSX.Element {
   return <h1>RESTfullClient</h1>;
 }
 

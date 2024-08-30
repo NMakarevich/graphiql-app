@@ -2,6 +2,7 @@
 import {
   FC,
   PropsWithChildren,
+  ReactPortal,
   useCallback,
   useEffect,
   useMemo,
@@ -24,7 +25,7 @@ export const Modal: FC<PropsWithChildren & IModalProps> = ({
   onClose,
   children,
   ...props
-}) => {
+}): ReactPortal | null => {
   const modalRef = useRef(null);
   const modalRoot = useMemo(() => {
     const element = document.createElement('div');

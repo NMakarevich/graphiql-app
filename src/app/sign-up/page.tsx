@@ -1,4 +1,4 @@
-function SignUp() {
+function SignUp(): JSX.Element {
   return <div>SignUp</div>;
 }
 
