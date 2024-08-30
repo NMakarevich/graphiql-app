@@ -18,9 +18,10 @@ const Contributor: FC<IContributorProps> = (
       href={contributor.url}
       className={styles.Contributor}
       title={contributor.name}
+      target="_blank"
     >
       <GitHubIcon />
-      <Typography className={styles.ContributorName}>
+      <Typography component="span" className={styles.ContributorName}>
         {getNameFromURL(contributor.url)}
       </Typography>
     </Link>
