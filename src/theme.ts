@@ -14,7 +14,7 @@ export const theme = createTheme({
       main: '#D0BCFF',
     },
     secondary: {
-      main: '#CCC2DC',
+      main: '#381E72',
     },
     error: {
       main: '#F2B8B5',
