@@ -19,13 +19,13 @@ describe('Home:', (): void => {
   });
 });
 
-describe('RootLayout:', () => {
+describe('RootLayout:', (): void => {
   it('- renders without crashing.', () => {
     const children: ReactNode = <div>Test Content</div>;
     render(<RootLayout>{children}</RootLayout>);
   });
 
-  it('- renders without crashing.', () => {
+  it('- renders without crashing.', (): void => {
     const children: ReactNode = <div>Test Content</div>;
     const { container } = render(<RootLayout>{children}</RootLayout>);
     expect(container).toBeInTheDocument();
