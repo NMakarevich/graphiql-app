@@ -1,5 +1,7 @@
+import SignInForm from '@components/signInForm/signInForm.tsx';
+
 function SignIn(): JSX.Element {
-  return <div>SignIn</div>;
+  return <SignInForm />;
 }
 
 export default SignIn;
