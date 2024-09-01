@@ -1,9 +1,8 @@
 'use client';
 
-import { Button, Paper, TextField, Typography } from '@mui/material';
+import { Button, Link, Paper, TextField, Typography } from '@mui/material';
 import styles from './form.module.scss';
 import { FormEvent } from 'react';
-import Link from 'next/link';
 import { ROUTES } from '@/utils/constants/routes.ts';
 
 export default function SignUpForm(): JSX.Element {
@@ -45,7 +44,10 @@ export default function SignUpForm(): JSX.Element {
         </Button>
       </form>
       <Typography component="p">
-        Already registered? <Link href={ROUTES.SIGN_IN_PATH}>Sign In</Link>
+        Already registered?{' '}
+        <Link href={ROUTES.SIGN_IN_PATH} color="secondary">
+          Sign In
+        </Link>
       </Typography>
     </Paper>
   );
