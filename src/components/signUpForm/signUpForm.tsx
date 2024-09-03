@@ -52,9 +52,6 @@ export default function SignUpForm(): JSX.Element {
     <Paper
       className={styles.Paper}
       sx={{
-        '& .MuiFormControl-root': {
-          width: '100%',
-        },
         '& .MuiFormLabel-root': { color: '#6750A4' },
       }}
     >

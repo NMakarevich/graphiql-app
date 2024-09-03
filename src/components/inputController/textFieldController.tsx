@@ -20,6 +20,7 @@ export default function TextFieldController<T extends FieldValues>(
           error={!!error}
           onChange={onChange}
           value={value}
+          fullWidth
           color="secondary"
         />
       )}
