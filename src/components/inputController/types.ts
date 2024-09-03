@@ -4,5 +4,5 @@ export default interface IControllerProps<T extends FieldValues> {
   inputName: FieldPath<T>;
   type: 'text' | 'email' | 'password';
   label: string;
-  control: Control<T>;
+  control?: Control<T>;
 }

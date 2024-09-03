@@ -8,6 +8,30 @@ import signUpSchema from '@components/signUpForm/signUpSchema.ts';
 import { yupResolver } from '@hookform/resolvers/yup';
 import ISignUpForm from '@components/signUpForm/types.ts';
 import TextFieldController from '@components/inputController/textFieldController.tsx';
+import IControllerProps from '@components/inputController/types.ts';
+
+const textFields: IControllerProps<ISignUpForm>[] = [
+  {
+    inputName: 'name',
+    type: 'text',
+    label: 'Name',
+  },
+  {
+    inputName: 'email',
+    type: 'email',
+    label: 'Email',
+  },
+  {
+    inputName: 'password',
+    type: 'password',
+    label: 'Password',
+  },
+  {
+    inputName: 'confirmPassword',
+    type: 'password',
+    label: 'Confirm Password',
+  },
+];
 
 export default function SignUpForm(): JSX.Element {
   const {
@@ -36,30 +60,15 @@ export default function SignUpForm(): JSX.Element {
     >
       <Typography component="h2">Sign Up</Typography>
       <form className={styles.Form} onSubmit={handleSubmit(onSubmit)}>
-        <TextFieldController<ISignUpForm>
-          inputName={'name'}
-          type={'text'}
-          label={'Name'}
-          control={control}
-        />
-        <TextFieldController<ISignUpForm>
-          inputName={'email'}
-          type={'email'}
-          label={'Email'}
-          control={control}
-        />
-        <TextFieldController<ISignUpForm>
-          inputName={'password'}
-          type={'password'}
-          label={'Password'}
-          control={control}
-        />
-        <TextFieldController<ISignUpForm>
-          inputName={'confirmPassword'}
-          type={'password'}
-          label={'Confirm Password'}
-          control={control}
-        />
+        {textFields.map(({ inputName, label, type }, index) => (
+          <TextFieldController<ISignUpForm>
+            key={index}
+            inputName={inputName}
+            label={label}
+            type={type}
+            control={control}
+          />
+        ))}
         <Button type="submit" variant={'contained'} disabled={!isValid}>
           Sign Up
         </Button>
