@@ -8,9 +8,9 @@ import signUpSchema from '@components/signUpForm/signUpSchema.ts';
 import { yupResolver } from '@hookform/resolvers/yup';
 import ISignUpForm from '@components/signUpForm/types.ts';
 import TextFieldController from '@components/inputController/textFieldController.tsx';
-import IControllerProps from '@components/inputController/types.ts';
+import { ITextField } from '@components/inputController/types.ts';
 
-const textFields: IControllerProps<ISignUpForm>[] = [
+const textFields: ITextField<ISignUpForm>[] = [
   {
     inputName: 'name',
     type: 'text',

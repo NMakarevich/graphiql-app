@@ -1,4 +1,4 @@
-import IControllerProps from '@components/inputController/types.ts';
+import { IControllerProps } from '@components/inputController/types.ts';
 import { TextField } from '@mui/material';
 import { Controller, FieldValues } from 'react-hook-form';
 
