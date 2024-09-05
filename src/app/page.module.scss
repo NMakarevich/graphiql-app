@@ -1,0 +1,23 @@
+.Paragraph {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.Nav {
+  width: 100%;
+  padding-top: 10px;
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  border-top: 1px solid #e6e0e9;
+}
+
+.Section {
+}
+
+.ListItem {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
