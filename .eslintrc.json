@@ -11,7 +11,8 @@
    },
    "rules": {
       "max-lines-per-function": "off",
-      "no-undef":"off"
+      "no-undef":"off",
+      "no-unused-vars": ["error", { "argsIgnorePattern": "data"}]
    },
    "overrides": [
       {

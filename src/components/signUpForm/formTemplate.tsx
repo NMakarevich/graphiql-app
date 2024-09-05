@@ -11,30 +11,27 @@ interface FormProps<T extends FieldValues> {
   schema: ObjectSchema<T>;
   defaultValues: DefaultValues<T>;
   submitText: string;
+  onSubmit: (data: T) => void;
 }
 
 export default function FormTemplate<T extends FieldValues>(
   props: FormProps<T>
 ) {
-  const { textFields, schema, submitText, defaultValues } = props;
+  const { textFields, schema, submitText, defaultValues, onSubmit } = props;
   const {
     control,
     handleSubmit,
     formState: { isValid },
-  } = useForm<T>({
-    resolver: yupResolver<T>(schema) as unknown as Resolver<T>,
+  } = useForm({
+    resolver: yupResolver(schema) as unknown as Resolver<T>,
     defaultValues: defaultValues,
     mode: 'all',
   });
 
-  function onSubmit(data: T) {
-    console.log(data);
-  }
-
   return (
     <form className={styles.Form} onSubmit={handleSubmit(onSubmit)}>
       {textFields.map(({ inputName, label, type }, index) => (
-        <TextFieldController<T>
+        <TextFieldController
           key={index}
           inputName={inputName}
           label={label}

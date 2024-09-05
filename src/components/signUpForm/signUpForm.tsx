@@ -32,6 +32,10 @@ const textFields: ITextField<ISignUpForm>[] = [
 ];
 
 export default function SignUpForm(): JSX.Element {
+  function onSubmit(data: ISignUpForm) {
+    console.log(data);
+  }
+
   return (
     <Paper
       className={styles.Paper}
@@ -40,8 +44,9 @@ export default function SignUpForm(): JSX.Element {
       }}
     >
       <Typography component="h2">Sign Up</Typography>
-      <FormTemplate<ISignUpForm>
+      <FormTemplate
         submitText={'Sign Up'}
+        onSubmit={onSubmit}
         textFields={textFields}
         schema={signUpSchema}
         defaultValues={{
