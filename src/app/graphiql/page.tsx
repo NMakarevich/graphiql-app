@@ -1,57 +1,19 @@
 'use client';
 
+import Loader from '@/components/loader/loader';
+import { endpoint, headers, query } from '@/utils/constants/graphiQLParams';
+import getData from '@/utils/graphQL/getData/getData';
 import getSchema from '@/utils/graphQL/getSchema/getSchema';
-import { useEffect } from 'react';
-
-const endpoint2 = 'https://swapi-graphql.netlify.app/.netlify/functions/index';
-const endpoint3 = 'https://countries.trevorblades.com/';
-
-const query = `
-    query {
-      pokemon(name: "Pikachu") {
-        id
-        name
-        classification
-        types
-      }
-    }
-    `;
-
-const query2 = `
-    query {
-      allPeople {
-        people {
-          name
-          birthYear
-          species {
-            name
-          }
-        }
-      }
-    }
-    `;
-
-const query3 = `
-    query {
-      country(code: "AT") {
-        name
-        capital
-        currency
-        languages {
-          name
-        }
-      }
-    }
-    `;
+import { useEffect, useState } from 'react';
 
 function GraphiQL(): JSX.Element {
-  const endpoint = 'https://graphql-pokemon2.vercel.app/';
+  const [loadingResponse, setLoadingResponse] = useState<boolean>(false);
+
   useEffect((): void => {
     (async (): Promise<void> => {
       try {
-        const resultSchema = await getSchema(endpoint);
-        console.log(resultSchema);
-        console.group(endpoint2, endpoint3, query2, query3, query);
+        const responseSchema = await getSchema(endpoint);
+        console.log(responseSchema);
       } catch (error) {
         const errorMessage = String((error as Error).message);
         console.error('getSchema Error:', error, errorMessage);
@@ -59,7 +21,36 @@ function GraphiQL(): JSX.Element {
     })();
   }, []);
 
-  return <div>GraphiQL</div>;
+  const handleGetDataResult = async (): Promise<void> => {
+    try {
+      setLoadingResponse(true);
+      const responseData = await getData(endpoint, headers, query);
+
+      console.log('responseData:', responseData);
+    } catch (error) {
+      if (error instanceof SyntaxError) {
+        const errorMessage = `Invalid JSON format. Please check your variables input. ${error.message}`;
+        console.error('Syntax Error:', error, errorMessage);
+      } else {
+        const errorMessage = String(error as Error);
+        console.error('getData Error:', error, errorMessage);
+      }
+    } finally {
+      setLoadingResponse(false);
+    }
+  };
+
+  return (
+    <div>
+      <div>GraphiQL</div>
+      <button onClick={handleGetDataResult}>getData</button>
+      <div
+        style={{ border: '2px white solid', width: '100px', height: '100px' }}
+      >
+        {loadingResponse ? <Loader /> : null}
+      </div>
+    </div>
+  );
 }
 
 export default GraphiQL;
