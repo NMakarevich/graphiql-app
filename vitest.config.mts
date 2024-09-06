@@ -15,6 +15,7 @@ export default defineConfig({
         '**/postcss.config.js',
         '**/postcss.config.mjs',
         '**/.eslintrc.cjs',
+        '**/types.ts',
         'next/**',
         'dist/**',
         'dict/**',

@@ -12,8 +12,8 @@ import {
 import { createPortal } from 'react-dom';
 import { useClickOutside } from '@hooks/useClickOutside';
 import { useLockScroll } from '@hooks/useLockScroll';
+import type { IModalProps } from './types';
 import styles from './Modal.module.scss';
-import { IModalProps } from './types';
 
 const modalCloseKeysCodes = ['Escape'];
 
