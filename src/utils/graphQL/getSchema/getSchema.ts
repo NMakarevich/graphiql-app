@@ -31,10 +31,18 @@ const getSchema = async (endpoint: string) => {
     body: JSON.stringify({ query: schemaQuery }),
   });
 
+  const statusCode = response.status;
+  const statusText = response.statusText;
+
   if (response.ok) {
-    return await response.json();
+    const data = await response.json();
+    return {
+      data: data.data,
+      statusCode,
+      statusText,
+    };
   } else {
-    const errorMessage = `${response.status} - ${response.statusText}`;
+    const errorMessage = `${statusCode} - ${statusText}`;
     throw new Error(errorMessage);
   }
 };

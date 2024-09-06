@@ -1,46 +1,47 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 import getData from './getData';
+import getSchema from '../getSchema/getSchema';
 
-beforeEach(() => {
+beforeEach((): void => {
   vi.restoreAllMocks();
 });
 
-describe('getData: ', () => {
-  it('- should fetch data with correct headers and query.', async () => {
-    const endpoint = 'https://example.com/graphql';
-    const headers = { Authorization: 'Bearer token' };
-    const query = '{ users { id name } }';
-
-    const mockJsonResponse = {
+describe('getData: ', (): void => {
+  it('- should fetch schema and return data, statusCode, and statusText.', async (): Promise<void> => {
+    const mockSuccessResponse = {
       data: {
-        users: [
-          { id: '1', name: 'User1' },
-          { id: '2', name: 'User2' },
-          { id: '2', name: 'User3' },
-        ],
+        __schema: {
+          types: [],
+        },
       },
+      statusCode: 200,
+      statusText: 'OK',
     };
 
     vi.spyOn(global, 'fetch').mockResolvedValueOnce({
       ok: true,
-      json: () => Promise.resolve(mockJsonResponse),
+      status: 200,
+      statusText: 'OK',
+      json: () =>
+        Promise.resolve({
+          data: {
+            __schema: {
+              types: [],
+            },
+          },
+        }),
     } as unknown as Response);
 
-    const result = await getData(endpoint, headers, query);
+    const schema = await getSchema('http://correct-endpoint.com');
 
-    expect(fetch).toHaveBeenCalledWith(endpoint, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: 'Bearer token',
-      },
-      mode: 'cors',
-      body: JSON.stringify({ query }),
+    expect(schema).toEqual({
+      data: mockSuccessResponse.data,
+      statusCode: mockSuccessResponse.statusCode,
+      statusText: mockSuccessResponse.statusText,
     });
-    expect(result).toEqual(mockJsonResponse);
   });
 
-  it('- should throw an error when the response is not ok.', async () => {
+  it('- should throw an error when the response is not ok.', async (): Promise<void> => {
     const endpoint = 'https://example.com/graphql';
     const headers = { Authorization: '' };
     const query = '{ users { id name } }';

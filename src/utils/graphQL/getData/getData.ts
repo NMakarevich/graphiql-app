@@ -17,12 +17,18 @@ const getData = async (
     body: query ? JSON.stringify({ query }) : undefined,
   });
 
+  const statusCode = response.status;
+  const statusText = response.statusText;
+
   if (response.ok) {
-    return await response.json();
+    const data = await response.json();
+    return {
+      data: data.data,
+      statusCode,
+      statusText,
+    };
   } else {
-    const errorMessage = `${response.status} ${
-      response.statusText ? '- ' : ''
-    }${response.statusText}`;
+    const errorMessage = `${statusCode} ${statusText ? '- ' : ''}${statusText}`;
     throw new Error(errorMessage);
   }
 };

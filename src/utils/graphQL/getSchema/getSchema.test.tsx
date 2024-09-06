@@ -10,7 +10,7 @@ const mockSuccessResponse = {
 };
 
 describe('getSchema:', (): void => {
-  it('- should return a schema when the endpoint is correct', async () => {
+  it('- should return a schema when the endpoint is correct', async (): Promise<void> => {
     (global.fetch as Mock).mockResolvedValueOnce({
       ok: true,
       json: async () => mockSuccessResponse,
@@ -20,14 +20,14 @@ describe('getSchema:', (): void => {
     expect(schema).toEqual(mockSuccessResponse);
   });
 
-  it('- should throw an error when the endpoint is incorrect', async () => {
+  it('- should throw an error when the endpoint is incorrect', async (): Promise<void> => {
     (global.fetch as Mock).mockResolvedValueOnce({
       ok: false,
       status: 404,
       statusText: 'Not Found',
     });
 
-    const testError = async () => {
+    const testError = async (): Promise<void> => {
       await getSchema('http://incorrect-endpoint.com');
     };
 
