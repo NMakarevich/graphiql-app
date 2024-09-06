@@ -23,7 +23,8 @@ export const theme = createTheme({
       default: '#141218',
     },
     text: {
-      primary: '#E6E0E9',
+      primary: '#381E72',
+      secondary: '#E6E0E9',
     },
   },
   typography: {
