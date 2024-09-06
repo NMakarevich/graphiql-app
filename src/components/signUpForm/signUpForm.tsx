@@ -49,12 +49,7 @@ export default function SignUpForm(): JSX.Element {
   }
 
   return (
-    <Paper
-      className={styles.Paper}
-      sx={{
-        '& .MuiFormLabel-root': { color: '#6750A4' },
-      }}
-    >
+    <Paper className={styles.Paper}>
       <Typography component="h2">Sign Up</Typography>
       <form className={styles.Form} onSubmit={handleSubmit(onSubmit)}>
         {textFields.map(({ inputName, label, type }, index) => (
@@ -71,10 +66,7 @@ export default function SignUpForm(): JSX.Element {
         </Button>
       </form>
       <Typography component="p">
-        Already registered?{' '}
-        <Link href={ROUTES.SIGN_IN_PATH} color="secondary">
-          Sign In
-        </Link>
+        Already registered? <Link href={ROUTES.SIGN_IN_PATH}>Sign In</Link>
       </Typography>
     </Paper>
   );
