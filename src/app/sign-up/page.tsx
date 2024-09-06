@@ -1,5 +1,7 @@
+import SignUpForm from '@components/signUpForm/signUpForm.tsx';
+
 function SignUp(): JSX.Element {
-  return <div>SignUp</div>;
+  return <SignUpForm />;
 }
 
 export default SignUp;
