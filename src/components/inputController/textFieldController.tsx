@@ -21,7 +21,6 @@ export default function TextFieldController<T extends FieldValues>(
           onChange={onChange}
           value={value}
           fullWidth
-          color="secondary"
         />
       )}
     />
