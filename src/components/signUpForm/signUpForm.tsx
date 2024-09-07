@@ -4,7 +4,7 @@ import { Button, Link, Paper, Typography } from '@mui/material';
 import styles from './form.module.scss';
 import { ROUTES } from '@/utils/constants/routes.ts';
 import { useForm } from 'react-hook-form';
-import signUpSchema from '@components/signUpForm/signUpSchema.ts';
+import signUpSchema from '@/utils/validations/signUpSchema.ts';
 import { yupResolver } from '@hookform/resolvers/yup';
 import ISignUpForm from '@components/signUpForm/types.ts';
 import TextFieldController from '@components/inputController/textFieldController.tsx';
