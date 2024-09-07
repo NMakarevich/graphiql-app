@@ -1,11 +1,12 @@
 import { IControllerProps } from '@components/inputController/types.ts';
 import { TextField } from '@mui/material';
 import { Controller, FieldValues } from 'react-hook-form';
+import React from 'react';
 
 export default function TextFieldController<T extends FieldValues>(
   props: IControllerProps<T>
 ) {
-  const { inputName, label, type, control } = props;
+  const { inputName, label, type, control, slotProps } = props;
 
   return (
     <Controller
@@ -21,6 +22,7 @@ export default function TextFieldController<T extends FieldValues>(
           onChange={onChange}
           value={value}
           fullWidth
+          slotProps={slotProps}
         />
       )}
     />
