@@ -3,7 +3,7 @@
 import Loader from '@/components/loader/loader';
 import { isAuthenticated } from '@/utils/auth/auth';
 import { useEffect, useState } from 'react';
-import { Link, Paper, Typography } from '@mui/material';
+import { Link, Paper, Typography, Divider } from '@mui/material';
 import CheckIcon from '@mui/icons-material/Check';
 import { ROUTES } from '@/utils/constants/routes.ts';
 import styles from './page.module.scss';
@@ -60,6 +60,7 @@ export default function Home(): JSX.Element {
               both GraphQL and RESTful client.
             </Typography>
           </Typography>
+          <Divider />
           <Typography
             variant={'body1'}
             component="section"
@@ -78,6 +79,7 @@ export default function Home(): JSX.Element {
               ))}
             </ul>
           </Typography>
+          <Divider />
           <Typography
             variant={'body1'}
             component="section"
@@ -88,43 +90,43 @@ export default function Home(): JSX.Element {
               This course is aimed at the students of the RS School who have
               passed RS School Stage #2 and at the new students who have
               experience with:
-              <ul>
-                <li>
-                  <Typography component={'span'} className={styles.ListItem}>
-                    <CheckIcon fontSize={'small'} /> JavaScript
-                  </Typography>
-                </li>
-                <li>
-                  <Typography component={'span'} className={styles.ListItem}>
-                    <CheckIcon fontSize={'small'} /> TypeScript
-                  </Typography>
-                </li>
-                <li>
-                  <Typography component={'span'} className={styles.ListItem}>
-                    <CheckIcon fontSize={'small'} /> Git, GitHub (clone, add,
-                    commit, push, pull, merge, rebase, pull request flow)
-                  </Typography>
-                </li>
-                <li>
-                  <Typography component={'span'} className={styles.ListItem}>
-                    <CheckIcon fontSize={'small'} /> NPM
-                  </Typography>
-                </li>
-                <li>
-                  <Typography component={'span'} className={styles.ListItem}>
-                    <CheckIcon fontSize={'small'} /> CSS3 / HTML5
-                  </Typography>
-                </li>
-                <li>
-                  <Typography component={'span'} className={styles.ListItem}>
-                    <CheckIcon fontSize={'small'} /> Understanding of how to
-                    interact with APIs (general understanding of REST and
-                    GraphQL)
-                  </Typography>
-                </li>
-              </ul>
             </Typography>
+            <ul>
+              <li>
+                <Typography component={'span'} className={styles.ListItem}>
+                  <CheckIcon fontSize={'small'} /> JavaScript
+                </Typography>
+              </li>
+              <li>
+                <Typography component={'span'} className={styles.ListItem}>
+                  <CheckIcon fontSize={'small'} /> TypeScript
+                </Typography>
+              </li>
+              <li>
+                <Typography component={'span'} className={styles.ListItem}>
+                  <CheckIcon fontSize={'small'} /> Git, GitHub (clone, add,
+                  commit, push, pull, merge, rebase, pull request flow)
+                </Typography>
+              </li>
+              <li>
+                <Typography component={'span'} className={styles.ListItem}>
+                  <CheckIcon fontSize={'small'} /> NPM
+                </Typography>
+              </li>
+              <li>
+                <Typography component={'span'} className={styles.ListItem}>
+                  <CheckIcon fontSize={'small'} /> CSS3 / HTML5
+                </Typography>
+              </li>
+              <li>
+                <Typography component={'span'} className={styles.ListItem}>
+                  <CheckIcon fontSize={'small'} /> Understanding of how to
+                  interact with APIs (general understanding of REST and GraphQL)
+                </Typography>
+              </li>
+            </ul>
           </Typography>
+          <Divider />
           <div className={styles.Nav}>
             <Link href={ROUTES.RESTFUL_CLIENT_PATH}>RESTful Client</Link>
             <Link href={ROUTES.GRAPHIQL_PATH}>GraphQL</Link>
