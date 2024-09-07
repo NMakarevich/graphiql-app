@@ -12,7 +12,7 @@ html {
   height: 100%;
   // @include mix.flex(null, null, column);
   @extend %layout;
-  overflow-x: hidden;
+  overflow-x: clip;
 
   // Фикс для слайдеров
   > * {
