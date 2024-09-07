@@ -6,6 +6,8 @@ import { logout } from '@/utils/firebase/firebase';
 import { deleteCookie } from '@/utils/cookies/deleteCookie';
 import { getCookie } from '@/utils/cookies/getCookie';
 
+import styles from './authControl.module.scss';
+
 const AuthControl: FC = (): JSX.Element => {
   const [isAuth, setIsAuth] = useState<boolean>(false);
   const router = useRouter();
@@ -34,14 +36,23 @@ const AuthControl: FC = (): JSX.Element => {
     router.push(ROUTES.SIGN_IN_PATH);
   };
 
+  function signUp() {
+    router.push(ROUTES.SIGN_UP_PATH);
+  }
+
   return isAuth ? (
     <Button variant="outlined" onClick={handleSignOut}>
       Sign out
     </Button>
   ) : (
-    <Button variant="contained" onClick={handleSignIn}>
-      Sign in
-    </Button>
+    <div className={styles.Auth}>
+      <Button variant="contained" onClick={handleSignIn}>
+        Sign in
+      </Button>
+      <Button variant="contained" onClick={signUp}>
+        Sign Up
+      </Button>
+    </div>
   );
 };
 
