@@ -41,8 +41,9 @@ export default function Home(): JSX.Element {
         display: 'flex',
         flexDirection: 'column',
         gap: '20px',
+        backgroundColor: 'rgba(12, 0, 29, 0.9)',
       }}
-      elevation={2}
+      className={styles.Paper}
     >
       <Typography variant={'h2'} sx={{ alignSelf: 'center' }}>
         Welcome to GraphiQL/RESTful app{authorized ? `, ${user}` : ''}!
@@ -137,11 +138,11 @@ export default function Home(): JSX.Element {
         <>
           <Typography variant={'body1'} className={styles.Paragraph}>
             To use app you need to authorize.{' '}
-            <div className={styles.Nav}>
-              <Link href={ROUTES.SIGN_IN_PATH}>Go to Sign In</Link>
-              <Link href={ROUTES.SIGN_UP_PATH}>Go to Sign Up</Link>
-            </div>
           </Typography>
+          <div className={styles.Nav}>
+            <Link href={ROUTES.SIGN_IN_PATH}>Go to Sign In</Link>
+            <Link href={ROUTES.SIGN_UP_PATH}>Go to Sign Up</Link>
+          </div>
         </>
       )}
     </Paper>
