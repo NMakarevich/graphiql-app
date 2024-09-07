@@ -8,6 +8,7 @@ import {
   signOut,
   updateProfile,
   User,
+  onAuthStateChanged,
 } from 'firebase/auth';
 import {
   getFirestore,
@@ -19,7 +20,7 @@ import {
 } from 'firebase/firestore';
 import firebaseConfig from '@/utils/firebase/firebaseConfig';
 
-const app = initializeApp(firebaseConfig);
+export const app = initializeApp(firebaseConfig);
 export const auth = getAuth(app);
 export const db = getFirestore(app);
 const googleProvider = new GoogleAuthProvider();
@@ -42,8 +43,12 @@ export const signInWithGoogle = async (): Promise<void> => {
 export const logInWithEmailAndPassword = async (
   email: string,
   password: string
-): Promise<void> => {
-  await signInWithEmailAndPassword(auth, email, password);
+) => {
+  const res = await signInWithEmailAndPassword(auth, email, password);
+
+  const user = res.user;
+  const token = await user.getIdToken();
+  return { user, token };
 };
 
 export const registerWithEmailAndPassword = async (
@@ -67,4 +72,20 @@ export const registerWithEmailAndPassword = async (
 
 export const logout = (): void => {
   signOut(auth);
+};
+
+export const getCurrentUser = (): Promise<User | null> => {
+  return new Promise((resolve, reject) => {
+    onAuthStateChanged(
+      auth,
+      (user) => {
+        if (user) {
+          resolve(user);
+        } else {
+          resolve(null);
+        }
+      },
+      reject
+    );
+  });
 };

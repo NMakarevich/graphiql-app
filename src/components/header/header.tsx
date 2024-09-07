@@ -147,7 +147,7 @@ const Header: FC = (): JSX.Element => {
               />
             </Box>
             <Box sx={{ display: { xs: 'none', sm: 'block' } }}>
-              <AuthControl isAuth={isAuth} />
+              <AuthControl />
             </Box>
           </Toolbar>
         </AppBar>

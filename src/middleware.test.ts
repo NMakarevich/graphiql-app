@@ -1,36 +1,53 @@
-import { describe, it, expect, beforeEach, vi, Mock } from 'vitest';
+import { describe, it, expect, beforeEach, vi } from 'vitest';
 import { NextRequest, NextResponse } from 'next/server';
 import middleware from '@/middleware';
 import { ROUTES } from '@/utils/constants/routes';
-import { isAuthenticated } from '@/utils/auth/auth';
-
-vi.mock('@/utils/auth/auth', () => ({
-  isAuthenticated: vi.fn(),
-}));
 
 describe('middleware: ', () => {
   beforeEach(() => {
     vi.clearAllMocks();
   });
 
-  it('- should allow access if authenticated and route is protected', async () => {
-    (isAuthenticated as unknown as Mock).mockResolvedValue(true);
-
+  it('- should redirect to sign-in if not authenticated and route is protected', async () => {
     const request = {
       nextUrl: new URL(ROUTES.RESTFUL_CLIENT_PATH, 'http://test-url.com'),
-    } as NextRequest;
+      headers: {
+        get: () => 'someOtherCookie=someValue',
+      },
+    } as unknown as NextRequest;
+
     const response = await middleware(request);
 
     expect(response).toBeInstanceOf(NextResponse);
-    expect(response.status).toBe(200);
+    expect(response.headers.get('Location')).toBe(
+      new URL(ROUTES.SIGN_IN_PATH, 'http://test-url.com').toString()
+    );
   });
 
-  it('- should allow access if route is not protected', async () => {
-    (isAuthenticated as unknown as Mock).mockResolvedValue(false);
+  it('- should redirect to home if authenticated and route is for authentication', async () => {
+    const request = {
+      nextUrl: new URL(ROUTES.SIGN_IN_PATH, 'http://test-url.com'),
+      headers: {
+        get: () => 'authToken=validToken',
+      },
+    } as unknown as NextRequest;
 
+    const response = await middleware(request);
+
+    expect(response).toBeInstanceOf(NextResponse);
+    expect(response.headers.get('Location')).toBe(
+      new URL(ROUTES.HOME_PATH, 'http://test-url.com').toString()
+    );
+  });
+
+  it('- should allow access if route is not protected and user is not authenticated', async () => {
     const request = {
       nextUrl: new URL('/some-other-path', 'http://test-url.com'),
-    } as NextRequest;
+      headers: {
+        get: () => '',
+      },
+    } as unknown as NextRequest;
+
     const response = await middleware(request);
 
     expect(response).toBeInstanceOf(NextResponse);
@@ -38,13 +55,15 @@ describe('middleware: ', () => {
   });
 
   it('- should handle errors gracefully', async () => {
-    (isAuthenticated as unknown as Mock).mockRejectedValue(
-      new Error('Test error')
-    );
-
     const request = {
       nextUrl: new URL(ROUTES.RESTFUL_CLIENT_PATH, 'http://test-url.com'),
-    } as NextRequest;
+      headers: {
+        get: () => {
+          throw new Error('Test error');
+        },
+      },
+    } as unknown as NextRequest;
+
     const response = await middleware(request);
 
     expect(response).toBeInstanceOf(NextResponse);

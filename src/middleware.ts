@@ -1,4 +1,3 @@
-import { isAuthenticated } from '@/utils/auth/auth';
 import { ROUTES } from '@/utils/constants/routes';
 import { NextRequest, NextResponse } from 'next/server';
 
@@ -16,19 +15,24 @@ export default async function middleware(
   request: NextRequest
 ): Promise<NextResponse<unknown>> {
   try {
-    const authenticated = await isAuthenticated;
+    const cookies = request.headers.get('cookie') || '';
+    const authToken = cookies
+      .split(';')
+      .find((cookie) => cookie.trim().startsWith('authToken='));
 
-    if (!authenticated && protectedRoutes.includes(request.nextUrl.pathname)) {
-      const absoluteURL = new URL(ROUTES.HOME_PATH, request.nextUrl.origin);
-      return NextResponse.redirect(absoluteURL.toString());
-    }
-
-    if (
-      authenticated &&
-      protectedRoutesForAuth.includes(request.nextUrl.pathname)
-    ) {
-      const absoluteURL = new URL(ROUTES.HOME_PATH, request.nextUrl.origin);
-      return NextResponse.redirect(absoluteURL.toString());
+    if (!authToken) {
+      if (protectedRoutes.includes(request.nextUrl.pathname)) {
+        const absoluteURL = new URL(
+          ROUTES.SIGN_IN_PATH,
+          request.nextUrl.origin
+        );
+        return NextResponse.redirect(absoluteURL.toString());
+      }
+    } else {
+      if (protectedRoutesForAuth.includes(request.nextUrl.pathname)) {
+        const absoluteURL = new URL(ROUTES.HOME_PATH, request.nextUrl.origin);
+        return NextResponse.redirect(absoluteURL.toString());
+      }
     }
 
     return NextResponse.next();

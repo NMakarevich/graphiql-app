@@ -1,25 +1,45 @@
-import { FC } from 'react';
+import { FC, useEffect, useState } from 'react';
 import Button from '@mui/material/Button';
-import { IAuthProps } from './types';
 import { useRouter } from 'next/navigation';
 import { ROUTES } from '@/utils/constants/routes.ts';
+import { logout } from '@/utils/firebase/firebase';
+import { deleteCookie } from '@/utils/cookies/deleteCookie';
+import { getCookie } from '@/utils/cookies/getCookie';
 
-const AuthControl: FC<IAuthProps> = (props): JSX.Element => {
-  const { isAuth } = props;
+const AuthControl: FC = (): JSX.Element => {
+  const [isAuth, setIsAuth] = useState<boolean>(false);
   const router = useRouter();
 
-  function signOut() {}
+  useEffect(() => {
+    const checkAuth = () => {
+      const authToken = getCookie('authToken');
+      setIsAuth(!!authToken);
+    };
 
-  function signIn() {
+    checkAuth();
+  }, []);
+
+  const handleSignOut = async () => {
+    try {
+      logout();
+      deleteCookie('authToken');
+      setIsAuth(false);
+      router.push(ROUTES.HOME_PATH);
+    } catch (error) {
+      console.error('Error signing out:', error);
+    }
+  };
+
+  const handleSignIn = () => {
     router.push(ROUTES.SIGN_IN_PATH);
-  }
+  };
 
   return isAuth ? (
-    <Button variant="outlined" onClick={signOut}>
+    <Button variant="outlined" onClick={handleSignOut}>
       Sign out
     </Button>
   ) : (
-    <Button variant="contained" onClick={signIn}>
+    <Button variant="contained" onClick={handleSignIn}>
       Sign in
     </Button>
   );
