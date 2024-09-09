@@ -25,11 +25,13 @@ export const auth = getAuth(app);
 export const db = getFirestore(app);
 const googleProvider = new GoogleAuthProvider();
 
-export const signInWithGoogle = async (): Promise<void> => {
+export const signInWithGoogle = async () => {
   const res = await signInWithPopup(auth, googleProvider);
   const user = res.user;
   const q = query(collection(db, 'users'), where('uid', '==', user.uid));
   const docs = await getDocs(q);
+  const token = await user.getIdToken();
+
   if (docs.docs.length === 0) {
     await addDoc(collection(db, 'users'), {
       uid: user.uid,
@@ -38,6 +40,7 @@ export const signInWithGoogle = async (): Promise<void> => {
       email: user.email,
     });
   }
+  return { user, token };
 };
 
 export const logInWithEmailAndPassword = async (

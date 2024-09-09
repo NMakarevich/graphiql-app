@@ -9,16 +9,17 @@ import { getCookie } from '@/utils/cookies/getCookie';
 import styles from './authControl.module.scss';
 
 const AuthControl: FC = (): JSX.Element => {
-  const [isAuth, setIsAuth] = useState<boolean>(false);
+  // const [isAuth, setIsAuth] = useState<boolean | null>(null);
+  const [isAuth, setIsAuth] = useState<boolean>(!!getCookie('authToken'));
   const router = useRouter();
 
-  useEffect(() => {
-    const checkAuth = () => {
-      const authToken = getCookie('authToken');
-      setIsAuth(!!authToken);
-    };
-
-    checkAuth();
+  // useEffect((): void => {
+  // const authToken = getCookie('authToken');
+  //   // setIsAuth(!!authToken);
+  // }, [isAuth]);
+  useEffect((): void => {
+    const authToken = getCookie('authToken');
+    setIsAuth(!!authToken);
   }, []);
 
   const handleSignOut = async () => {

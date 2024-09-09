@@ -49,7 +49,6 @@ function Scroll({ children }: { children: ReactElement }) {
 const Header: FC = (): JSX.Element => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const isMenuOpen = Boolean(anchorEl);
-  const isAuth = true;
 
   const handleMenuOpen = (event: MouseEvent<HTMLElement>): void => {
     setAnchorEl(event.currentTarget);
@@ -112,7 +111,7 @@ const Header: FC = (): JSX.Element => {
                   onClick={handleMenuClose}
                   sx={{ justifyContent: 'center' }}
                 >
-                  <AuthControl isAuth={isAuth} />
+                  <AuthControl />
                 </MenuItem>
               </Menu>
             </Box>

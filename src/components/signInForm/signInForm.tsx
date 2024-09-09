@@ -11,10 +11,11 @@ import {
 import styles from './form.module.scss';
 import React, { useState } from 'react';
 import { ROUTES } from '@/utils/constants/routes.ts';
-
-import { logInWithEmailAndPassword } from '@/utils/firebase/firebase';
+import {
+  logInWithEmailAndPassword,
+  signInWithGoogle,
+} from '@/utils/firebase/firebase';
 import { setAuthCookie } from '@/utils/cookies/setAuthCookie';
-
 import { ITextField } from '@components/inputController/types.ts';
 import ISignInForm from '@components/signInForm/types.ts';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
@@ -23,6 +24,7 @@ import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import signInSchema from '@/utils/validations/signInSchema.ts';
 import GoogleIcon from '@mui/icons-material/Google';
+import { useRouter } from 'next/navigation';
 
 export default function SignInForm(): JSX.Element {
   const {
@@ -36,6 +38,7 @@ export default function SignInForm(): JSX.Element {
   });
 
   const [visiblePassword, setVisiblePassword] = useState<boolean>(false);
+  const router = useRouter();
 
   const onSubmit = async (data: ISignInForm) => {
     console.log(data);
@@ -47,15 +50,22 @@ export default function SignInForm(): JSX.Element {
         const user = await logInWithEmailAndPassword(email, password);
         setAuthCookie('authToken', user.token, 7);
         console.log('User signed in successfully', user);
+        router.push(ROUTES.GRAPHIQL_PATH);
       } catch (error) {
         console.error('Error signing in:', error);
       }
     }
   };
 
-  function onSignInWithGoogle() {
-    console.log('Sign In with Google');
-  }
+  const onSignInWithGoogle = async () => {
+    try {
+      const user = await signInWithGoogle();
+      setAuthCookie('authToken', user.token, 7);
+      console.log('User signed in with Google successfully', user);
+    } catch (error) {
+      console.error('Error signing in with Google:', error);
+    }
+  };
 
   const textFields: ITextField<ISignInForm>[] = [
     {
