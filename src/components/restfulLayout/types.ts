@@ -7,8 +7,14 @@ export default interface RESTful {
   body: string;
 }
 
-interface RESTfulHeaders {
+export interface RESTfulHeaders {
   selected: { isSelected: boolean }[];
   keys: { key: string }[];
   values: { value: string }[];
+}
+
+export interface HeaderItem {
+  isSelected: boolean;
+  key: string;
+  value: string;
 }
