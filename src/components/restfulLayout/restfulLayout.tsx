@@ -23,19 +23,15 @@ import styles from './restfulLayout.module.scss';
 import { RESTful_METHODS } from '@/utils/constants/RESTfulMethods.ts';
 import { Controller, useFieldArray, useForm } from 'react-hook-form';
 import RESTful from '@components/restfulLayout/types.ts';
+import { usePathname, useSearchParams } from 'next/navigation';
+import { parseURL } from '@/utils/restful/restful.ts';
 
 function RestfulLayout(): JSX.Element {
+  const url = usePathname();
+  const searchParams = useSearchParams();
+
   const { control, handleSubmit, getValues } = useForm<RESTful>({
-    defaultValues: {
-      method: RESTful_METHODS.GET,
-      baseURL: '',
-      headers: {
-        selected: [{ isSelected: true }],
-        keys: [{ key: '' }],
-        values: [{ value: '' }],
-      },
-      body: '',
-    },
+    defaultValues: { ...parseURL(url, searchParams.toString()) },
     mode: 'onSubmit',
   });
 
