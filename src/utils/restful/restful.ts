@@ -56,8 +56,10 @@ export function generateURL(data: RESTful) {
   const { method, baseURL, headers, body } = data;
   const baseURL64 = encodeBase64(baseURL);
   const body64 = body ? encodeBase64(body) : '';
-  const searchParams = generateSearchParams(headers);
-  return `/${method}/${baseURL64}/${body64}?${searchParams}`;
+  const searchParams = generateSearchParams(headers).toString();
+  const path = [method, baseURL64, body64].filter((string) => string).join('/');
+  const url = [path, searchParams].filter((string) => string).join('?');
+  return `/${url}`;
 }
 
 export function parseURL(url: string, searchParams: string): RESTful {
