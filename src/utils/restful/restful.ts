@@ -58,7 +58,7 @@ export function generateURL(data: RESTful) {
   const baseURL64 = encodeBase64(baseURL);
   const body64 = body ? encodeBase64(body) : '';
   const searchParams = generateSearchParams(headers);
-  return `${method}/${baseURL64}/${body64}?${searchParams}`;
+  return `/${method}/${baseURL64}/${body64}?${searchParams}`;
 }
 
 export function parseURL(url: string): RESTful {
