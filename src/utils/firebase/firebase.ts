@@ -73,8 +73,9 @@ export const registerWithEmailAndPassword = async (
   return user;
 };
 
-export const logout = (): void => {
-  signOut(auth);
+export const logout = async (): Promise<{ userAuth: boolean }> => {
+  await signOut(auth);
+  return { userAuth: false };
 };
 
 export const getCurrentUser = (): Promise<User | null> => {

@@ -23,6 +23,7 @@ export default function TextFieldController<T extends FieldValues>(
           value={value}
           fullWidth
           slotProps={slotProps}
+          autoComplete={type === 'password' ? 'current-password' : 'off'}
         />
       )}
     />

@@ -18,7 +18,8 @@ export default async function middleware(
     const cookies = request.headers.get('cookie') || '';
     const authToken = cookies
       .split(';')
-      .find((cookie) => cookie.trim().startsWith('authToken='));
+      .find((cookie) => cookie.trim().startsWith('authToken='))
+      ?.split('=')[1];
 
     if (!authToken) {
       if (protectedRoutes.includes(request.nextUrl.pathname)) {

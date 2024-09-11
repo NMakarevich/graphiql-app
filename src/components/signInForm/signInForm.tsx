@@ -25,6 +25,8 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import signInSchema from '@/utils/validations/signInSchema.ts';
 import GoogleIcon from '@mui/icons-material/Google';
 import { useRouter } from 'next/navigation';
+import { EUserEvent, localEventBus } from '@/utils/EventBus';
+import { ECookies } from '@/utils/cookies/types';
 
 export default function SignInForm(): JSX.Element {
   const {
@@ -41,15 +43,17 @@ export default function SignInForm(): JSX.Element {
   const router = useRouter();
 
   const onSubmit = async (data: ISignInForm) => {
-    console.log(data);
     const email = data.email as string;
     const password = data.password as string;
-    console.log(data, email, password);
     if (email && password) {
       try {
         const user = await logInWithEmailAndPassword(email, password);
-        setAuthCookie('authToken', user.token, 7);
-        console.log('User signed in successfully', user);
+        setAuthCookie(ECookies.AUTH_TOKEN, user.token, 7);
+        user.user.displayName
+          ? setAuthCookie(ECookies.USER_NAME, user.user.displayName, 7)
+          : null;
+
+        localEventBus.emitEvent(EUserEvent.USER_LOGIN);
         router.push(ROUTES.GRAPHIQL_PATH);
       } catch (error) {
         console.error('Error signing in:', error);
@@ -60,8 +64,13 @@ export default function SignInForm(): JSX.Element {
   const onSignInWithGoogle = async () => {
     try {
       const user = await signInWithGoogle();
-      setAuthCookie('authToken', user.token, 7);
-      console.log('User signed in with Google successfully', user);
+      setAuthCookie(ECookies.AUTH_TOKEN, user.token, 7);
+      user.user.displayName
+        ? setAuthCookie(ECookies.USER_NAME, user.user.displayName, 7)
+        : null;
+
+      localEventBus.emitEvent(EUserEvent.USER_LOGIN);
+      router.push(ROUTES.GRAPHIQL_PATH);
     } catch (error) {
       console.error('Error signing in with Google:', error);
     }
