@@ -17,10 +17,9 @@ export function reduceHeaders(headers: RESTfulHeaders) {
 }
 
 export function filterHeaders(headers: HeaderItem[]) {
-  return headers
-    .filter(({ isSelected }) => isSelected)
-    .filter(({ key }) => key)
-    .filter(({ value }) => value);
+  return headers.filter(
+    ({ isSelected, key, value }) => isSelected && key && value
+  );
 }
 
 export function generateRequestHeaders(headers: HeaderItem[]) {
