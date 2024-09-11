@@ -61,8 +61,7 @@ export function generateURL(data: RESTful) {
   return `/${method}/${baseURL64}/${body64}?${searchParams}`;
 }
 
-export function parseURL(url: string): RESTful {
-  const [path, searchParams] = url.split('?');
+export function parseURL(url: string, searchParams: string): RESTful {
   const headers = decodeSearchParams(searchParams);
   const [method, baseURL64, body64] = path.split('/');
   return <RESTful>{
