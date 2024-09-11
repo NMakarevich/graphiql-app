@@ -63,11 +63,13 @@ export function generateURL(data: RESTful) {
 
 export function parseURL(url: string, searchParams: string): RESTful {
   const headers = decodeSearchParams(searchParams);
-  const [method, baseURL64, body64] = path.split('/');
+  const [method, baseURL64, body64] = url.slice(1).split('/');
+  const baseURL = baseURL64 ? decodeBase64(baseURL64) : '';
+  const body = body64 ? decodeBase64(body64) : '';
   return <RESTful>{
     method,
-    baseURL: decodeBase64(baseURL64),
-    body: decodeBase64(body64),
+    baseURL,
+    body,
     headers,
   };
 }
