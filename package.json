@@ -28,7 +28,9 @@
       "react-dom": "^18"
    },
    "devDependencies": {
+      "@codemirror/lang-json": "^6.0.1",
       "@hookform/resolvers": "^3.9.0",
+      "@monaco-editor/react": "^4.6.0",
       "@testing-library/jest-dom": "^6.4.8",
       "@testing-library/react": "^16.0.0",
       "@testing-library/user-event": "^14.5.2",
@@ -36,6 +38,8 @@
       "@types/react": "^18",
       "@types/react-dom": "^18",
       "@typescript-eslint/eslint-plugin": "^8.5.0",
+      "@uiw/codemirror-theme-atomone": "^4.23.2",
+      "@uiw/react-codemirror": "^4.23.2",
       "@vitejs/plugin-react": "^4.3.1",
       "@vitest/coverage-v8": "^2.0.5",
       "autoprefixer": "^10.4.20",
