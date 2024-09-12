@@ -22,11 +22,14 @@ export function filterHeaders(headers: HeaderItem[]) {
   );
 }
 
-export function generateRequestHeaders(headers: HeaderItem[]) {
-  return headers.reduce((acc: { [key: string]: string }, header) => {
-    acc[header.key] = header.value;
-    return acc;
-  }, {});
+export function generateRequestHeaders(headers: RESTfulHeaders) {
+  return filterHeaders(reduceHeaders(headers)).reduce(
+    (acc: { [key: string]: string }, header) => {
+      acc[header.key] = header.value;
+      return acc;
+    },
+    {}
+  );
 }
 
 export function generateSearchParams(headers: RESTfulHeaders) {
