@@ -78,7 +78,16 @@ export function parseURL(url: string, searchParams: string): RESTful {
   return <RESTful>{
     method,
     baseURL,
-    body,
+    body: prettify(body),
     headers,
   };
+}
+
+function prettify(body: string) {
+  try {
+    const json = JSON.parse(body);
+    return JSON.stringify(json, null, 2);
+  } catch {
+    return body;
+  }
 }

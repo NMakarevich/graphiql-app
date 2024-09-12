@@ -31,7 +31,7 @@ function RestfulLayout(): JSX.Element {
   const url = usePathname();
   const searchParams = useSearchParams();
 
-  const { control, handleSubmit, getValues } = useForm<RESTful>({
+  const { control, handleSubmit, getValues, setValue } = useForm<RESTful>({
     defaultValues: { ...parseURL(url, searchParams.toString()) },
     mode: 'onSubmit',
   });
@@ -65,6 +65,18 @@ function RestfulLayout(): JSX.Element {
     appendSelected({ isSelected: true });
     appendKey({ key: '' });
     appendValue({ value: '' });
+  }
+
+  function prettify() {
+    const body = getValues('body');
+    try {
+      const json = JSON.parse(body);
+      const string = JSON.stringify(json, null, 2);
+      setValue('body', string);
+      onBlur();
+    } catch {
+      setValue('body', body);
+    }
   }
 
   return (
@@ -226,6 +238,9 @@ function RestfulLayout(): JSX.Element {
             >
               <header className={`${styles.SectionHeader} ${styles.Flex}`}>
                 <Typography variant={'h4'}>Body</Typography>
+                <Button type="button" onClick={prettify}>
+                  Prettify
+                </Button>
               </header>
               <Controller
                 name={'body'}
