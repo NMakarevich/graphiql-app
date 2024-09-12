@@ -4,7 +4,6 @@ import {
   Button,
   Checkbox,
   Divider,
-  InputAdornment,
   MenuItem,
   Paper,
   Select,
@@ -26,10 +25,15 @@ import RESTful from '@components/restfulLayout/types.ts';
 import { usePathname, useSearchParams } from 'next/navigation';
 import { generateURL, parseURL } from '@/utils/restful/restful.ts';
 import MonacoEditor from '@components/monacoEditor/monacoEditor.tsx';
+import { useState } from 'react';
+import ResponseStatus from '@components/responseStatus/responseStatus.tsx';
+import request from '@/utils/request/request.ts';
 
 function RestfulLayout(): JSX.Element {
   const url = usePathname();
   const searchParams = useSearchParams();
+  const [status, setStatus] = useState(0);
+  const [response, setResponse] = useState('');
 
   const { control, handleSubmit, getValues, setValue } = useForm<RESTful>({
     defaultValues: { ...parseURL(url, searchParams.toString()) },
@@ -49,10 +53,17 @@ function RestfulLayout(): JSX.Element {
     name: 'headers.values',
   });
 
-  const status = 200;
-
-  function onSubmit(data: RESTful) {
-    console.log(data);
+  async function onSubmit(data: RESTful) {
+    setResponse('');
+    try {
+      const response = await request(data);
+      const status = response.status;
+      setStatus(status);
+      const json = await response.json();
+      setResponse(JSON.stringify(json, null, 2));
+    } catch (error) {
+      if (error instanceof Error) console.log(error.message);
+    }
   }
 
   function onBlur() {
@@ -259,26 +270,14 @@ function RestfulLayout(): JSX.Element {
               </header>
               <TextField
                 name={'body'}
+                value={response}
                 rows={10}
                 fullWidth
                 multiline
                 disabled
                 slotProps={{
                   input: {
-                    endAdornment: (
-                      <InputAdornment
-                        sx={{
-                          alignSelf: 'flex-end',
-                          color:
-                            Math.ceil(status / 100) === 2
-                              ? '#4caf50'
-                              : '#F2B8B5',
-                        }}
-                        position="end"
-                      >
-                        {status}
-                      </InputAdornment>
-                    ),
+                    endAdornment: <ResponseStatus status={status} />,
                   },
                 }}
               />
