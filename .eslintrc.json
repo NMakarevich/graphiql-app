@@ -9,9 +9,12 @@
          "jsx": true
       }
    },
-   "rules": {
+  "plugins": ["@typescript-eslint"],
+  "rules": {
       "max-lines-per-function": "off",
-      "no-undef":"off"
+      "no-undef":"off",
+      "no-unused-vars": "off",
+      "@typescript-eslint/no-unused-vars": "error"
    },
    "overrides": [
       {
