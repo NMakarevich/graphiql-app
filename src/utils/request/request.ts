@@ -8,5 +8,6 @@ export default async function request(data: RESTful) {
     method,
     headers: { ...generateRequestHeaders(headers) },
     body: method !== RESTful_METHODS.GET && body ? JSON.parse(body) : null,
+    'Content-Type': 'application/json',
   });
 }
