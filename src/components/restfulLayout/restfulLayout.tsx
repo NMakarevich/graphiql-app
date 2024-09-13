@@ -24,10 +24,10 @@ import { Controller, useFieldArray, useForm } from 'react-hook-form';
 import RESTful from '@components/restfulLayout/types.ts';
 import { usePathname, useSearchParams } from 'next/navigation';
 import { generateURL, parseURL } from '@/utils/restful/restful.ts';
-import MonacoEditor from '@components/monacoEditor/monacoEditor.tsx';
 import { useState } from 'react';
 import ResponseStatus from '@components/responseStatus/responseStatus.tsx';
 import request from '@/utils/request/request.ts';
+import CodeMirrorEditor from '@components/codeMirrorEditor/codeMirrorEditor.tsx';
 
 function RestfulLayout(): JSX.Element {
   const url = usePathname();
@@ -257,7 +257,7 @@ function RestfulLayout(): JSX.Element {
                 name={'body'}
                 control={control}
                 render={({ field: { onChange, value } }) => (
-                  <MonacoEditor value={value} onChange={onChange} />
+                  <CodeMirrorEditor value={value} onChange={onChange} />
                 )}
               />
             </Grid>
