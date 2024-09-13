@@ -1,6 +1,9 @@
 'use client';
 
 import {
+  Accordion,
+  AccordionDetails,
+  AccordionSummary,
   Button,
   Checkbox,
   Divider,
@@ -18,6 +21,7 @@ import {
 } from '@mui/material';
 import Grid from '@mui/material/Grid2';
 import AddIcon from '@mui/icons-material/Add';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import styles from './restfulLayout.module.scss';
 import { RESTful_METHODS } from '@/utils/constants/RESTfulMethods.ts';
 import { Controller, useFieldArray, useForm } from 'react-hook-form';
@@ -32,7 +36,7 @@ import CodeMirrorEditor from '@components/codeMirrorEditor/codeMirrorEditor.tsx'
 function RestfulLayout(): JSX.Element {
   const url = usePathname();
   const searchParams = useSearchParams();
-  const [status, setStatus] = useState(0);
+  const [responseStatus, setResponseStatus] = useState(0);
   const [response, setResponse] = useState('');
 
   const { control, handleSubmit, getValues, setValue } = useForm<RESTful>({
@@ -68,11 +72,13 @@ function RestfulLayout(): JSX.Element {
     try {
       const response = await request(data);
       const status = response.status;
-      setStatus(status);
+      setResponseStatus(status);
       const json = await response.json();
       setResponse(JSON.stringify(json, null, 2));
     } catch (error) {
-      if (error instanceof Error) console.log(error.message);
+      if (error instanceof Error) {
+        setResponse(JSON.stringify({ error: error.message }, null, 2));
+      }
     }
   }
 
@@ -259,81 +265,93 @@ function RestfulLayout(): JSX.Element {
           <section
             className={`${styles.Section} ${styles.Flex} ${styles.FlexColumn}`}
           >
-            <header className={styles.SectionHeader}>
-              <Typography variant={'h4'} sx={{ padding: '10px 0' }}>
-                Variables ({variablesKeys.length})
-              </Typography>
-              <Button type="button" onClick={addVariable}>
-                <AddIcon /> Add variable
-              </Button>
-            </header>
-            <TableContainer sx={{ maxHeight: 175 }}>
-              <Table
-                sx={{
-                  '.MuiTableCell-root:not(:first-child)': {
-                    borderLeft: '1px solid #E6E0E9',
-                  },
-                }}
+            <Accordion disableGutters>
+              <AccordionSummary
+                expandIcon={<ExpandMoreIcon />}
+                aria-controls="panel1-content"
+                id="panel1-header"
               >
-                <TableHead
-                  sx={{
-                    borderBottom: '1px solid #E6E0E9',
-                    '& .MuiTableCell-root': { padding: '5px' },
-                  }}
-                >
-                  <TableRow>
-                    <TableCell align="left">Key</TableCell>
-                    <TableCell align="left">Value</TableCell>
-                  </TableRow>
-                </TableHead>
-                <TableBody
-                  sx={{
-                    '& .MuiTableCell-root': { padding: '2px' },
-                    '& .MuiInputBase-input': {
-                      padding: '5px',
-                    },
-                  }}
-                >
-                  {variablesKeys.map((key, index) => (
-                    <TableRow
-                      key={key.id}
-                      sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                <header className={styles.SectionHeader}>
+                  <Typography variant={'h4'} sx={{ padding: '10px 0' }}>
+                    Variables ({variablesKeys.length})
+                  </Typography>
+                </header>
+              </AccordionSummary>
+              <AccordionDetails>
+                <Button type="button" onClick={addVariable}>
+                  <AddIcon /> Add variable
+                </Button>
+                <TableContainer sx={{ maxHeight: 175 }}>
+                  <Table
+                    sx={{
+                      '.MuiTableCell-root:not(:first-child)': {
+                        borderLeft: '1px solid #E6E0E9',
+                      },
+                    }}
+                  >
+                    <TableHead
+                      sx={{
+                        borderBottom: '1px solid #E6E0E9',
+                        '& .MuiTableCell-root': { padding: '5px' },
+                      }}
                     >
-                      <TableCell align="left">
-                        <Controller
-                          control={control}
-                          name={`variables.keys.${index}.key`}
-                          render={({ field: { onChange, value } }) => (
-                            <TextField
-                              type="text"
+                      <TableRow>
+                        <TableCell align="left">Key</TableCell>
+                        <TableCell align="left">Value</TableCell>
+                      </TableRow>
+                    </TableHead>
+                    <TableBody
+                      sx={{
+                        '& .MuiTableCell-root': { padding: '2px' },
+                        '& .MuiInputBase-input': {
+                          padding: '5px',
+                        },
+                      }}
+                    >
+                      {variablesKeys.map((key, index) => (
+                        <TableRow
+                          key={key.id}
+                          sx={{
+                            '&:last-child td, &:last-child th': { border: 0 },
+                          }}
+                        >
+                          <TableCell align="left">
+                            <Controller
+                              control={control}
                               name={`variables.keys.${index}.key`}
-                              onChange={onChange}
-                              value={value}
-                              fullWidth
+                              render={({ field: { onChange, value } }) => (
+                                <TextField
+                                  type="text"
+                                  name={`variables.keys.${index}.key`}
+                                  onChange={onChange}
+                                  value={value}
+                                  fullWidth
+                                />
+                              )}
                             />
-                          )}
-                        />
-                      </TableCell>
-                      <TableCell align="left">
-                        <Controller
-                          control={control}
-                          name={`variables.values.${index}.value`}
-                          render={({ field: { onChange, value } }) => (
-                            <TextField
-                              type="text"
-                              name={`variables.values[${index}].value`}
-                              onChange={onChange}
-                              value={value}
-                              fullWidth
+                          </TableCell>
+                          <TableCell align="left">
+                            <Controller
+                              control={control}
+                              name={`variables.values.${index}.value`}
+                              render={({ field: { onChange, value } }) => (
+                                <TextField
+                                  type="text"
+                                  name={`variables.values[${index}].value`}
+                                  onChange={onChange}
+                                  value={value}
+                                  fullWidth
+                                />
+                              )}
                             />
-                          )}
-                        />
-                      </TableCell>
-                    </TableRow>
-                  ))}
-                </TableBody>
-              </Table>
-            </TableContainer>
+                          </TableCell>
+                        </TableRow>
+                      ))}
+                    </TableBody>
+                  </Table>
+                </TableContainer>
+              </AccordionDetails>
+            </Accordion>
           </section>
           <Divider />
           <Grid container columnSpacing={1} sx={{ width: '100%' }}>
@@ -361,7 +379,7 @@ function RestfulLayout(): JSX.Element {
             >
               <header className={`${styles.SectionHeader} ${styles.Flex}`}>
                 <Typography variant={'h4'}>Response</Typography>
-                <ResponseStatus status={status} />
+                <ResponseStatus status={responseStatus} />
               </header>
               <CodeMirrorEditor value={response} readonly={true} />
             </Grid>
