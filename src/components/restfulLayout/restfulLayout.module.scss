@@ -1,0 +1,15 @@
+.Flex {
+  display: flex;
+  gap: 10px;
+
+  &Column {
+    flex-direction: column;
+  }
+}
+
+.Section {
+  &Header {
+    display: flex;
+    justify-content: space-between;
+  }
+}
