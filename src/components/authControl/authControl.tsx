@@ -8,7 +8,9 @@ import { logout } from '@/utils/firebase/firebase';
 import { deleteCookie } from '@/utils/cookies/deleteCookie';
 import { getCookie } from '@/utils/cookies/getCookie';
 import styles from './authControl.module.scss';
-import { EUserEvent, localEventBus } from '@/utils/EventBus';
+import { localEventBus } from '@/utils/eventBus/EventBus';
+import { ECookies } from '@/utils/cookies/types';
+import { EUserEvent } from '@/utils/eventBus/types';
 
 const AuthControl: FC = (): JSX.Element => {
   const [isAuth, setIsAuth] = useState<boolean>(false);
@@ -16,17 +18,23 @@ const AuthControl: FC = (): JSX.Element => {
   const router = useRouter();
 
   useEffect((): (() => void) => {
-    const { exists } = getCookie('authToken');
+    const { exists } = getCookie(ECookies.AUTH_TOKEN);
     setIsAuth(exists);
 
     const unsubLogin = localEventBus.subscribeToEvent(
-      EUserEvent.USER_LOGIN,
+      EUserEvent.USER_SIGNIN,
       (): void => {
         setIsAuth(true);
       }
     );
+    const unsubSignup = localEventBus.subscribeToEvent(
+      EUserEvent.USER_SIGNUP,
+      () => {
+        setIsAuth(true);
+      }
+    );
     const unsubLogout = localEventBus.subscribeToEvent(
-      EUserEvent.USER_LOGOUT,
+      EUserEvent.USER_SIGNOUT,
       (): void => {
         setIsAuth(false);
       }
@@ -36,6 +44,7 @@ const AuthControl: FC = (): JSX.Element => {
 
     return (): void => {
       unsubLogin();
+      unsubSignup();
       unsubLogout();
     };
   }, []);
@@ -44,8 +53,8 @@ const AuthControl: FC = (): JSX.Element => {
     try {
       const logoutUserAuth = await logout();
       if (!logoutUserAuth.userAuth) {
-        await deleteCookie('authToken');
-        localEventBus.emitEvent(EUserEvent.USER_LOGOUT);
+        await deleteCookie(ECookies.AUTH_TOKEN);
+        localEventBus.emitEvent(EUserEvent.USER_SIGNOUT);
         router.push(ROUTES.HOME_PATH);
       }
     } catch (error) {

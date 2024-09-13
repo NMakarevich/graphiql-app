@@ -1,14 +1,10 @@
-export enum EUserEvent {
-  USER_LOGIN = 'USER_LOGIN',
-  USER_LOGOUT = 'USER_LOGOUT',
-}
-
-type noop = () => void;
+import { EUserEvent, noop } from './types';
 
 class EventBus {
   private eventSubscribers: Record<EUserEvent, noop[]> = {
-    [EUserEvent.USER_LOGIN]: [],
-    [EUserEvent.USER_LOGOUT]: [],
+    [EUserEvent.USER_SIGNIN]: [],
+    [EUserEvent.USER_SIGNUP]: [],
+    [EUserEvent.USER_SIGNOUT]: [],
   };
 
   public emitEvent = (eventType: EUserEvent) => {

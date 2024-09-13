@@ -8,8 +8,9 @@ import { ROUTES } from '@/utils/constants/routes.ts';
 import styles from './page.module.scss';
 import { contributors } from '@/utils/constants/contributors.ts';
 import { getCookie } from '@/utils/cookies/getCookie';
-import { localEventBus, EUserEvent } from '@/utils/EventBus';
+import { localEventBus } from '@/utils/eventBus/EventBus';
 import { ECookies } from '@/utils/cookies/types';
+import { EUserEvent } from '@/utils/eventBus/types';
 
 export default function Home(): JSX.Element {
   const [loading, setLoading] = useState<boolean>(true);
@@ -22,7 +23,7 @@ export default function Home(): JSX.Element {
     setAuthorized(exists);
 
     const unsubLogin = localEventBus.subscribeToEvent(
-      EUserEvent.USER_LOGIN,
+      EUserEvent.USER_SIGNIN,
       (): void => {
         setAuthorized(true);
         if (cookiesUserName.cookie) {
@@ -31,7 +32,7 @@ export default function Home(): JSX.Element {
       }
     );
     const unsubLogout = localEventBus.subscribeToEvent(
-      EUserEvent.USER_LOGOUT,
+      EUserEvent.USER_SIGNOUT,
       (): void => {
         setAuthorized(false);
         setUser('');
@@ -62,7 +63,7 @@ export default function Home(): JSX.Element {
       className={styles.Paper}
     >
       <Typography variant={'h2'} sx={{ alignSelf: 'center' }}>
-        Welcome to GraphiQL/RESTful app{authorized ? `, ${user}` : ''}!
+        Welcome to GraphiQL/RESTful app{authorized && user ? `, ${user}` : ''}!
       </Typography>
       {authorized ? (
         <>
