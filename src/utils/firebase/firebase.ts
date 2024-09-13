@@ -9,6 +9,9 @@ import {
   updateProfile,
   User,
   onAuthStateChanged,
+  signInWithRedirect,
+  getRedirectResult,
+  getAdditionalUserInfo,
 } from 'firebase/auth';
 import {
   getFirestore,
@@ -54,11 +57,33 @@ export const signInWithGoogle = async () => {
 };
 
 export const loginWithGoogle = async () => {
-  signInWithPopup(auth, googleProvider)
+  signInWithRedirect(auth, googleProvider)
     .then((result) => {
       const credential = GoogleAuthProvider.credentialFromResult(result);
       const token = credential?.accessToken;
-      const user = result.user;
+      const res = getAdditionalUserInfo(result);
+      return { res, token };
+    })
+    .catch((error) => {
+      const errorCode = error.code;
+      const errorMessage = error.message;
+      const email = error.customData.email;
+      const credential = GoogleAuthProvider.credentialFromError(error);
+      console.error(
+        'Error signing in with Google:',
+        errorCode,
+        errorMessage,
+        email,
+        credential
+      );
+    });
+
+  getRedirectResult(auth)
+    .then((result) => {
+      const credential = GoogleAuthProvider.credentialFromResult(result!);
+      const token = credential?.accessToken;
+
+      const user = result?.user;
       return { token, user };
     })
     .catch((error) => {

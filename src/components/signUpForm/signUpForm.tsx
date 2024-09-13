@@ -17,7 +17,6 @@ import ISignUpForm from '@components/signUpForm/types.ts';
 import TextFieldController from '@components/inputController/textFieldController.tsx';
 import { ITextField } from '@components/inputController/types.ts';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
-import GoogleIcon from '@mui/icons-material/Google';
 import React, { useState } from 'react';
 import { signUpWithEmailAndPassword } from '@/utils/firebase/firebase';
 import { setAuthCookie } from '@/utils/cookies/setAuthCookie';
@@ -74,10 +73,6 @@ export default function SignUpForm(): JSX.Element {
       }
     }
   };
-
-  function onSignInWithGoogle() {
-    console.log('Sign In with Google');
-  }
 
   const closeModal = (): void => setErrorSignUp(null);
 
@@ -155,15 +150,6 @@ export default function SignUpForm(): JSX.Element {
           ))}
           <Button type="submit" variant={'contained'} disabled={!isValid}>
             Sign Up
-          </Button>
-          <Button
-            type="button"
-            variant={'contained'}
-            sx={{ gap: '5px' }}
-            onClick={onSignInWithGoogle}
-          >
-            <GoogleIcon fontSize={'small'} />{' '}
-            <Typography component={'span'}>Sign In with Google</Typography>
           </Button>
         </form>
         <Typography component="p">

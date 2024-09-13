@@ -11,10 +11,7 @@ import {
 import styles from './form.module.scss';
 import React, { useState } from 'react';
 import { ROUTES } from '@/utils/constants/routes.ts';
-import {
-  logInWithEmailAndPassword,
-  loginWithGoogle,
-} from '@/utils/firebase/firebase';
+import { logInWithEmailAndPassword } from '@/utils/firebase/firebase';
 import { setAuthCookie } from '@/utils/cookies/setAuthCookie';
 import { ITextField } from '@components/inputController/types.ts';
 import ISignInForm from '@components/signInForm/types.ts';
@@ -23,7 +20,6 @@ import TextFieldController from '@components/inputController/textFieldController
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import signInSchema from '@/utils/validations/signInSchema.ts';
-import GoogleIcon from '@mui/icons-material/Google';
 import { useRouter } from 'next/navigation';
 import { localEventBus } from '@/utils/eventBus/EventBus';
 import { ECookies } from '@/utils/cookies/types';
@@ -71,15 +67,6 @@ export default function SignInForm(): JSX.Element {
           setErrorSignIn(error.message);
         }
       }
-    }
-  };
-
-  const onSignInWithGoogle = async (): Promise<void> => {
-    try {
-      const user = await loginWithGoogle();
-      console.log('User authenticated:', user);
-    } catch (error) {
-      console.error('Error signing in with Google:', error);
     }
   };
 
@@ -131,15 +118,6 @@ export default function SignInForm(): JSX.Element {
           ))}
           <Button type="submit" variant={'contained'} disabled={!isValid}>
             Sign In
-          </Button>
-          <Button
-            type="button"
-            variant={'contained'}
-            sx={{ gap: '5px' }}
-            onClick={onSignInWithGoogle}
-          >
-            <GoogleIcon fontSize={'small'} />{' '}
-            <Typography component={'span'}>Sign In with Google</Typography>
           </Button>
         </form>
         <Typography component="p">
