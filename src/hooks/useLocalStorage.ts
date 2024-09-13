@@ -1,8 +1,9 @@
 import { useEffect, useState } from 'react';
 
 export function useLocalStorage(key: string, initValue: string = '') {
+  const isUserClient = typeof window !== 'undefined';
   const readLocalStorageValue = () => {
-    if (typeof window !== 'undefined') {
+    if (isUserClient) {
       const item = localStorage.getItem(key);
       return item !== null ? item : initValue;
     }
@@ -14,14 +15,14 @@ export function useLocalStorage(key: string, initValue: string = '') {
   );
 
   useEffect(() => {
-    if (typeof window !== 'undefined') {
+    if (isUserClient) {
       if (localStorageValue) {
         localStorage.setItem(key, localStorageValue);
       } else {
         localStorage.removeItem(key);
       }
     }
-  }, [key, localStorageValue]);
+  }, [key, localStorageValue, isUserClient]);
 
   return [localStorageValue, setLocalStorageValue] as const;
 }
