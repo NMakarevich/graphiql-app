@@ -6,9 +6,11 @@ import './codeMirrorEditor.scss';
 function CodeMirrorEditor({
   value,
   onChange,
+  readonly,
 }: {
   value: string;
-  onChange: (value: string | undefined) => void;
+  onChange?: (value: string | undefined) => void;
+  readonly?: boolean;
 }) {
   return (
     <CodeMirror
@@ -17,6 +19,7 @@ function CodeMirrorEditor({
       theme={atomone}
       extensions={[json()]}
       height="100%"
+      readOnly={readonly}
     />
   );
 }

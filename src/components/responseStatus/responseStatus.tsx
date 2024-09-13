@@ -1,16 +1,18 @@
-import { InputAdornment } from '@mui/material';
+import styles from './responseStatus.module.scss';
+import { Typography } from '@mui/material';
 
 function ResponseStatus({ status }: { status: number }) {
+  const style = Math.floor(status / 100) === 2 ? 'success' : 'error';
+
   return (
-    <InputAdornment
-      sx={{
-        alignSelf: 'flex-end',
-        color: Math.ceil(status / 100) === 2 ? '#4caf50' : '#F2B8B5',
-      }}
-      position="end"
-    >
-      {status ? status : ''}
-    </InputAdornment>
+    status > 0 && (
+      <Typography component={'p'} className={styles.Status}>
+        Status:
+        <Typography className={styles[style]} component={'span'}>
+          {status}
+        </Typography>
+      </Typography>
+    )
   );
 }
 

@@ -267,20 +267,9 @@ function RestfulLayout(): JSX.Element {
             >
               <header className={`${styles.SectionHeader} ${styles.Flex}`}>
                 <Typography variant={'h4'}>Response</Typography>
+                <ResponseStatus status={status} />
               </header>
-              <TextField
-                name={'body'}
-                value={response}
-                rows={10}
-                fullWidth
-                multiline
-                disabled
-                slotProps={{
-                  input: {
-                    endAdornment: <ResponseStatus status={status} />,
-                  },
-                }}
-              />
+              <CodeMirrorEditor value={response} readonly={true} />
             </Grid>
           </Grid>
         </main>
