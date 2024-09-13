@@ -2,8 +2,11 @@ import { useEffect, useState } from 'react';
 
 export function useLocalStorage(key: string, initValue: string = '') {
   const readLocalStorageValue = () => {
-    const item = localStorage.getItem(key);
-    return item !== null ? item : initValue;
+    if (typeof window !== 'undefined') {
+      const item = localStorage.getItem(key);
+      return item !== null ? item : initValue;
+    }
+    return initValue;
   };
 
   const [localStorageValue, setLocalStorageValue] = useState<string>(
@@ -11,10 +14,12 @@ export function useLocalStorage(key: string, initValue: string = '') {
   );
 
   useEffect(() => {
-    if (localStorageValue) {
-      localStorage.setItem(key, localStorageValue);
-    } else {
-      localStorage.removeItem(key);
+    if (typeof window !== 'undefined') {
+      if (localStorageValue) {
+        localStorage.setItem(key, localStorageValue);
+      } else {
+        localStorage.removeItem(key);
+      }
     }
   }, [key, localStorageValue]);
 
