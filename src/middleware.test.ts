@@ -67,6 +67,6 @@ describe('middleware: ', () => {
     const response = await middleware(request);
 
     expect(response).toBeInstanceOf(NextResponse);
-    expect(response.status).toBe(200);
+    expect(response.status).toBe(500);
   });
 });

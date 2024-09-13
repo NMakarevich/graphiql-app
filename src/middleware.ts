@@ -1,5 +1,6 @@
 import { ROUTES } from '@/utils/constants/routes';
 import { NextRequest, NextResponse } from 'next/server';
+import { ECookies } from './utils/cookies/types';
 
 const protectedRoutes: string[] = [
   ROUTES.RESTFUL_CLIENT_PATH,
@@ -18,7 +19,7 @@ export default async function middleware(
     const cookies = request.headers.get('cookie') || '';
     const authToken = cookies
       .split(';')
-      .find((cookie) => cookie.trim().startsWith('authToken='))
+      .find((cookie) => cookie.trim().startsWith(`${ECookies.AUTH_TOKEN}=`))
       ?.split('=')[1];
 
     if (!authToken) {
@@ -39,6 +40,6 @@ export default async function middleware(
     return NextResponse.next();
   } catch (error) {
     console.error('Error in authentication middleware:', error);
-    return NextResponse.next();
+    return new NextResponse('Internal Server Error', { status: 500 });
   }
 }
