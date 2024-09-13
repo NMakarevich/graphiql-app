@@ -5,6 +5,12 @@ export default interface RESTful {
   baseURL: string;
   headers: RESTfulHeaders;
   body: string;
+  variables: RESTfulVariables;
+}
+
+export interface RESTfulVariables {
+  keys: { key: string }[];
+  values: { value: string }[];
 }
 
 export interface RESTfulHeaders {

@@ -1,6 +1,7 @@
 import RESTful, {
   HeaderItem,
   RESTfulHeaders,
+  RESTfulVariables,
 } from '@components/restfulLayout/types.ts';
 import { decodeBase64, encodeBase64 } from '@/utils/base64/base64.ts';
 
@@ -32,6 +33,27 @@ export function generateRequestHeaders(headers: RESTfulHeaders) {
   );
 }
 
+export function generateRequestVariables(variables: RESTfulVariables) {
+  const keys = Object.values(variables.keys).map(({ key }) => key);
+  const values = Object.values(variables.values).map(({ value }) => value);
+  const object: { [key: string]: string } = {};
+  keys.forEach((key, index) => (object[key] = values[index]));
+  return object;
+}
+
+export function generateBodyWithVariables(
+  body: string,
+  variables: RESTfulVariables
+) {
+  if (!body || !variables || Object.keys(variables).length === 0) return body;
+  const reqVariables = generateRequestVariables(variables);
+  return body.replace(/"{{(\w+)}}"/g, (_, key) => {
+    return isNaN(parseInt(reqVariables[key]))
+      ? `"${reqVariables[key]}"`
+      : reqVariables[key] || '';
+  });
+}
+
 export function generateSearchParams(headers: RESTfulHeaders) {
   const searchParams = new URLSearchParams();
   filterHeaders(reduceHeaders(headers)).forEach((header) =>
@@ -56,9 +78,11 @@ export function decodeSearchParams(searchParams: string) {
 }
 
 export function generateURL(data: RESTful) {
-  const { method, baseURL, headers, body } = data;
+  const { method, baseURL, headers, body, variables } = data;
   const baseURL64 = encodeBase64(baseURL);
-  const body64 = body ? encodeBase64(body) : '';
+  const body64 = body
+    ? encodeBase64(generateBodyWithVariables(body, variables))
+    : '';
   const searchParams = generateSearchParams(headers).toString();
   const path = [method, baseURL64, body64].filter((string) => string).join('/');
   const url = [path, searchParams].filter((string) => string).join('?');

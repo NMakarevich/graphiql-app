@@ -53,6 +53,16 @@ function RestfulLayout(): JSX.Element {
     name: 'headers.values',
   });
 
+  const { fields: variablesKeys, append: appendVariablesKeys } = useFieldArray({
+    control,
+    name: 'variables.keys',
+  });
+
+  const { append: appendVariablesValues } = useFieldArray({
+    control,
+    name: 'variables.values',
+  });
+
   async function onSubmit(data: RESTful) {
     setResponse('');
     try {
@@ -76,6 +86,11 @@ function RestfulLayout(): JSX.Element {
     appendSelected({ isSelected: true });
     appendKey({ key: '' });
     appendValue({ value: '' });
+  }
+
+  function addVariable() {
+    appendVariablesKeys({ key: '' });
+    appendVariablesValues({ value: '' });
   }
 
   function prettify() {
@@ -151,7 +166,7 @@ function RestfulLayout(): JSX.Element {
           >
             <header className={styles.SectionHeader}>
               <Typography variant={'h4'} sx={{ padding: '10px 0' }}>
-                Headers
+                Headers ({selectedFields.length})
               </Typography>
               <Button type="button" onClick={addHeader}>
                 <AddIcon /> Add header
@@ -228,6 +243,85 @@ function RestfulLayout(): JSX.Element {
                             <TextField
                               type="text"
                               name={`headers.values[${index}].value`}
+                              onChange={onChange}
+                              value={value}
+                              fullWidth
+                            />
+                          )}
+                        />
+                      </TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </TableContainer>
+          </section>
+          <section
+            className={`${styles.Section} ${styles.Flex} ${styles.FlexColumn}`}
+          >
+            <header className={styles.SectionHeader}>
+              <Typography variant={'h4'} sx={{ padding: '10px 0' }}>
+                Variables ({variablesKeys.length})
+              </Typography>
+              <Button type="button" onClick={addVariable}>
+                <AddIcon /> Add variable
+              </Button>
+            </header>
+            <TableContainer sx={{ maxHeight: 175 }}>
+              <Table
+                sx={{
+                  '.MuiTableCell-root:not(:first-child)': {
+                    borderLeft: '1px solid #E6E0E9',
+                  },
+                }}
+              >
+                <TableHead
+                  sx={{
+                    borderBottom: '1px solid #E6E0E9',
+                    '& .MuiTableCell-root': { padding: '5px' },
+                  }}
+                >
+                  <TableRow>
+                    <TableCell align="left">Key</TableCell>
+                    <TableCell align="left">Value</TableCell>
+                  </TableRow>
+                </TableHead>
+                <TableBody
+                  sx={{
+                    '& .MuiTableCell-root': { padding: '2px' },
+                    '& .MuiInputBase-input': {
+                      padding: '5px',
+                    },
+                  }}
+                >
+                  {variablesKeys.map((key, index) => (
+                    <TableRow
+                      key={key.id}
+                      sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                    >
+                      <TableCell align="left">
+                        <Controller
+                          control={control}
+                          name={`variables.keys.${index}.key`}
+                          render={({ field: { onChange, value } }) => (
+                            <TextField
+                              type="text"
+                              name={`variables.keys.${index}.key`}
+                              onChange={onChange}
+                              value={value}
+                              fullWidth
+                            />
+                          )}
+                        />
+                      </TableCell>
+                      <TableCell align="left">
+                        <Controller
+                          control={control}
+                          name={`variables.values.${index}.value`}
+                          render={({ field: { onChange, value } }) => (
+                            <TextField
+                              type="text"
+                              name={`variables.values[${index}].value`}
                               onChange={onChange}
                               value={value}
                               fullWidth
