@@ -17,8 +17,16 @@ import ISignUpForm from '@components/signUpForm/types.ts';
 import TextFieldController from '@components/inputController/textFieldController.tsx';
 import { ITextField } from '@components/inputController/types.ts';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
-import GoogleIcon from '@mui/icons-material/Google';
-import React from 'react';
+import React, { useState } from 'react';
+import { signUpWithEmailAndPassword } from '@/utils/firebase/firebase';
+import { setAuthCookie } from '@/utils/cookies/setAuthCookie';
+import { ECookies } from '@/utils/cookies/types';
+import { localEventBus } from '@/utils/eventBus/EventBus';
+import { useRouter } from 'next/navigation';
+import { EUserEvent } from '@/utils/eventBus/types';
+import { getAuth, onAuthStateChanged } from 'firebase/auth';
+import { FirebaseError } from 'firebase/app';
+import { Modal } from '@/components/Modal/Modal';
 
 export default function SignUpForm(): JSX.Element {
   const {
@@ -31,16 +39,42 @@ export default function SignUpForm(): JSX.Element {
     mode: 'all',
   });
 
-  const [visiblePassword, setVisiblePassword] = React.useState(false);
-  const [visibleCPassword, setVisibleCPassword] = React.useState(false);
+  const [visiblePassword, setVisiblePassword] = useState(false);
+  const [visibleCPassword, setVisibleCPassword] = useState(false);
+  const [errorSignUp, setErrorSignUp] = useState<string | null>(null);
+  const router = useRouter();
 
-  function onSubmit(data: ISignUpForm) {
-    console.log(data);
-  }
+  const onSubmit = async (data: ISignUpForm): Promise<void> => {
+    const { name, email, password } = data;
+    if (name && email && password) {
+      try {
+        await signUpWithEmailAndPassword(name, email, password);
+        const auth = getAuth();
+        onAuthStateChanged(auth, async (user): Promise<void> => {
+          if (user) {
+            const displayName = user.displayName;
+            const token = await user.getIdToken();
 
-  function onSignInWithGoogle() {
-    console.log('Sign In with Google');
-  }
+            setAuthCookie(ECookies.AUTH_TOKEN, token, 1);
+            displayName
+              ? setAuthCookie(ECookies.USER_NAME, displayName, 1)
+              : null;
+
+            localEventBus.emitEvent(EUserEvent.USER_SIGNUP);
+            router.push(ROUTES.HOME_PATH);
+          }
+        });
+      } catch (error) {
+        console.error('Error sign up:', error);
+        if (error && error instanceof FirebaseError) {
+          setErrorSignUp(error.message);
+          console.log(error.message, errorSignUp, 1232);
+        }
+      }
+    }
+  };
+
+  const closeModal = (): void => setErrorSignUp(null);
 
   const textFields: ITextField<ISignUpForm>[] = [
     {
@@ -98,37 +132,35 @@ export default function SignUpForm(): JSX.Element {
   ];
 
   return (
-    <Paper className={styles.Paper} sx={{ boxShadow: '0 0 3px 1px #D0BCFF' }}>
-      <Typography component="h2" sx={{ fontWeight: 'bold' }}>
-        Sign Up
-      </Typography>
-      <form className={styles.Form} onSubmit={handleSubmit(onSubmit)}>
-        {textFields.map(({ inputName, label, type, slotProps }, index) => (
-          <TextFieldController<ISignUpForm>
-            key={index}
-            inputName={inputName}
-            label={label}
-            type={type}
-            control={control}
-            slotProps={slotProps}
-          />
-        ))}
-        <Button type="submit" variant={'contained'} disabled={!isValid}>
+    <>
+      <Paper className={styles.Paper} sx={{ boxShadow: '0 0 3px 1px #D0BCFF' }}>
+        <Typography component="h2" sx={{ fontWeight: 'bold' }}>
           Sign Up
-        </Button>
-        <Button
-          type="button"
-          variant={'contained'}
-          sx={{ gap: '5px' }}
-          onClick={onSignInWithGoogle}
-        >
-          <GoogleIcon fontSize={'small'} />{' '}
-          <Typography component={'span'}>Sign In with Google</Typography>
-        </Button>
-      </form>
-      <Typography component="p">
-        Already registered? <Link href={ROUTES.SIGN_IN_PATH}>Sign In</Link>
-      </Typography>
-    </Paper>
+        </Typography>
+        <form className={styles.Form} onSubmit={handleSubmit(onSubmit)}>
+          {textFields.map(({ inputName, label, type, slotProps }, index) => (
+            <TextFieldController<ISignUpForm>
+              key={index}
+              inputName={inputName}
+              label={label}
+              type={type}
+              control={control}
+              slotProps={slotProps}
+            />
+          ))}
+          <Button type="submit" variant={'contained'} disabled={!isValid}>
+            Sign Up
+          </Button>
+        </form>
+        <Typography component="p">
+          Already registered? <Link href={ROUTES.SIGN_IN_PATH}>Sign In</Link>
+        </Typography>
+      </Paper>
+      {errorSignUp && (
+        <Modal isOpenModal onClose={closeModal}>
+          {errorSignUp}
+        </Modal>
+      )}
+    </>
   );
 }
