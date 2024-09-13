@@ -14,7 +14,7 @@ function HistoryListItem({ item }: { item: HistoryItem }): JSX.Element {
             {new Date(item.executedAt).toLocaleString()}
           </Typography>
           <Typography component="span" className={styles.Url}>
-            {item.labelUrl}
+            {item.baseUrl}
           </Typography>
         </p>
       </ListItemButton>
