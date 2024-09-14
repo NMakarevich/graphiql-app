@@ -73,12 +73,12 @@ function RestfulLayout(): JSX.Element {
   async function onSubmit(data: RESTful) {
     setResponseStatus(0);
     try {
+      setLocalStorage(saveToHistory(data, localStorage));
       const response = await request(data);
       const status = response.status;
       const json = await response.json();
       setResponseStatus(status);
       setResponse(JSON.stringify(json, null, 2));
-      setLocalStorage(saveToHistory(data, localStorage));
     } catch (error) {
       if (error instanceof Error) {
         setResponseStatus(500);
