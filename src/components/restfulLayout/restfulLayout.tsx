@@ -1,10 +1,12 @@
 'use client';
 
 import {
+  Accordion,
+  AccordionDetails,
+  AccordionSummary,
   Button,
   Checkbox,
   Divider,
-  InputAdornment,
   MenuItem,
   Paper,
   Select,
@@ -19,23 +21,26 @@ import {
 } from '@mui/material';
 import Grid from '@mui/material/Grid2';
 import AddIcon from '@mui/icons-material/Add';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import styles from './restfulLayout.module.scss';
 import { RESTful_METHODS } from '@/utils/constants/RESTfulMethods.ts';
 import { Controller, useFieldArray, useForm } from 'react-hook-form';
 import RESTful from '@components/restfulLayout/types.ts';
+import { usePathname, useSearchParams } from 'next/navigation';
+import { generateURL, parseURL } from '@/utils/restful/restful.ts';
+import { useState } from 'react';
+import ResponseStatus from '@components/responseStatus/responseStatus.tsx';
+import request from '@/utils/request/request.ts';
+import CodeMirrorEditor from '@components/codeMirrorEditor/codeMirrorEditor.tsx';
 
 function RestfulLayout(): JSX.Element {
-  const { control, handleSubmit, getValues } = useForm<RESTful>({
-    defaultValues: {
-      method: RESTful_METHODS.GET,
-      baseURL: '',
-      headers: {
-        selected: [{ isSelected: true }],
-        keys: [{ key: '' }],
-        values: [{ value: '' }],
-      },
-      body: '',
-    },
+  const url = usePathname();
+  const searchParams = useSearchParams();
+  const [responseStatus, setResponseStatus] = useState(0);
+  const [response, setResponse] = useState('');
+
+  const { control, handleSubmit, getValues, setValue } = useForm<RESTful>({
+    defaultValues: { ...parseURL(url, searchParams.toString()) },
     mode: 'onSubmit',
   });
 
@@ -52,20 +57,58 @@ function RestfulLayout(): JSX.Element {
     name: 'headers.values',
   });
 
-  const status = 200;
+  const { fields: variablesKeys, append: appendVariablesKeys } = useFieldArray({
+    control,
+    name: 'variables.keys',
+  });
 
-  function onSubmit(data: RESTful) {
-    console.log(data);
+  const { append: appendVariablesValues } = useFieldArray({
+    control,
+    name: 'variables.values',
+  });
+
+  async function onSubmit(data: RESTful) {
+    setResponse('');
+    try {
+      const response = await request(data);
+      const status = response.status;
+      setResponseStatus(status);
+      const json = await response.json();
+      setResponse(JSON.stringify(json, null, 2));
+    } catch (error) {
+      if (error instanceof Error) {
+        setResponse(JSON.stringify({ error: error.message }, null, 2));
+      }
+    }
   }
 
   function onBlur() {
-    console.log(getValues());
+    const data = getValues();
+    const url = generateURL(data);
+    window.history.replaceState(null, '', url);
   }
 
   function addHeader() {
     appendSelected({ isSelected: true });
     appendKey({ key: '' });
     appendValue({ value: '' });
+  }
+
+  function addVariable() {
+    appendVariablesKeys({ key: '' });
+    appendVariablesValues({ value: '' });
+  }
+
+  function prettify() {
+    const body = getValues('body');
+    try {
+      const json = JSON.parse(body);
+      const string = JSON.stringify(json, null, 2);
+      setValue('body', string);
+      onBlur();
+    } catch {
+      setValue('body', body);
+    }
   }
 
   return (
@@ -129,7 +172,7 @@ function RestfulLayout(): JSX.Element {
           >
             <header className={styles.SectionHeader}>
               <Typography variant={'h4'} sx={{ padding: '10px 0' }}>
-                Headers
+                Headers ({selectedFields.length})
               </Typography>
               <Button type="button" onClick={addHeader}>
                 <AddIcon /> Add header
@@ -219,6 +262,97 @@ function RestfulLayout(): JSX.Element {
               </Table>
             </TableContainer>
           </section>
+          <section
+            className={`${styles.Section} ${styles.Flex} ${styles.FlexColumn}`}
+          >
+            <Accordion disableGutters>
+              <AccordionSummary
+                expandIcon={<ExpandMoreIcon />}
+                aria-controls="panel1-content"
+                id="panel1-header"
+              >
+                <header className={styles.SectionHeader}>
+                  <Typography variant={'h4'} sx={{ padding: '10px 0' }}>
+                    Variables ({variablesKeys.length})
+                  </Typography>
+                </header>
+              </AccordionSummary>
+              <AccordionDetails>
+                <Button type="button" onClick={addVariable}>
+                  <AddIcon /> Add variable
+                </Button>
+                <TableContainer sx={{ maxHeight: 175 }}>
+                  <Table
+                    sx={{
+                      '.MuiTableCell-root:not(:first-child)': {
+                        borderLeft: '1px solid #E6E0E9',
+                      },
+                    }}
+                  >
+                    <TableHead
+                      sx={{
+                        borderBottom: '1px solid #E6E0E9',
+                        '& .MuiTableCell-root': { padding: '5px' },
+                      }}
+                    >
+                      <TableRow>
+                        <TableCell align="left">Key</TableCell>
+                        <TableCell align="left">Value</TableCell>
+                      </TableRow>
+                    </TableHead>
+                    <TableBody
+                      sx={{
+                        '& .MuiTableCell-root': { padding: '2px' },
+                        '& .MuiInputBase-input': {
+                          padding: '5px',
+                        },
+                      }}
+                    >
+                      {variablesKeys.map((key, index) => (
+                        <TableRow
+                          key={key.id}
+                          sx={{
+                            '&:last-child td, &:last-child th': { border: 0 },
+                          }}
+                        >
+                          <TableCell align="left">
+                            <Controller
+                              control={control}
+                              name={`variables.keys.${index}.key`}
+                              render={({ field: { onChange, value } }) => (
+                                <TextField
+                                  type="text"
+                                  name={`variables.keys.${index}.key`}
+                                  onChange={onChange}
+                                  value={value}
+                                  fullWidth
+                                />
+                              )}
+                            />
+                          </TableCell>
+                          <TableCell align="left">
+                            <Controller
+                              control={control}
+                              name={`variables.values.${index}.value`}
+                              render={({ field: { onChange, value } }) => (
+                                <TextField
+                                  type="text"
+                                  name={`variables.values[${index}].value`}
+                                  onChange={onChange}
+                                  value={value}
+                                  fullWidth
+                                />
+                              )}
+                            />
+                          </TableCell>
+                        </TableRow>
+                      ))}
+                    </TableBody>
+                  </Table>
+                </TableContainer>
+              </AccordionDetails>
+            </Accordion>
+          </section>
           <Divider />
           <Grid container columnSpacing={1} sx={{ width: '100%' }}>
             <Grid
@@ -227,19 +361,15 @@ function RestfulLayout(): JSX.Element {
             >
               <header className={`${styles.SectionHeader} ${styles.Flex}`}>
                 <Typography variant={'h4'}>Body</Typography>
+                <Button type="button" onClick={prettify}>
+                  Prettify
+                </Button>
               </header>
               <Controller
                 name={'body'}
                 control={control}
                 render={({ field: { onChange, value } }) => (
-                  <TextField
-                    name={'body'}
-                    onChange={onChange}
-                    value={value}
-                    rows={10}
-                    fullWidth
-                    multiline
-                  />
+                  <CodeMirrorEditor value={value} onChange={onChange} />
                 )}
               />
             </Grid>
@@ -249,32 +379,9 @@ function RestfulLayout(): JSX.Element {
             >
               <header className={`${styles.SectionHeader} ${styles.Flex}`}>
                 <Typography variant={'h4'}>Response</Typography>
+                <ResponseStatus status={responseStatus} />
               </header>
-              <TextField
-                name={'body'}
-                rows={10}
-                fullWidth
-                multiline
-                disabled
-                slotProps={{
-                  input: {
-                    endAdornment: (
-                      <InputAdornment
-                        sx={{
-                          alignSelf: 'flex-end',
-                          color:
-                            Math.ceil(status / 100) === 2
-                              ? '#4caf50'
-                              : '#F2B8B5',
-                        }}
-                        position="end"
-                      >
-                        {status}
-                      </InputAdornment>
-                    ),
-                  },
-                }}
-              />
+              <CodeMirrorEditor value={response} readonly={true} />
             </Grid>
           </Grid>
         </main>
