@@ -4,6 +4,8 @@ import RESTful, {
   RESTfulVariables,
 } from '@components/restfulLayout/types.ts';
 import { decodeBase64, encodeBase64 } from '@/utils/base64/base64.ts';
+import { ReadonlyURLSearchParams } from 'next/navigation';
+import { RESTful_METHODS } from '@/utils/constants/RESTfulMethods.ts';
 
 export function reduceHeaders(headers: RESTfulHeaders) {
   const headersArray: HeaderItem[] = [];
@@ -103,8 +105,21 @@ export function generateURL(data: RESTful) {
   return `/${url}`;
 }
 
-export function parseURL(url: string, searchParams: string): RESTful {
-  const headers = decodeSearchParams(searchParams);
+export function parseURL(
+  url: string,
+  searchParams: ReadonlyURLSearchParams
+): RESTful {
+  if (!url) {
+    return <RESTful>{
+      method: RESTful_METHODS.GET,
+      baseURL: '',
+      body: '',
+      headers: {},
+    };
+  }
+  const headers = searchParams
+    ? decodeSearchParams(searchParams.toString())
+    : {};
   const [method, baseURL64, body64] = url.slice(1).split('/');
   const baseURL =
     baseURL64 && !/(?=[{}])/.test(decodeBase64(baseURL64))

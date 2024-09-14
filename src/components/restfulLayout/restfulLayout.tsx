@@ -43,7 +43,7 @@ function RestfulLayout(): JSX.Element {
   const [localStorage, setLocalStorage] = useLocalStorage('history');
 
   const { control, handleSubmit, getValues, setValue } = useForm<RESTful>({
-    defaultValues: { ...parseURL(url, searchParams.toString()) },
+    defaultValues: { ...parseURL(url, searchParams) },
     mode: 'onSubmit',
   });
 
