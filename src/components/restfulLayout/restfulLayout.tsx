@@ -27,7 +27,7 @@ import { RESTful_METHODS } from '@/utils/constants/RESTfulMethods.ts';
 import { Controller, useFieldArray, useForm } from 'react-hook-form';
 import RESTful from '@components/restfulLayout/types.ts';
 import { usePathname, useSearchParams } from 'next/navigation';
-import { generateURL, parseURL } from '@/utils/restful/restful.ts';
+import { generateURL, parseURL, prettify } from '@/utils/restful/restful.ts';
 import { useState } from 'react';
 import ResponseStatus from '@components/responseStatus/responseStatus.tsx';
 import request from '@/utils/request/request.ts';
@@ -103,16 +103,11 @@ function RestfulLayout(): JSX.Element {
     appendVariablesValues({ value: '' });
   }
 
-  function prettify() {
+  function onPrettify() {
     const body = getValues('body');
-    try {
-      const json = JSON.parse(body);
-      const string = JSON.stringify(json, null, 2);
-      setValue('body', string);
-      onBlur();
-    } catch {
-      setValue('body', body);
-    }
+    const formattedBody = prettify(body);
+    setValue('body', formattedBody);
+    onBlur();
   }
 
   return (
@@ -365,7 +360,7 @@ function RestfulLayout(): JSX.Element {
             >
               <header className={`${styles.SectionHeader} ${styles.Flex}`}>
                 <Typography variant={'h4'}>Body</Typography>
-                <Button type="button" onClick={prettify}>
+                <Button type="button" onClick={onPrettify}>
                   Prettify
                 </Button>
               </header>
