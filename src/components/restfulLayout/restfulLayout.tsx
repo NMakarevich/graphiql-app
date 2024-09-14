@@ -32,12 +32,15 @@ import { useState } from 'react';
 import ResponseStatus from '@components/responseStatus/responseStatus.tsx';
 import request from '@/utils/request/request.ts';
 import CodeMirrorEditor from '@components/codeMirrorEditor/codeMirrorEditor.tsx';
+import { useLocalStorage } from '@hooks/useLocalStorage.ts';
+import { saveToHistory } from '@/utils/history/history.ts';
 
 function RestfulLayout(): JSX.Element {
   const url = usePathname();
   const searchParams = useSearchParams();
   const [responseStatus, setResponseStatus] = useState(0);
   const [response, setResponse] = useState('');
+  const [localStorage, setLocalStorage] = useLocalStorage('history');
 
   const { control, handleSubmit, getValues, setValue } = useForm<RESTful>({
     defaultValues: { ...parseURL(url, searchParams.toString()) },
@@ -72,9 +75,10 @@ function RestfulLayout(): JSX.Element {
     try {
       const response = await request(data);
       const status = response.status;
-      setResponseStatus(status);
       const json = await response.json();
+      setResponseStatus(status);
       setResponse(JSON.stringify(json, null, 2));
+      setLocalStorage(saveToHistory(data, localStorage));
     } catch (error) {
       if (error instanceof Error) {
         setResponse(JSON.stringify({ error: error.message }, null, 2));

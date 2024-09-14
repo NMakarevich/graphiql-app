@@ -13,10 +13,9 @@ function HistoryList() {
   const [localStorage] = useLocalStorage('history', '{}');
   const [historyList, setHistoryList] = useState<HistoryItem[]>([]);
   const [isLoaded, setIsLoaded] = useState(false);
-  const user = 'user1';
 
   useEffect(() => {
-    const historyList = getHistoryList(user, JSON.parse(localStorage));
+    const historyList = getHistoryList(JSON.parse(localStorage));
     setHistoryList(historyList);
     setIsLoaded(true);
   }, [localStorage]);
