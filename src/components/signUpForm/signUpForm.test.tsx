@@ -2,6 +2,12 @@ import { describe, expect, it } from 'vitest';
 import { fireEvent, render, screen } from '@testing-library/react';
 import SignUpForm from '@components/signUpForm/signUpForm.tsx';
 
+vi.mock('next/navigation', async () => ({
+  useRouter: () => ({
+    push: vi.fn(),
+  }),
+}));
+
 describe('SignUpForm', () => {
   it('Sign Up button should be disabled', () => {
     render(<SignUpForm />);
