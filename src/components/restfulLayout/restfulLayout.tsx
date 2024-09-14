@@ -71,7 +71,7 @@ function RestfulLayout(): JSX.Element {
   });
 
   async function onSubmit(data: RESTful) {
-    setResponse('');
+    setResponseStatus(0);
     try {
       const response = await request(data);
       const status = response.status;
@@ -81,6 +81,7 @@ function RestfulLayout(): JSX.Element {
       setLocalStorage(saveToHistory(data, localStorage));
     } catch (error) {
       if (error instanceof Error) {
+        setResponseStatus(500);
         setResponse(JSON.stringify({ error: error.message }, null, 2));
       }
     }
