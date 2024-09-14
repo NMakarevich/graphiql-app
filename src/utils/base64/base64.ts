@@ -1,7 +1,15 @@
 export const encodeBase64 = (value: string) => {
-  return btoa(value);
+  try {
+    return btoa(value);
+  } catch {
+    return '';
+  }
 };
 
 export const decodeBase64 = (value: string) => {
-  return atob(value);
+  try {
+    return atob(value);
+  } catch {
+    return '';
+  }
 };
