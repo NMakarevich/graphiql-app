@@ -1,6 +1,6 @@
 import CodeMirror from '@uiw/react-codemirror';
 import { atomone } from '@uiw/codemirror-theme-atomone';
-import { json } from '@codemirror/lang-json';
+import { langs } from '@uiw/codemirror-extensions-langs';
 import './codeMirrorEditor.scss';
 
 function CodeMirrorEditor({
@@ -17,7 +17,7 @@ function CodeMirrorEditor({
       value={value}
       onChange={onChange}
       theme={atomone}
-      extensions={[json()]}
+      extensions={[langs.json()]}
       height="100%"
       readOnly={readonly}
     />
