@@ -17,7 +17,7 @@ import ISignUpForm from '@components/signUpForm/types.ts';
 import TextFieldController from '@components/inputController/textFieldController.tsx';
 import { ITextField } from '@components/inputController/types.ts';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { signUpWithEmailAndPassword } from '@/utils/firebase/firebase';
 import { setAuthCookie } from '@/utils/cookies/setAuthCookie';
 import { ECookies } from '@/utils/cookies/types';
@@ -28,6 +28,8 @@ import { getAuth, onAuthStateChanged } from 'firebase/auth';
 import { FirebaseError } from 'firebase/app';
 import { Modal } from '@/components/Modal/Modal';
 import { useTranslation } from 'react-i18next';
+import '@/utils/localization/i18n';
+import Loader from '@/components/loader/loader';
 
 export default function SignUpForm(): JSX.Element {
   const {
@@ -43,8 +45,16 @@ export default function SignUpForm(): JSX.Element {
   const [visiblePassword, setVisiblePassword] = useState(false);
   const [visibleCPassword, setVisibleCPassword] = useState(false);
   const [errorSignUp, setErrorSignUp] = useState<string | null>(null);
+  const [loading, setLoading] = useState<boolean>(true);
   const router = useRouter();
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
+
+  useEffect(() => {
+    const savedLocale = localStorage.getItem('LOCALE') || 'en';
+    i18n.changeLanguage(savedLocale).then(() => {
+      setLoading(false);
+    });
+  }, [i18n]);
 
   const onSubmit = async (data: ISignUpForm): Promise<void> => {
     const { name, email, password } = data;
@@ -132,6 +142,10 @@ export default function SignUpForm(): JSX.Element {
       },
     },
   ];
+
+  if (loading) {
+    return <Loader />;
+  }
 
   return (
     <>

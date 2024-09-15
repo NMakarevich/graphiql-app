@@ -1,12 +1,8 @@
+import { IMainTranslation } from '@/locales/main/types';
 import 'server-only';
-
 interface ILocales {
-  en: () => Promise<{
-    title: string;
-  }>;
-  ru: () => Promise<{
-    title: string;
-  }>;
+  en: () => Promise<IMainTranslation>;
+  ru: () => Promise<IMainTranslation>;
 }
 
 const locales: ILocales = {

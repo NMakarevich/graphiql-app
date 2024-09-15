@@ -19,9 +19,12 @@ export default function Home(): JSX.Element {
   const [authorized, setAuthorized] = useState<boolean>(false);
   const [user, setUser] = useState<string>('');
 
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
 
   useEffect((): (() => void) => {
+    const savedLocale = localStorage.getItem('LOCALE') || 'en';
+    i18n.changeLanguage(savedLocale);
+
     const { exists } = getCookie(ECookies.AUTH_TOKEN);
     const cookiesUserName = getCookie(ECookies.USER_NAME);
     setAuthorized(exists);

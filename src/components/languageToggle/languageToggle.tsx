@@ -7,6 +7,7 @@ import { Typography } from '@mui/material';
 import { ILanguageToggleProps } from './types';
 import { useRouter } from 'next/navigation';
 import { useTranslation } from 'react-i18next';
+import '@/utils/localization/i18n';
 
 const LanguageToggle: FC<ILanguageToggleProps> = ({
   languages,
@@ -15,26 +16,30 @@ const LanguageToggle: FC<ILanguageToggleProps> = ({
   const en = 'en';
   const ru = 'ru';
   const [checked, setChecked] = useState<boolean>(false);
+  const [mounted, setMounted] = useState<boolean>(false);
   const router = useRouter();
   const { t, i18n } = useTranslation();
 
   useEffect(() => {
-    const savedLocale = localStorage.getItem('LOCALE') || en;
-    const currentLocale = window.location.pathname.split('/')[1] || en;
+    if (typeof window !== 'undefined') {
+      setMounted(true);
+      const savedLocale = localStorage.getItem('LOCALE') || en;
+      const currentLocale = window.location.pathname.split('/')[1] || en;
 
-    setChecked(savedLocale === ru);
+      setChecked(savedLocale === ru);
 
-    if (currentLocale !== savedLocale) {
-      const currentPath = window.location.pathname;
-      const pathSegments = currentPath
-        .split('/')
-        .filter((segment: string): string => segment);
+      if (currentLocale !== savedLocale) {
+        const currentPath = window.location.pathname;
+        const pathSegments = currentPath
+          .split('/')
+          .filter((segment: string): string => segment);
 
-      const newPath = `/${savedLocale}${pathSegments.length > 1 ? `/${pathSegments.slice(1).join('/')}` : ''}`;
+        const newPath = `/${savedLocale}${pathSegments.length > 1 ? `/${pathSegments.slice(1).join('/')}` : ''}`;
 
-      router.push(newPath);
+        router.push(newPath);
+        i18n.changeLanguage(savedLocale);
+      }
     }
-    i18n.changeLanguage(savedLocale);
   }, [router]);
 
   const toggleLanguage = (locale: string): void => {
@@ -51,6 +56,10 @@ const LanguageToggle: FC<ILanguageToggleProps> = ({
     setChecked(locale === ru);
     i18n.changeLanguage(locale);
   };
+
+  if (!mounted) {
+    return <></>;
+  }
 
   return (
     <div className={styles.Toggle}>

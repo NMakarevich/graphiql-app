@@ -12,6 +12,7 @@ import { localEventBus } from '@/utils/eventBus/EventBus';
 import { ECookies } from '@/utils/cookies/types';
 import { EUserEvent } from '@/utils/eventBus/types';
 import { useTranslation } from 'react-i18next';
+import '@/utils/localization/i18n';
 
 const AuthControl: FC = (): JSX.Element => {
   const [isAuth, setIsAuth] = useState<boolean>(false);

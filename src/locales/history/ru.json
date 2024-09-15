@@ -1,0 +1,6 @@
+{
+  "requestsHistory": "История запросов",
+  "historyEmptyMessage": "История пуста. Сделайте первый запрос: ",
+  "historyNavigateToRestfulClient": "RESTful клиент",
+  "historyNavigateToGraphQL": "GraphQL"
+}

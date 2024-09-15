@@ -9,7 +9,7 @@ import {
   Typography,
 } from '@mui/material';
 import styles from './form.module.scss';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { ROUTES } from '@/utils/constants/routes.ts';
 import { logInWithEmailAndPassword } from '@/utils/firebase/firebase';
 import { setAuthCookie } from '@/utils/cookies/setAuthCookie';
@@ -27,6 +27,8 @@ import { EUserEvent } from '@/utils/eventBus/types';
 import { FirebaseError } from 'firebase/app';
 import { Modal } from '@/components/Modal/Modal';
 import { useTranslation } from 'react-i18next';
+import '@/utils/localization/i18n';
+import Loader from '@/components/loader/loader';
 
 export default function SignInForm(): JSX.Element {
   const {
@@ -41,8 +43,16 @@ export default function SignInForm(): JSX.Element {
 
   const [visiblePassword, setVisiblePassword] = useState<boolean>(false);
   const [errorSignIn, setErrorSignIn] = useState<string | null>(null);
+  const [loading, setLoading] = useState<boolean>(true);
   const router = useRouter();
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
+
+  useEffect(() => {
+    const savedLocale = localStorage.getItem('LOCALE') || 'en';
+    i18n.changeLanguage(savedLocale).then(() => {
+      setLoading(false);
+    });
+  }, [i18n]);
 
   const onSubmit = async (data: ISignInForm): Promise<void> => {
     const email = data.email as string;
@@ -102,6 +112,10 @@ export default function SignInForm(): JSX.Element {
       },
     },
   ];
+
+  if (loading) {
+    return <Loader />;
+  }
 
   return (
     <>
