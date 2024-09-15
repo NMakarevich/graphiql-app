@@ -1,7 +1,8 @@
 import { describe, it, expect, beforeEach, vi } from 'vitest';
 import { NextRequest, NextResponse } from 'next/server';
-import middleware from '@/middleware';
+
 import { ROUTES } from '@/utils/constants/routes';
+import middlewareWithAuth from './middlewareWithAuth/middlewareWithAuth';
 
 describe('middleware: ', () => {
   beforeEach(() => {
@@ -16,7 +17,7 @@ describe('middleware: ', () => {
       },
     } as unknown as NextRequest;
 
-    const response = await middleware(request);
+    const response = await middlewareWithAuth(request);
 
     expect(response).toBeInstanceOf(NextResponse);
     expect(response.headers.get('Location')).toBe(
@@ -32,7 +33,7 @@ describe('middleware: ', () => {
       },
     } as unknown as NextRequest;
 
-    const response = await middleware(request);
+    const response = await middlewareWithAuth(request);
 
     expect(response).toBeInstanceOf(NextResponse);
     expect(response.headers.get('Location')).toBe(
@@ -48,7 +49,7 @@ describe('middleware: ', () => {
       },
     } as unknown as NextRequest;
 
-    const response = await middleware(request);
+    const response = await middlewareWithAuth(request);
 
     expect(response).toBeInstanceOf(NextResponse);
     expect(response.status).toBe(200);
@@ -64,7 +65,7 @@ describe('middleware: ', () => {
       },
     } as unknown as NextRequest;
 
-    const response = await middleware(request);
+    const response = await middlewareWithAuth(request);
 
     expect(response).toBeInstanceOf(NextResponse);
     expect(response.status).toBe(500);
