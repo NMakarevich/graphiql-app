@@ -1,5 +1,6 @@
 import { IMainTranslation } from '@/locales/main/types';
 import 'server-only';
+
 interface ILocales {
   en: () => Promise<IMainTranslation>;
   ru: () => Promise<IMainTranslation>;
