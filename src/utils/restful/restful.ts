@@ -47,7 +47,7 @@ export function generateBodyWithVariables(
   body: string,
   variables: RESTfulVariables
 ) {
-  if (!body || !variables || Object.keys(variables).length === 0) return body;
+  if (!body || !variables || !Object.keys(variables).length) return body;
   const reqVariables = generateRequestVariables(variables);
   return /"{{\w+}}"/g.test(body)
     ? body.replace(/"{{(\w+)}}"/g, (_, key) => {
