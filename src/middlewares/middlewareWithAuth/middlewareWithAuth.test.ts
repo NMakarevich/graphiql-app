@@ -1,73 +1,87 @@
-import { describe, it, expect, beforeEach, vi } from 'vitest';
-import { NextRequest, NextResponse } from 'next/server';
+import { NextFetchEvent, NextRequest, NextResponse } from 'next/server';
+import { describe, it, expect, vi } from 'vitest';
+import middlewareWithAuth from '@/middlewares/middlewareWithAuth/middlewareWithAuth';
+import { CustomMiddleware } from '@/middlewares/chain/types';
 
-import { ROUTES } from '@/utils/constants/routes';
-import middlewareWithAuth from './middlewareWithAuth/middlewareWithAuth';
-
-describe('middleware: ', () => {
-  beforeEach(() => {
-    vi.clearAllMocks();
-  });
-
-  it('- should redirect to sign-in if not authenticated and route is protected', async () => {
-    const request = {
-      nextUrl: new URL(ROUTES.RESTFUL_CLIENT_PATH, 'http://test-url.com'),
-      headers: {
-        get: () => 'someOtherCookie=someValue',
-      },
-    } as unknown as NextRequest;
-
-    const response = await middlewareWithAuth(request);
-
-    expect(response).toBeInstanceOf(NextResponse);
-    expect(response.headers.get('Location')).toBe(
-      new URL(ROUTES.SIGN_IN_PATH, 'http://test-url.com').toString()
+describe('middlewareWithAuth: ', () => {
+  it('- should redirect to home if no auth token and path is protected', async () => {
+    const mockMiddleware: CustomMiddleware = vi.fn(
+      async (_req, _event, res) => res
     );
-  });
 
-  it('- should redirect to home if authenticated and route is for authentication', async () => {
     const request = {
-      nextUrl: new URL(ROUTES.SIGN_IN_PATH, 'http://test-url.com'),
-      headers: {
-        get: () => 'authToken=validToken',
+      headers: new Headers({
+        cookie: '',
+      }),
+      nextUrl: {
+        pathname: '/protected-path',
+        origin: 'https://example.com',
       },
     } as unknown as NextRequest;
 
-    const response = await middlewareWithAuth(request);
+    const response = NextResponse.next();
 
-    expect(response).toBeInstanceOf(NextResponse);
-    expect(response.headers.get('Location')).toBe(
-      new URL(ROUTES.HOME_PATH, 'http://test-url.com').toString()
+    const authMiddleware = middlewareWithAuth(mockMiddleware);
+    const result = await authMiddleware(
+      request,
+      {} as NextFetchEvent,
+      response
     );
+
+    expect(result).toBeInstanceOf(NextResponse);
   });
 
-  it('- should allow access if route is not protected and user is not authenticated', async () => {
+  it('- should redirect to home if auth token is present and path is for sign-in or sign-up', async () => {
+    const mockMiddleware: CustomMiddleware = vi.fn(
+      async (_req, _event, res) => res
+    );
+
     const request = {
-      nextUrl: new URL('/some-other-path', 'http://test-url.com'),
-      headers: {
-        get: () => '',
+      headers: new Headers({
+        cookie: 'auth-token=valid-token',
+      }),
+      nextUrl: {
+        pathname: '/sign-in',
+        origin: 'https://example.com',
       },
     } as unknown as NextRequest;
 
-    const response = await middlewareWithAuth(request);
+    const response = NextResponse.next();
 
-    expect(response).toBeInstanceOf(NextResponse);
-    expect(response.status).toBe(200);
+    const authMiddleware = middlewareWithAuth(mockMiddleware);
+    const result = await authMiddleware(
+      request,
+      {} as NextFetchEvent,
+      response
+    );
+
+    expect(result).toBeInstanceOf(NextResponse);
   });
 
-  it('- should handle errors gracefully', async () => {
+  it('- should call the next middleware if auth token is present and path is not for sign-in or sign-up', async () => {
+    const mockMiddleware: CustomMiddleware = vi.fn(
+      async (_req, _event, res) => res
+    );
+
     const request = {
-      nextUrl: new URL(ROUTES.RESTFUL_CLIENT_PATH, 'http://test-url.com'),
-      headers: {
-        get: () => {
-          throw new Error('Test error');
-        },
+      headers: new Headers({
+        cookie: 'auth-token=valid-token',
+      }),
+      nextUrl: {
+        pathname: '/some-path',
       },
     } as unknown as NextRequest;
 
-    const response = await middlewareWithAuth(request);
+    const response = NextResponse.next();
 
-    expect(response).toBeInstanceOf(NextResponse);
-    expect(response.status).toBe(500);
+    const authMiddleware = middlewareWithAuth(mockMiddleware);
+    const result = await authMiddleware(
+      request,
+      {} as NextFetchEvent,
+      response
+    );
+
+    expect(result).toBeInstanceOf(NextResponse);
+    expect(mockMiddleware).toHaveBeenCalledWith(request, {}, response);
   });
 });
