@@ -1,3 +1,30 @@
 {
-  "title": "Добро пожаловать в приложение GraphiQL/RESTful"
+  "mainTitle": "Добро пожаловать в приложение GraphiQL/RESTful",
+  "mainAboutApp": "О приложении",
+  "mainContent": "GraphiQL/RESTful — это приложение, которое предоставляет функциональность как для GraphQL, так и для RESTful клиента.",
+  "mainAboutTeam": "О команде",
+  "mainTeamIntro": "Наша команда:",
+  "mainAboutCourse": "О курсе",
+  "mainCourseIntro": "Этот курс предназначен для студентов RS School, которые прошли этап RS School Stage #2, а также для новых студентов, которые имеют опыт в:",
+  "mainAPIInteraction": "Понимание работы с API (общее понимание REST и GraphQL)",
+  "mainRestfulPath": "RESTful Клиент",
+  "mainGraphQLPath": "GraphQL",
+  "mainHistoryPath": "История",
+  "mainAuthRequired": "Для использования приложения необходимо авторизоваться.",
+  "mainSignIn": "Войти",
+  "mainSignUp": "Регистрация",
+  "contributors": {
+    "TatyanaAntipova": {
+      "name": "Татьяна Антипова",
+      "role": "Менеджер проекта"
+    },
+    "MaximRavinskiy": {
+      "name": "Максим Равинский",
+      "role": "Верстальщик"
+    },
+    "NikolayMakarevich": {
+      "name": "Николай Макаревич",
+      "role": "Руководитель команды"
+    }
+  }
 }

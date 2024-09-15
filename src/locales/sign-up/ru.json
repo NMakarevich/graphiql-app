@@ -1,0 +1,11 @@
+{
+  "signUpTitle": "Регистрация",
+  "signUpNameLabel": "Имя",
+  "signUpEmailLabel": "Эл. почта",
+  "signUpPasswordLabel": "Пароль",
+  "signUpConfirmPasswordLabel": "Подтвердите пароль",
+  "signUpButton": "Зарегистрироваться",
+  "signUpAlreadyRegisteredText": "Уже зарегистрированы?",
+  "signUpHintLinkText": "Войти",
+  "signUpErrorSignUp": "Ошибка при регистрации:"
+}

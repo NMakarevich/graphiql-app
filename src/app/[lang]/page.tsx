@@ -11,11 +11,15 @@ import { getCookie } from '@/utils/cookies/getCookie';
 import { localEventBus } from '@/utils/eventBus/EventBus';
 import { ECookies } from '@/utils/cookies/types';
 import { EUserEvent } from '@/utils/eventBus/types';
+import { useTranslation } from 'react-i18next';
+import '@/utils/localization/i18n';
 
 export default function Home(): JSX.Element {
   const [loading, setLoading] = useState<boolean>(true);
   const [authorized, setAuthorized] = useState<boolean>(false);
   const [user, setUser] = useState<string>('');
+
+  const { t } = useTranslation();
 
   useEffect((): (() => void) => {
     const { exists } = getCookie(ECookies.AUTH_TOKEN);
@@ -63,7 +67,8 @@ export default function Home(): JSX.Element {
       className={styles.Paper}
     >
       <Typography variant={'h2'} sx={{ alignSelf: 'center' }}>
-        Welcome to GraphiQL/RESTful app{authorized && user ? `, ${user}` : ''}!
+        {t('mainTitle')}
+        {authorized && user ? `, ${user}` : ''}!
       </Typography>
       {authorized ? (
         <>
@@ -72,11 +77,8 @@ export default function Home(): JSX.Element {
             component="section"
             className={`${styles.Section} ${styles.About}`}
           >
-            <Typography variant={'h4'}>About App</Typography>
-            <Typography component={'p'}>
-              GraphiQL/RESTful is an application which provides functionality
-              both GraphQL and RESTful client.
-            </Typography>
+            <Typography variant={'h4'}>{t('mainAboutApp')}</Typography>
+            <Typography component={'p'}>{t('mainContent')}</Typography>
           </Typography>
           <Divider />
           <Typography
@@ -84,14 +86,14 @@ export default function Home(): JSX.Element {
             component="section"
             className={`${styles.Section} ${styles.Team}`}
           >
-            <Typography variant={'h4'}>About Team</Typography>
-            <Typography component={'p'}>Our team:</Typography>
+            <Typography variant={'h4'}>{t('mainAboutTeam')}</Typography>
+            <Typography component={'p'}>{t('mainTeamIntro')}</Typography>
             <ul>
               {contributors.map(({ name, role }) => (
                 <li key={name}>
                   <Typography component={'p'} className={styles.ListItem}>
                     <CheckIcon fontSize={'small'} />
-                    {name} - {role}
+                    {t(name)} - {t(role)}
                   </Typography>
                 </li>
               ))}
@@ -103,12 +105,8 @@ export default function Home(): JSX.Element {
             component="section"
             className={`${styles.Section} ${styles.About}`}
           >
-            <Typography variant={'h4'}>About Course</Typography>
-            <Typography component={'p'}>
-              This course is aimed at the students of the RS School who have
-              passed RS School Stage #2 and at the new students who have
-              experience with:
-            </Typography>
+            <Typography variant={'h4'}>{t('mainAboutCourse')}</Typography>
+            <Typography component={'p'}>{t('mainCourseIntro')}</Typography>
             <ul>
               <li>
                 <Typography component={'span'} className={styles.ListItem}>
@@ -138,27 +136,29 @@ export default function Home(): JSX.Element {
               </li>
               <li>
                 <Typography component={'span'} className={styles.ListItem}>
-                  <CheckIcon fontSize={'small'} /> Understanding of how to
-                  interact with APIs (general understanding of REST and GraphQL)
+                  <CheckIcon fontSize={'small'} />
+                  {t('mainAPIInteraction')}
                 </Typography>
               </li>
             </ul>
           </Typography>
           <Divider />
           <div className={styles.Nav}>
-            <Link href={ROUTES.RESTFUL_CLIENT_PATH}>RESTful Client</Link>
-            <Link href={ROUTES.GRAPHIQL_PATH}>GraphQL</Link>
-            <Link href={ROUTES.HISTORY_PATH}>History</Link>
+            <Link href={ROUTES.RESTFUL_CLIENT_PATH}>
+              {t('mainRestfulPath')}
+            </Link>
+            <Link href={ROUTES.GRAPHIQL_PATH}>{t('mainGraphQLPath')}</Link>
+            <Link href={ROUTES.HISTORY_PATH}>{t('mainHistoryPath')}</Link>
           </div>
         </>
       ) : (
         <>
           <Typography variant={'body1'} className={styles.Paragraph}>
-            To use app you need to authorize.{' '}
+            {t('mainAuthRequired')}
           </Typography>
           <div className={styles.Nav}>
-            <Link href={ROUTES.SIGN_IN_PATH}>Go to Sign In</Link>
-            <Link href={ROUTES.SIGN_UP_PATH}>Go to Sign Up</Link>
+            <Link href={ROUTES.SIGN_IN_PATH}>{t('mainSignIn')}</Link>
+            <Link href={ROUTES.SIGN_UP_PATH}>{t('mainSignUp')}</Link>
           </div>
         </>
       )}

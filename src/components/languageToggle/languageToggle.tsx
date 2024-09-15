@@ -6,6 +6,7 @@ import Switch from '@mui/material/Switch';
 import { Typography } from '@mui/material';
 import { ILanguageToggleProps } from './types';
 import { useRouter } from 'next/navigation';
+import { useTranslation } from 'react-i18next';
 
 const LanguageToggle: FC<ILanguageToggleProps> = ({
   languages,
@@ -15,6 +16,7 @@ const LanguageToggle: FC<ILanguageToggleProps> = ({
   const ru = 'ru';
   const [checked, setChecked] = useState<boolean>(false);
   const router = useRouter();
+  const { t, i18n } = useTranslation();
 
   useEffect(() => {
     const savedLocale = localStorage.getItem('LOCALE') || en;
@@ -32,6 +34,7 @@ const LanguageToggle: FC<ILanguageToggleProps> = ({
 
       router.push(newPath);
     }
+    i18n.changeLanguage(savedLocale);
   }, [router]);
 
   const toggleLanguage = (locale: string): void => {
@@ -46,6 +49,7 @@ const LanguageToggle: FC<ILanguageToggleProps> = ({
 
     localStorage.setItem('LOCALE', locale);
     setChecked(locale === ru);
+    i18n.changeLanguage(locale);
   };
 
   return (
@@ -54,7 +58,7 @@ const LanguageToggle: FC<ILanguageToggleProps> = ({
         className={styles.Language}
         onClick={(): void => toggleLanguage(en)}
       >
-        {firstLanguage}
+        {t(firstLanguage)}
       </Typography>
       <Switch
         onChange={(): void => toggleLanguage(checked ? en : ru)}
@@ -64,7 +68,7 @@ const LanguageToggle: FC<ILanguageToggleProps> = ({
         className={styles.Language}
         onClick={(): void => toggleLanguage(ru)}
       >
-        {secondLanguage}
+        {t(secondLanguage)}
       </Typography>
     </div>
   );

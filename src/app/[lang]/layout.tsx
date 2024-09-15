@@ -7,7 +7,7 @@ import { CssBaseline, ThemeProvider } from '@mui/material';
 import { theme } from '@/theme.ts';
 import Layout from '@/components/layout/layout';
 import ErrorBoundary from '@/components/ErrorBoundary/ErrorBoundary';
-import { Locale } from '@/utils/constants/i18n-config';
+import { Locale } from '@/utils/localization/i18n-config';
 
 const montserrat = Montserrat({
   subsets: ['cyrillic', 'latin'],

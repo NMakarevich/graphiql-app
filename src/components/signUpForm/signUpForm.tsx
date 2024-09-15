@@ -27,6 +27,7 @@ import { EUserEvent } from '@/utils/eventBus/types';
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
 import { FirebaseError } from 'firebase/app';
 import { Modal } from '@/components/Modal/Modal';
+import { useTranslation } from 'react-i18next';
 
 export default function SignUpForm(): JSX.Element {
   const {
@@ -43,6 +44,7 @@ export default function SignUpForm(): JSX.Element {
   const [visibleCPassword, setVisibleCPassword] = useState(false);
   const [errorSignUp, setErrorSignUp] = useState<string | null>(null);
   const router = useRouter();
+  const { t } = useTranslation();
 
   const onSubmit = async (data: ISignUpForm): Promise<void> => {
     const { name, email, password } = data;
@@ -80,17 +82,17 @@ export default function SignUpForm(): JSX.Element {
     {
       inputName: 'name',
       type: 'text',
-      label: 'Name',
+      label: t('signUpNameLabel'),
     },
     {
       inputName: 'email',
       type: 'email',
-      label: 'Email',
+      label: t('signUpEmailLabel'),
     },
     {
       inputName: 'password',
       type: 'password',
-      label: 'Password',
+      label: t('signUpPasswordLabel'),
       slotProps: {
         input: {
           type: visiblePassword ? 'text' : 'password',
@@ -111,7 +113,7 @@ export default function SignUpForm(): JSX.Element {
     {
       inputName: 'confirmPassword',
       type: 'password',
-      label: 'Confirm Password',
+      label: t('signUpConfirmPasswordLabel'),
       slotProps: {
         input: {
           type: visibleCPassword ? 'text' : 'password',
@@ -135,7 +137,7 @@ export default function SignUpForm(): JSX.Element {
     <>
       <Paper className={styles.Paper} sx={{ boxShadow: '0 0 3px 1px #D0BCFF' }}>
         <Typography component="h2" sx={{ fontWeight: 'bold' }}>
-          Sign Up
+          {t('signUpTitle')}
         </Typography>
         <form className={styles.Form} onSubmit={handleSubmit(onSubmit)}>
           {textFields.map(({ inputName, label, type, slotProps }, index) => (
@@ -149,11 +151,12 @@ export default function SignUpForm(): JSX.Element {
             />
           ))}
           <Button type="submit" variant={'contained'} disabled={!isValid}>
-            Sign Up
+            {t('signUpButton')}
           </Button>
         </form>
         <Typography component="p">
-          Already registered? <Link href={ROUTES.SIGN_IN_PATH}>Sign In</Link>
+          {t('signUpAlreadyRegisteredText')}
+          <Link href={ROUTES.SIGN_IN_PATH}>{t('signUpHintLinkText')}</Link>
         </Typography>
       </Paper>
       {errorSignUp && (
