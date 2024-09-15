@@ -2,18 +2,18 @@ import { IContributor } from '@/components/footer/types';
 
 export const contributors: IContributor[] = [
   {
-    name: 'Tatyana Antipova',
+    name: 'contributors.TatyanaAntipova.name',
     url: 'https://github.com/L1senochek',
-    role: 'Project Manager',
+    role: 'contributors.TatyanaAntipova.role',
   },
   {
-    name: 'Maxim Ravinskiy',
+    name: 'contributors.MaximRavinskiy.name',
     url: 'https://github.com/GreyAdmiral',
-    role: 'Layout Master',
+    role: 'contributors.MaximRavinskiy.role',
   },
   {
-    name: 'Nikolay Makarevich',
+    name: 'contributors.NikolayMakarevich.name',
     url: 'https://github.com/NMakarevich',
-    role: 'Team Lead',
+    role: 'contributors.NikolayMakarevich.role',
   },
 ] as const;

@@ -26,10 +26,11 @@ describe('SignInForm: ', () => {
     });
   });
 
-  it('- should close the modal when close button is clicked', () => {
+  it('- should close the modal when close button is clicked', async () => {
     render(<SignInForm />);
 
-    fireEvent.change(screen.getByLabelText(/Email/i), {
+    const email = await screen.findByLabelText(/Email/i);
+    fireEvent.change(email, {
       target: { value: 'test@example.com' },
     });
     expect(

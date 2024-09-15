@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { fireEvent, render, screen } from '@testing-library/react';
+import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import SignUpForm from '@components/signUpForm/signUpForm.tsx';
 
 vi.mock('next/navigation', async () => ({
@@ -9,23 +9,25 @@ vi.mock('next/navigation', async () => ({
 }));
 
 describe('SignUpForm', () => {
-  it('Sign Up button should be disabled', () => {
+  it('Sign Up button should be disabled', async () => {
     render(<SignUpForm />);
-    const button: HTMLButtonElement = screen.getByRole('button', {
+    const button: HTMLButtonElement = await screen.findByRole('button', {
       name: /Sign Up/i,
     });
     expect(button).toBeDisabled();
   });
   it('Should display error when invalid email address is provided', async () => {
     render(<SignUpForm />);
-    const emailInput = screen.getByLabelText(/email/i);
-    fireEvent.input(emailInput, { target: { value: 'test' } });
-    const errorMessage = await screen.findByText(/Please enter valid email/i);
-    expect(errorMessage).toBeInTheDocument();
+    const emailInput = await screen.findByLabelText(/email/i);
+    await waitFor(async () => {
+      fireEvent.input(emailInput, { target: { value: 'test' } });
+      const errorMessage = await screen.findByText(/Please enter valid email/i);
+      expect(errorMessage).toBeInTheDocument();
+    });
   });
   it('Sign Up button should be enabled after providing all fields with valid data.', async () => {
     render(<SignUpForm />);
-    const nameInput = screen.getByLabelText(/name/i);
+    const nameInput = await screen.findByLabelText(/name/i);
     const emailInput = screen.getByLabelText(/email/i);
     const passwordInput = screen.getByLabelText('Password');
     const confirmPasswordInput = screen.getByLabelText('Confirm Password');

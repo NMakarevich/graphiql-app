@@ -9,7 +9,7 @@ import {
   Typography,
 } from '@mui/material';
 import styles from './form.module.scss';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { ROUTES } from '@/utils/constants/routes.ts';
 import { logInWithEmailAndPassword } from '@/utils/firebase/firebase';
 import { setAuthCookie } from '@/utils/cookies/setAuthCookie';
@@ -26,6 +26,9 @@ import { ECookies } from '@/utils/cookies/types';
 import { EUserEvent } from '@/utils/eventBus/types';
 import { FirebaseError } from 'firebase/app';
 import { Modal } from '@/components/Modal/Modal';
+import { useTranslation } from 'react-i18next';
+import '@/utils/localization/i18n';
+import Loader from '@/components/loader/loader';
 
 export default function SignInForm(): JSX.Element {
   const {
@@ -40,7 +43,16 @@ export default function SignInForm(): JSX.Element {
 
   const [visiblePassword, setVisiblePassword] = useState<boolean>(false);
   const [errorSignIn, setErrorSignIn] = useState<string | null>(null);
+  const [loading, setLoading] = useState<boolean>(true);
   const router = useRouter();
+  const { t, i18n } = useTranslation();
+
+  useEffect(() => {
+    const savedLocale = localStorage.getItem('LOCALE') || 'en';
+    i18n.changeLanguage(savedLocale).then(() => {
+      setLoading(false);
+    });
+  }, [i18n]);
 
   const onSubmit = async (data: ISignInForm): Promise<void> => {
     const email = data.email as string;
@@ -76,12 +88,12 @@ export default function SignInForm(): JSX.Element {
     {
       inputName: 'email',
       type: 'email',
-      label: 'Email',
+      label: t('signInEmailLabel'),
     },
     {
       inputName: 'password',
       type: 'password',
-      label: 'Password',
+      label: t('signInPasswordLabel'),
       slotProps: {
         input: {
           type: visiblePassword ? 'text' : 'password',
@@ -101,10 +113,14 @@ export default function SignInForm(): JSX.Element {
     },
   ];
 
+  if (loading) {
+    return <Loader />;
+  }
+
   return (
     <>
       <Paper className={styles.Paper} sx={{ boxShadow: '0 0 3px 1px #D0BCFF' }}>
-        <Typography component="h2">Sign In</Typography>
+        <Typography component="h2">{t('signInTitle')}</Typography>
         <form className={styles.Form} onSubmit={handleSubmit(onSubmit)}>
           {textFields.map(({ inputName, label, type, slotProps }, index) => (
             <TextFieldController<ISignInForm>
@@ -117,11 +133,12 @@ export default function SignInForm(): JSX.Element {
             />
           ))}
           <Button type="submit" variant={'contained'} disabled={!isValid}>
-            Sign In
+            {t('signInButton')}
           </Button>
         </form>
         <Typography component="p">
-          Not registered yet? <Link href={ROUTES.SIGN_UP_PATH}>Sign Up</Link>
+          {t('signInNotRegisteredText')}
+          <Link href={ROUTES.SIGN_UP_PATH}>{t('signInHintLinkText')}</Link>
         </Typography>
       </Paper>
       {errorSignIn && (

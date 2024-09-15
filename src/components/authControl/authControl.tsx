@@ -11,11 +11,15 @@ import styles from './authControl.module.scss';
 import { localEventBus } from '@/utils/eventBus/EventBus';
 import { ECookies } from '@/utils/cookies/types';
 import { EUserEvent } from '@/utils/eventBus/types';
+import { useTranslation } from 'react-i18next';
+import '@/utils/localization/i18n';
 
 const AuthControl: FC = (): JSX.Element => {
   const [isAuth, setIsAuth] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(true);
   const router = useRouter();
+
+  const { t } = useTranslation();
 
   useEffect((): (() => void) => {
     const { exists } = getCookie(ECookies.AUTH_TOKEN);
@@ -71,15 +75,15 @@ const AuthControl: FC = (): JSX.Element => {
 
   return isAuth ? (
     <Button variant="outlined" onClick={handleSignOut}>
-      Sign out
+      {t('headerButtonSignOut')}
     </Button>
   ) : (
     <div className={styles.Auth}>
       <Button variant="contained" onClick={handleSignIn}>
-        Sign in
+        {t('headerButtonSignIn')}
       </Button>
       <Button variant="contained" onClick={handleSignUp}>
-        Sign Up
+        {t('headerButtonSignUp')}
       </Button>
     </div>
   );

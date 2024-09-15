@@ -140,8 +140,8 @@ const Header: FC = (): JSX.Element => {
             <Box sx={{ display: { xs: 'none', sm: 'block' } }}>
               <LanguageToggle
                 languages={{
-                  firstLanguage: 'English',
-                  secondLanguage: 'Russian',
+                  firstLanguage: 'headerToggleEnglish',
+                  secondLanguage: 'headerToggleRussian',
                 }}
               />
             </Box>
