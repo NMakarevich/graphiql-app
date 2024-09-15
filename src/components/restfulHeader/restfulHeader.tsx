@@ -1,9 +1,14 @@
+'use client';
+
 import { Control, Controller } from 'react-hook-form';
 import { Button, MenuItem, Select, TextField } from '@mui/material';
 import { RESTful_METHODS } from '@/utils/constants/RESTfulMethods.ts';
 import RESTful from '@components/restfulLayout/types.ts';
+import { useTranslation } from 'react-i18next';
 
 function RestfulHeader({ control }: { control: Control<RESTful> }) {
+  const { t } = useTranslation();
+
   return (
     <>
       <Controller
@@ -50,7 +55,7 @@ function RestfulHeader({ control }: { control: Control<RESTful> }) {
         )}
       />
       <Button type="submit" variant="contained">
-        Send
+        {t('restfulSend')}
       </Button>
     </>
   );

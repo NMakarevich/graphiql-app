@@ -1,0 +1,13 @@
+{
+  "restfulTitle": "RESTful Client",
+  "restfulSend": "Send",
+  "restfulHeadersSectionTitle": "Headers ",
+  "restfulAddHeaderButton": " Add header",
+  "restfulKey": "Key",
+  "restfulValue": "Value",
+  "restfulVariablesSectionTitle": "Variables ",
+  "restfulAddVariableButton": " Add variable",
+  "restfulBodySectionTitle": "Body",
+  "restfulPrettifyButton": "Prettify",
+  "restfulResponseSectionTitle": "Response"
+}

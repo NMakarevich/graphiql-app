@@ -1,3 +1,5 @@
+'use client';
+
 import { Control, Controller, useFieldArray } from 'react-hook-form';
 import RESTful from '@components/restfulLayout/types.ts';
 import {
@@ -17,8 +19,11 @@ import {
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import styles from '@components/restfulLayout/restfulLayout.module.scss';
 import AddIcon from '@mui/icons-material/Add';
+import { useTranslation } from 'react-i18next';
 
 function RestfulVariables({ control }: { control: Control<RESTful> }) {
+  const { t } = useTranslation();
+
   const { fields: variablesKeys, append: appendVariablesKeys } = useFieldArray({
     control,
     name: 'variables.keys',
@@ -44,13 +49,14 @@ function RestfulVariables({ control }: { control: Control<RESTful> }) {
         >
           <header className={styles.SectionHeader}>
             <Typography variant={'h4'} sx={{ padding: '10px 0' }}>
-              Variables ({variablesKeys.length})
+              {t('restfulVariablesSectionTitle')}({variablesKeys.length})
             </Typography>
           </header>
         </AccordionSummary>
         <AccordionDetails>
           <Button type="button" onClick={addVariable}>
-            <AddIcon /> Add variable
+            <AddIcon />
+            {t('restfulAddVariableButton')}
           </Button>
           <TableContainer sx={{ maxHeight: 175 }}>
             <Table
@@ -67,8 +73,8 @@ function RestfulVariables({ control }: { control: Control<RESTful> }) {
                 }}
               >
                 <TableRow>
-                  <TableCell align="left">Key</TableCell>
-                  <TableCell align="left">Value</TableCell>
+                  <TableCell align="left">{t('restfulKey')}</TableCell>
+                  <TableCell align="left">{t('restfulValue')}</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody

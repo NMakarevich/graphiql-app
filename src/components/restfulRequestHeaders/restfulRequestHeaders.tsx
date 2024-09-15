@@ -1,3 +1,5 @@
+'use client';
+
 import { Control, Controller, useFieldArray } from 'react-hook-form';
 import RESTful from '@components/restfulLayout/types.ts';
 import styles from '@components/restfulLayout/restfulLayout.module.scss';
@@ -14,8 +16,11 @@ import {
   Typography,
 } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
+import { useTranslation } from 'react-i18next';
 
 function RestfulRequestHeaders({ control }: { control: Control<RESTful> }) {
+  const { t } = useTranslation();
+
   const { fields: selectedFields, append: appendSelected } = useFieldArray({
     control,
     name: 'headers.selected',
@@ -38,10 +43,11 @@ function RestfulRequestHeaders({ control }: { control: Control<RESTful> }) {
     <>
       <header className={styles.SectionHeader}>
         <Typography variant={'h4'} sx={{ padding: '10px 0' }}>
-          Headers ({selectedFields.length})
+          {t('restfulHeadersSectionTitle')}({selectedFields.length})
         </Typography>
         <Button type="button" onClick={addHeader}>
-          <AddIcon /> Add header
+          <AddIcon />
+          {t('restfulAddHeaderButton')}
         </Button>
       </header>
       <TableContainer sx={{ maxHeight: 175 }}>
@@ -61,8 +67,8 @@ function RestfulRequestHeaders({ control }: { control: Control<RESTful> }) {
           >
             <TableRow>
               <TableCell></TableCell>
-              <TableCell align="left">Key</TableCell>
-              <TableCell align="left">Value</TableCell>
+              <TableCell align="left">{t('restfulKey')}</TableCell>
+              <TableCell align="left">{t('restfulValue')}</TableCell>
             </TableRow>
           </TableHead>
           <TableBody

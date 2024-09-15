@@ -10,6 +10,8 @@ import signUpPageEn from '@/locales/sign-up/en.json';
 import signUpPageRu from '@/locales/sign-up/ru.json';
 import historyEn from '@/locales/history/en.json';
 import historyRu from '@/locales/history/ru.json';
+import restfulEn from '@/locales/restful/en.json';
+import restfulRu from '@/locales/restful/ru.json';
 
 const resources = {
   en: {
@@ -19,6 +21,7 @@ const resources = {
       ...headerEn,
       ...signUpPageEn,
       ...historyEn,
+      ...restfulEn,
     },
   },
   ru: {
@@ -28,12 +31,12 @@ const resources = {
       ...headerRu,
       ...signUpPageRu,
       ...historyRu,
+      ...restfulRu,
     },
   },
 };
 
 i18next.use(initReactI18next).init({
-  debug: true,
   resources,
   lng: 'en',
   fallbackLng: 'en',
