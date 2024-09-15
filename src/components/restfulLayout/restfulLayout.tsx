@@ -27,20 +27,23 @@ import { RESTful_METHODS } from '@/utils/constants/RESTfulMethods.ts';
 import { Controller, useFieldArray, useForm } from 'react-hook-form';
 import RESTful from '@components/restfulLayout/types.ts';
 import { usePathname, useSearchParams } from 'next/navigation';
-import { generateURL, parseURL } from '@/utils/restful/restful.ts';
+import { generateURL, parseURL, prettify } from '@/utils/restful/restful.ts';
 import { useState } from 'react';
 import ResponseStatus from '@components/responseStatus/responseStatus.tsx';
 import request from '@/utils/request/request.ts';
 import CodeMirrorEditor from '@components/codeMirrorEditor/codeMirrorEditor.tsx';
+import { useLocalStorage } from '@hooks/useLocalStorage.ts';
+import { saveToHistory } from '@/utils/history/history.ts';
 
 function RestfulLayout(): JSX.Element {
   const url = usePathname();
   const searchParams = useSearchParams();
   const [responseStatus, setResponseStatus] = useState(0);
   const [response, setResponse] = useState('');
+  const [localStorage, setLocalStorage] = useLocalStorage('history');
 
   const { control, handleSubmit, getValues, setValue } = useForm<RESTful>({
-    defaultValues: { ...parseURL(url, searchParams.toString()) },
+    defaultValues: { ...parseURL(url, searchParams) },
     mode: 'onSubmit',
   });
 
@@ -68,15 +71,17 @@ function RestfulLayout(): JSX.Element {
   });
 
   async function onSubmit(data: RESTful) {
-    setResponse('');
+    setResponseStatus(0);
     try {
+      setLocalStorage(saveToHistory(data, localStorage));
       const response = await request(data);
       const status = response.status;
-      setResponseStatus(status);
       const json = await response.json();
+      setResponseStatus(status);
       setResponse(JSON.stringify(json, null, 2));
     } catch (error) {
       if (error instanceof Error) {
+        setResponseStatus(500);
         setResponse(JSON.stringify({ error: error.message }, null, 2));
       }
     }
@@ -99,16 +104,11 @@ function RestfulLayout(): JSX.Element {
     appendVariablesValues({ value: '' });
   }
 
-  function prettify() {
+  function onPrettify() {
     const body = getValues('body');
-    try {
-      const json = JSON.parse(body);
-      const string = JSON.stringify(json, null, 2);
-      setValue('body', string);
-      onBlur();
-    } catch {
-      setValue('body', body);
-    }
+    const formattedBody = prettify(body);
+    setValue('body', formattedBody);
+    onBlur();
   }
 
   return (
@@ -361,7 +361,7 @@ function RestfulLayout(): JSX.Element {
             >
               <header className={`${styles.SectionHeader} ${styles.Flex}`}>
                 <Typography variant={'h4'}>Body</Typography>
-                <Button type="button" onClick={prettify}>
+                <Button type="button" onClick={onPrettify}>
                   Prettify
                 </Button>
               </header>

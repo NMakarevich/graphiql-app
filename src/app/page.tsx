@@ -21,13 +21,14 @@ export default function Home(): JSX.Element {
     const { exists } = getCookie(ECookies.AUTH_TOKEN);
     const cookiesUserName = getCookie(ECookies.USER_NAME);
     setAuthorized(exists);
+    setUser(cookiesUserName.cookie || '');
 
     const unsubLogin = localEventBus.subscribeToEvent(
       EUserEvent.USER_SIGNIN,
       (): void => {
         setAuthorized(true);
         if (cookiesUserName.cookie) {
-          setUser(cookiesUserName.cookie!);
+          setUser(cookiesUserName.cookie);
         }
       }
     );
