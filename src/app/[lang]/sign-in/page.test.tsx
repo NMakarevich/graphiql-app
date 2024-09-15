@@ -1,6 +1,7 @@
-import { render, screen, fireEvent } from '@testing-library/react';
+import { render, screen, fireEvent, act } from '@testing-library/react';
 import { describe, it, vi, afterEach, expect } from 'vitest';
 import SignInForm from '@/components/signInForm/signInForm';
+import SignIn from '@app/[lang]/sign-in/page.tsx';
 
 vi.mock('next/navigation', () => ({
   useRouter: vi.fn(),
@@ -17,6 +18,12 @@ vi.mock('@/utils/cookies/setAuthCookie', () => ({
 describe('SignInForm: ', () => {
   afterEach(() => {
     vi.resetAllMocks();
+  });
+
+  it('- renders without crashing.', async (): Promise<void> => {
+    await act(async (): Promise<void> => {
+      render(<SignIn />);
+    });
   });
 
   it('- should close the modal when close button is clicked', () => {
