@@ -1,6 +1,7 @@
-import { screen, render } from '@testing-library/react';
-import { describe, expect, test, vi } from 'vitest';
+import { screen, render, act } from '@testing-library/react';
+import { describe, expect, it, test, vi } from 'vitest';
 import SignUpForm from '@components/signUpForm/signUpForm.tsx';
+import SignUp from '@app/[lang]/sign-up/page.tsx';
 
 vi.mock('next/navigation', () => ({
   useRouter: vi.fn(),
@@ -15,6 +16,12 @@ vi.mock('@/utils/cookies/setAuthCookie', () => ({
 }));
 
 describe('SignUpForm', () => {
+  it('- renders without crashing.', async (): Promise<void> => {
+    await act(async (): Promise<void> => {
+      render(<SignUp />);
+    });
+  });
+
   test('renders sign up form', () => {
     render(<SignUpForm />);
 

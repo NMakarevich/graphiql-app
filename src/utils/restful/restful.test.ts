@@ -50,7 +50,7 @@ describe('restful', () => {
   });
   it('parseURL returns correct object', () => {
     const url =
-      '/POST/aHR0cHM6Ly90YXNrcy5hcHAucnMuc2Nob29sL2FuZ3VsYXIvbG9naW4=/eyJlbWFpbCI6ICJ0ZXN0QHRlc3QxMjMiLCJwYXNzd29yZCI6ICJUZXN0QDEyIn0=';
+      '/ru/POST/aHR0cHM6Ly90YXNrcy5hcHAucnMuc2Nob29sL2FuZ3VsYXIvbG9naW4=/eyJlbWFpbCI6ICJ0ZXN0QHRlc3QxMjMiLCJwYXNzd29yZCI6ICJUZXN0QDEyIn0=';
     const searchParams = new ReadonlyURLSearchParams();
     const resultObject = parseURL(url, searchParams);
     const expectedObject = {

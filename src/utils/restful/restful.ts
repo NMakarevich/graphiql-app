@@ -47,7 +47,7 @@ export function generateBodyWithVariables(
   body: string,
   variables: RESTfulVariables
 ) {
-  if (!body || !variables || Object.keys(variables).length === 0) return body;
+  if (!body || !variables || !Object.keys(variables).length) return body;
   const reqVariables = generateRequestVariables(variables);
   return /"{{\w+}}"/g.test(body)
     ? body.replace(/"{{(\w+)}}"/g, (_, key) => {
@@ -120,7 +120,7 @@ export function parseURL(
   const headers = searchParams
     ? decodeSearchParams(searchParams.toString())
     : {};
-  const [method, baseURL64, body64] = url.slice(1).split('/');
+  const [, method, baseURL64, body64] = url.slice(1).split('/');
   const baseURL =
     baseURL64 && !/(?=[{}])/.test(decodeBase64(baseURL64))
       ? decodeBase64(baseURL64)
