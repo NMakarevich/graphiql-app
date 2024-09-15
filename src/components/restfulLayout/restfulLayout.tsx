@@ -16,14 +16,14 @@ import RestfulVariables from '@components/restfulVariables/restfulVariables.tsx'
 import RestfulReqRes from '@components/restfulReqRes/restfulReqRes.tsx';
 
 function RestfulLayout(): JSX.Element {
-  const url = usePathname();
+  const pathname = usePathname();
   const searchParams = useSearchParams();
   const [responseStatus, setResponseStatus] = useState(0);
   const [response, setResponse] = useState('');
   const [localStorage, setLocalStorage] = useLocalStorage('history');
 
   const { control, handleSubmit, getValues, setValue } = useForm<RESTful>({
-    defaultValues: { ...parseURL(url, searchParams) },
+    defaultValues: { ...parseURL(pathname, searchParams) },
     mode: 'onSubmit',
   });
 
@@ -46,7 +46,8 @@ function RestfulLayout(): JSX.Element {
 
   function onBlur() {
     const data = getValues();
-    const url = generateURL(data);
+    const lang = pathname.split('/')[1];
+    const url = `/${lang}${generateURL(data)}`;
     window.history.replaceState(null, '', url);
   }
 

@@ -120,7 +120,7 @@ export function parseURL(
   const headers = searchParams
     ? decodeSearchParams(searchParams.toString())
     : {};
-  const [method, baseURL64, body64] = url.slice(1).split('/');
+  const [, method, baseURL64, body64] = url.slice(1).split('/');
   const baseURL =
     baseURL64 && !/(?=[{}])/.test(decodeBase64(baseURL64))
       ? decodeBase64(baseURL64)
