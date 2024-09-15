@@ -8,6 +8,7 @@ import HistoryListItem from '@components/historyListItem/historyListItem.tsx';
 import { ROUTES } from '@/utils/constants/routes.ts';
 import { useEffect, useState } from 'react';
 import { HistoryItem } from '@components/historyList/types.ts';
+import Loader from '@components/loader/loader.tsx';
 
 function HistoryList(): JSX.Element {
   const [localStorage] = useLocalStorage('history', '{}');
@@ -19,6 +20,10 @@ function HistoryList(): JSX.Element {
     setHistoryList(historyList);
     setIsLoaded(true);
   }, [localStorage]);
+
+  if (!isLoaded) {
+    return <Loader />;
+  }
 
   return (
     <>
