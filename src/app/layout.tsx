@@ -1,12 +1,12 @@
 import { Montserrat } from 'next/font/google';
-import type { PropsWithChildren } from 'react';
-import type { Metadata } from 'next';
-import '../styles/scss/style.scss';
+import Layout from '@/components/layout/layout';
+import ErrorBoundary from '@/components/ErrorBoundary/ErrorBoundary';
 import { AppRouterCacheProvider } from '@mui/material-nextjs/v13-appRouter';
 import { CssBaseline, ThemeProvider } from '@mui/material';
 import { theme } from '@/theme.ts';
-import Layout from '@/components/layout/layout';
-import ErrorBoundary from '@/components/ErrorBoundary/ErrorBoundary';
+import type { PropsWithChildren } from 'react';
+import type { Metadata } from 'next';
+import '../styles/scss/style.scss';
 
 const montserrat = Montserrat({
   subsets: ['cyrillic', 'latin'],

@@ -1,0 +1,15 @@
+.doc {
+  &_container {
+    background-color: v.$documentationVioletTransparent !important;
+    width: 100%;
+    height: 100%;
+    max-width: f.rem(300px);
+    padding: f.rem(15px);
+  }
+
+  &_content {
+    width: 100%;
+    height: 100%;
+    max-width: f.rem(300px);
+  }
+}

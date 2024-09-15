@@ -1,0 +1,23 @@
+.graphql {
+  &_form {
+    padding: f.rem(5px) f.rem(5px) f.rem(10px);
+    flex: 0 1 46.5%;
+
+    & &_url {
+      color: v.$thistlePurpleLight;
+
+      fieldset {
+        border-color: v.$brownLight;
+      }
+    }
+
+    [type='text'],
+    [data-shrink='true'] {
+      color: v.$thistlePurpleLight;
+    }
+
+    [data-shrink='false'] {
+      color: v.$brownLight;
+    }
+  }
+}
