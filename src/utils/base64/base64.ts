@@ -1,6 +1,6 @@
 export const encodeBase64 = (value: string) => {
   try {
-    return btoa(value);
+    return btoa(value).replaceAll('/', '-');
   } catch {
     return '';
   }
@@ -8,7 +8,7 @@ export const encodeBase64 = (value: string) => {
 
 export const decodeBase64 = (value: string) => {
   try {
-    return atob(value);
+    return atob(value.replaceAll('-', '/'));
   } catch {
     return '';
   }
