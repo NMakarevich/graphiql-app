@@ -10,6 +10,7 @@ const montserrat = Montserrat({
 
 export const theme = createTheme({
   palette: {
+    mode: 'dark',
     primary: {
       main: '#D0BCFF',
     },
@@ -28,6 +29,15 @@ export const theme = createTheme({
   },
   typography: {
     fontFamily: montserrat.style.fontFamily,
+    h2: {
+      fontSize: '1.5rem',
+    },
+    h3: {
+      fontSize: '1.3rem',
+    },
+    h4: {
+      fontSize: '1.2rem',
+    },
   },
   breakpoints: {
     values: {
