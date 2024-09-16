@@ -20,7 +20,7 @@ function RestfulLayout(): JSX.Element {
   const searchParams = useSearchParams();
   const [responseStatus, setResponseStatus] = useState(0);
   const [response, setResponse] = useState('');
-  const [localStorage, setLocalStorage] = useLocalStorage('history');
+  const [localStorage, setLocalStorage] = useLocalStorage('history', '{}');
 
   const { control, handleSubmit, getValues, setValue } = useForm<RESTful>({
     defaultValues: { ...parseURL(pathname, searchParams) },
