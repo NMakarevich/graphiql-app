@@ -17,7 +17,7 @@ import ISignUpForm from '@components/signUpForm/types.ts';
 import TextFieldController from '@components/inputController/textFieldController.tsx';
 import { ITextField } from '@components/inputController/types.ts';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { signUpWithEmailAndPassword } from '@/utils/firebase/firebase';
 import { setAuthCookie } from '@/utils/cookies/setAuthCookie';
 import { ECookies } from '@/utils/cookies/types';
@@ -27,6 +27,9 @@ import { EUserEvent } from '@/utils/eventBus/types';
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
 import { FirebaseError } from 'firebase/app';
 import { Modal } from '@/components/Modal/Modal';
+import { useTranslation } from 'react-i18next';
+import '@/utils/localization/i18n';
+import Loader from '@/components/loader/loader';
 
 export default function SignUpForm(): JSX.Element {
   const {
@@ -42,7 +45,16 @@ export default function SignUpForm(): JSX.Element {
   const [visiblePassword, setVisiblePassword] = useState(false);
   const [visibleCPassword, setVisibleCPassword] = useState(false);
   const [errorSignUp, setErrorSignUp] = useState<string | null>(null);
+  const [loading, setLoading] = useState<boolean>(true);
   const router = useRouter();
+  const { t, i18n } = useTranslation();
+
+  useEffect(() => {
+    const savedLocale = localStorage.getItem('LOCALE') || 'en';
+    i18n.changeLanguage(savedLocale).then(() => {
+      setLoading(false);
+    });
+  }, [i18n]);
 
   const onSubmit = async (data: ISignUpForm): Promise<void> => {
     const { name, email, password } = data;
@@ -68,7 +80,6 @@ export default function SignUpForm(): JSX.Element {
         console.error('Error sign up:', error);
         if (error && error instanceof FirebaseError) {
           setErrorSignUp(error.message);
-          console.log(error.message, errorSignUp, 1232);
         }
       }
     }
@@ -80,17 +91,17 @@ export default function SignUpForm(): JSX.Element {
     {
       inputName: 'name',
       type: 'text',
-      label: 'Name',
+      label: t('signUpNameLabel'),
     },
     {
       inputName: 'email',
       type: 'email',
-      label: 'Email',
+      label: t('signUpEmailLabel'),
     },
     {
       inputName: 'password',
       type: 'password',
-      label: 'Password',
+      label: t('signUpPasswordLabel'),
       slotProps: {
         input: {
           type: visiblePassword ? 'text' : 'password',
@@ -111,7 +122,7 @@ export default function SignUpForm(): JSX.Element {
     {
       inputName: 'confirmPassword',
       type: 'password',
-      label: 'Confirm Password',
+      label: t('signUpConfirmPasswordLabel'),
       slotProps: {
         input: {
           type: visibleCPassword ? 'text' : 'password',
@@ -131,11 +142,15 @@ export default function SignUpForm(): JSX.Element {
     },
   ];
 
+  if (loading) {
+    return <Loader />;
+  }
+
   return (
     <>
       <Paper className={styles.Paper} sx={{ boxShadow: '0 0 3px 1px #D0BCFF' }}>
         <Typography component="h2" sx={{ fontWeight: 'bold' }}>
-          Sign Up
+          {t('signUpTitle')}
         </Typography>
         <form className={styles.Form} onSubmit={handleSubmit(onSubmit)}>
           {textFields.map(({ inputName, label, type, slotProps }, index) => (
@@ -149,11 +164,12 @@ export default function SignUpForm(): JSX.Element {
             />
           ))}
           <Button type="submit" variant={'contained'} disabled={!isValid}>
-            Sign Up
+            {t('signUpButton')}
           </Button>
         </form>
         <Typography component="p">
-          Already registered? <Link href={ROUTES.SIGN_IN_PATH}>Sign In</Link>
+          {t('signUpAlreadyRegisteredText')}
+          <Link href={ROUTES.SIGN_IN_PATH}>{t('signUpHintLinkText')}</Link>
         </Typography>
       </Paper>
       {errorSignUp && (

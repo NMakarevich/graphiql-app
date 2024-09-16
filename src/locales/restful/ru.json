@@ -1,0 +1,13 @@
+{
+  "restfulTitle": "RESTful Клиент",
+  "restfulSend": "Отправить",
+  "restfulHeadersSectionTitle": "Заголовки ",
+  "restfulAddHeaderButton": " Добавить заголовок",
+  "restfulKey": "Ключ",
+  "restfulValue": "Значение",
+  "restfulVariablesSectionTitle": "Переменные ",
+  "restfulAddVariableButton": " Добавить переменную",
+  "restfulBodySectionTitle": "Тело запроса",
+  "restfulPrettifyButton": "Отформатировать",
+  "restfulResponseSectionTitle": "Ответ"
+}

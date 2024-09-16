@@ -22,12 +22,14 @@ describe('Home:', (): void => {
 describe('RootLayout:', (): void => {
   it('- renders without crashing.', () => {
     const children: ReactNode = <div>Test Content</div>;
-    render(<RootLayout>{children}</RootLayout>);
+    render(<RootLayout params={{ lang: 'ru' }}>{children}</RootLayout>);
   });
 
   it('- renders without crashing.', (): void => {
     const children: ReactNode = <div>Test Content</div>;
-    const { container } = render(<RootLayout>{children}</RootLayout>);
+    const { container } = render(
+      <RootLayout params={{ lang: 'ru' }}>{children}</RootLayout>
+    );
     expect(container).toBeInTheDocument();
   });
 });

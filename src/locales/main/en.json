@@ -1,0 +1,30 @@
+{
+  "mainTitle": "Welcome to GraphiQL/RESTful app",
+  "mainAboutApp": "About App",
+  "mainContent": "GraphiQL/RESTful is an application which provides functionality both GraphQL and RESTful client.",
+  "mainAboutTeam": "About Team",
+  "mainTeamIntro": "Our team:",
+  "mainAboutCourse": "About Course",
+  "mainCourseIntro": "This course is aimed at the students of the RS School who have passed RS School Stage #2 and at the new students who have experience with:",
+  "mainAPIInteraction": " Understanding of how to interact with APIs (general understanding of REST and GraphQL)",
+  "mainRestfulPath": "RESTful Client",
+  "mainGraphQLPath": "GraphQL",
+  "mainHistoryPath": "History",
+  "mainAuthRequired": "To use the app you need to authorize. ",
+  "mainSignIn": "Go to Sign In",
+  "mainSignUp": "Go to Sign Up",
+  "contributors": {
+    "TatyanaAntipova": {
+      "name": "Tatyana Antipova",
+      "role": "Project Manager"
+    },
+    "MaximRavinskiy": {
+      "name": "Maxim Ravinskiy",
+      "role": "Layout Master"
+    },
+    "NikolayMakarevich": {
+      "name": "Nikolay Makarevich",
+      "role": "Team Lead"
+    }
+  }
+}

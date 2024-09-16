@@ -1,3 +1,5 @@
+'use client';
+
 import { Control, Controller } from 'react-hook-form';
 import RESTful from '@components/restfulLayout/types.ts';
 import Grid from '@mui/material/Grid2';
@@ -5,6 +7,7 @@ import styles from '@components/restfulLayout/restfulLayout.module.scss';
 import { Button, Typography } from '@mui/material';
 import CodeMirrorEditor from '@components/codeMirrorEditor/codeMirrorEditor.tsx';
 import ResponseStatus from '@components/responseStatus/responseStatus.tsx';
+import { useTranslation } from 'react-i18next';
 
 interface Props {
   control: Control<RESTful>;
@@ -15,6 +18,7 @@ interface Props {
 
 function RestfulReqRes(props: Props) {
   const { control, responseStatus, response, onPrettify } = props;
+  const { t } = useTranslation();
 
   return (
     <Grid container columnSpacing={1} sx={{ width: '100%' }}>
@@ -23,9 +27,9 @@ function RestfulReqRes(props: Props) {
         className={`${styles.Flex} ${styles.FlexColumn}`}
       >
         <header className={`${styles.SectionHeader} ${styles.Flex}`}>
-          <Typography variant={'h4'}>Body</Typography>
+          <Typography variant={'h4'}>{t('restfulBodySectionTitle')}</Typography>
           <Button type="button" onClick={onPrettify}>
-            Prettify
+            {t('restfulPrettifyButton')}
           </Button>
         </header>
         <Controller
@@ -41,7 +45,9 @@ function RestfulReqRes(props: Props) {
         className={`${styles.Flex} ${styles.FlexColumn}`}
       >
         <header className={`${styles.SectionHeader} ${styles.Flex}`}>
-          <Typography variant={'h4'}>Response</Typography>
+          <Typography variant={'h4'}>
+            {t('restfulResponseSectionTitle')}
+          </Typography>
           <ResponseStatus status={responseStatus} />
         </header>
         <CodeMirrorEditor value={response} readonly={true} />
