@@ -61,9 +61,13 @@ export const TabPanel: FC<TabPanelProps> = ({
     e.stopPropagation();
     const newParams = new URLSearchParams();
 
-    queriesState.forEach((it) => {
-      newParams.set(it.name, it.value);
-    });
+    queriesState
+      .filter((it, idx, arr) => {
+        return arr.findIndex((el) => el.name === it.name) === idx;
+      })
+      .forEach((it) => {
+        newParams.set(it.name, it.value);
+      });
 
     const fullPath = `${path}${queriesState.length ? '?' + newParams.toString() : ''}`;
 
@@ -75,7 +79,11 @@ export const TabPanel: FC<TabPanelProps> = ({
     const isHas = queriesState.some((q) => q.id === state.id);
 
     if (action === 'add' && !isHas) {
-      setQueriesState([...queriesState, state]);
+      setQueriesState(
+        [...queriesState, state].filter((it, idx, arr) => {
+          return arr.findLastIndex((el) => el.name === it.name) === idx;
+        })
+      );
     } else if (action === 'delete' && isHas) {
       setQueriesState((queries) => queries.filter((q) => q.id !== state.id));
     }
@@ -83,6 +91,10 @@ export const TabPanel: FC<TabPanelProps> = ({
 
   useEffect(() => {
     document.body.addEventListener('qupdate', qUpdateHandler);
+
+    return () => {
+      document.body.removeEventListener('qupdate', qUpdateHandler);
+    };
   });
 
   return (
