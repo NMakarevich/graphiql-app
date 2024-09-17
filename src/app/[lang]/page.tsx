@@ -53,7 +53,7 @@ export default function Home(): JSX.Element {
       unsubLogin();
       unsubLogout();
     };
-  }, []);
+  }, [i18n]);
 
   if (loading) {
     return <Loader />;

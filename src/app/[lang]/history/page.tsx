@@ -18,7 +18,7 @@ function History(): JSX.Element {
     i18n.changeLanguage(savedLocale);
 
     setLoading(false);
-  }, []);
+  }, [i18n]);
 
   if (loading) {
     return <Loader />;

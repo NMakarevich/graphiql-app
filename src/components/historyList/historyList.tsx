@@ -24,7 +24,7 @@ function HistoryList(): JSX.Element {
   useEffect(() => {
     const savedLocale = localStorage.getItem('LOCALE') || 'en';
     i18n.changeLanguage(savedLocale);
-  }, []);
+  }, [i18n]);
 
   useEffect(() => {
     const historyList = getHistoryList(JSON.parse(localStorageHook));

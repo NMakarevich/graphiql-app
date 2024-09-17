@@ -20,7 +20,7 @@ function RESTfullClient({
   useEffect(() => {
     const savedLocale = localStorage.getItem('LOCALE') || 'en';
     i18n.changeLanguage(savedLocale);
-  }, []);
+  }, [i18n]);
 
   if (!methods.includes(params.method)) notFound();
 
