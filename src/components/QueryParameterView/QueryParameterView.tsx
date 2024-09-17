@@ -1,10 +1,10 @@
 'use client';
-import { FC, useCallback, useEffect, useId, useState } from 'react';
+import { useCallback, useEffect, useId, useState } from 'react';
 import Checkbox from '@mui/material/Checkbox';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import { createQuery } from '@/utils/functions/createQuery';
-import type { ChangeEvent } from 'react';
+import type { FC, ChangeEvent, SyntheticEvent } from 'react';
 import type { QueryParameterViewProps, stateArray } from './types';
 import styles from './QueryParameterView.module.scss';
 
@@ -45,6 +45,12 @@ export const QueryParameterView: FC<QueryParameterViewProps> = ({
     setIsActive(!isActive);
   }
 
+  function blurHandler(e: SyntheticEvent) {
+    if (!(isActive && queryTitle && queryValue)) {
+      e.stopPropagation();
+    }
+  }
+
   const changeQueries = useCallback(
     (action?: string) => {
       const query = createQuery(placeholderText, {
@@ -62,7 +68,11 @@ export const QueryParameterView: FC<QueryParameterViewProps> = ({
         data.action = 'add';
       }
 
-      document.body.dispatchEvent(new CustomEvent('qupdate', { detail: data }));
+      if (query.placeholderText === 'parameter') {
+        document.body.dispatchEvent(
+          new CustomEvent('qupdate', { detail: data })
+        );
+      }
     },
     [id, isActive, placeholderText, queryTitle, queryValue]
   );
@@ -75,6 +85,7 @@ export const QueryParameterView: FC<QueryParameterViewProps> = ({
     <div className={styles.query_box}>
       <Checkbox
         onChange={changeCheckboxHandler}
+        onBlur={blurHandler}
         defaultChecked={isChecked}
         classes={{ root: styles.query_box_activated }}
         {...label}
@@ -89,6 +100,7 @@ export const QueryParameterView: FC<QueryParameterViewProps> = ({
         variant="standard"
         autoComplete="off"
         onChange={changeTitleHandler}
+        onBlur={blurHandler}
         classes={{ root: styles.query_box_input }}
         slotProps={{
           htmlInput: {
@@ -107,6 +119,7 @@ export const QueryParameterView: FC<QueryParameterViewProps> = ({
         variant="standard"
         autoComplete="off"
         onChange={changeValueHandler}
+        onBlur={blurHandler}
         classes={{ root: styles.query_box_input }}
         slotProps={{
           htmlInput: {
@@ -119,6 +132,7 @@ export const QueryParameterView: FC<QueryParameterViewProps> = ({
       <Button
         variant="text"
         onClick={removeHandler}
+        onBlur={blurHandler}
         classes={{ root: styles.query_box_remove }}
       >
         X

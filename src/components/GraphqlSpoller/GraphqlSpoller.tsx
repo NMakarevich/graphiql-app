@@ -4,44 +4,35 @@ import Accordion from '@mui/material/Accordion';
 import AccordionDetails from '@mui/material/AccordionDetails';
 import AccordionSummary from '@mui/material/AccordionSummary';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
-import Tabs from '@mui/material/Tabs';
-import Tab from '@mui/material/Tab';
-import { TabPanel } from '../TabPanel/TabPanel';
+import { AccordionContent } from '../AccordionContent/AccordionContent';
 import { createQuery } from '@/utils/functions/createQuery';
-import type { SyntheticEvent } from 'react';
+import type { FC, SyntheticEvent } from 'react';
+import type { GraphqlSpollerProps } from './types';
 import styles from './GraphqlSpoller.module.scss';
 
-const panels = [
-  { text: 'Add the parameter', placeholder: 'parameter', title: 'Headers' },
-  { text: 'Add the variable', placeholder: 'var', title: 'Variables' },
-];
+export const GraphqlSpoller: FC<GraphqlSpollerProps> = ({ spoller, index }) => {
+  const defaultPanelsContent = Array.from({ length: 2 }, () =>
+    createQuery(spoller.placeholder)
+  );
+  const [content] = useState<Record<string, string>[]>(defaultPanelsContent);
 
-const defaultPanelsContent = Array.from({ length: panels.length }, (_, idx) =>
-  panels.map((_, __, arr) => createQuery(arr[idx].placeholder))
-);
+  const [onExpanded, setOnExpanded] = useState<boolean>(false);
 
-function a11yProps(index: number) {
-  return {
-    id: `simple-tab-${index}`,
-    'aria-controls': `simple-tabpanel-${index}`,
-  };
-}
-
-export const GraphqlSpoller = () => {
-  const [value, setValue] = useState<number>(0);
-  const [content] = useState<Record<string, string>[][]>(defaultPanelsContent);
-  const handleTabChange = (e: SyntheticEvent, newValue: number) => {
-    e.stopPropagation();
-    setValue(newValue);
+  const handleChange = () => (_e: SyntheticEvent, newExpanded: boolean) => {
+    setOnExpanded(newExpanded);
   };
 
   return (
     <Accordion
+      key={Math.random()}
       classes={{ root: styles.graphiql_spoller }}
       slotProps={{
         heading: { component: 'h2' },
-        transition: { unmountOnExit: true },
       }}
+      {...(spoller.placeholder === 'parameter'
+        ? { onChange: handleChange() }
+        : {})}
+      {...(spoller.placeholder === 'parameter' ? { expanded: onExpanded } : {})}
       disableGutters
     >
       <AccordionSummary
@@ -50,43 +41,18 @@ export const GraphqlSpoller = () => {
             classes={{ root: styles.graphiql_spoller_icon }}
           />
         }
-        aria-controls="panel-content"
-        id="panel-header"
+        aria-controls={`panel-content-${index}`}
+        id={`panel-header-${index}`}
         classes={{
           root: styles.graphiql_spoller_summary,
           content: styles.graphiql_spoller_summary_content,
         }}
       >
-        <Tabs
-          value={value}
-          onChange={handleTabChange}
-          aria-label={panels.reduce(
-            (acc, panel) => (acc ? acc + ' & ' + panel.title : panel.title),
-            ''
-          )}
-        >
-          {panels.map((panel, index) => {
-            return (
-              <Tab
-                key={panel.title}
-                label={panel.title}
-                {...a11yProps(index)}
-              />
-            );
-          })}
-        </Tabs>
+        {spoller.title}
       </AccordionSummary>
 
       <AccordionDetails classes={{ root: styles.graphiql_spoller_details }}>
-        {panels.map((panel, index) => (
-          <TabPanel
-            key={Math.random()}
-            queries={content[index]}
-            value={value}
-            index={index}
-            addText={panel.text}
-          />
-        ))}
+        <AccordionContent queries={content} addText={spoller.addButtontext} />
       </AccordionDetails>
     </Accordion>
   );

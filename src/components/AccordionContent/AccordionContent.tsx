@@ -5,34 +5,11 @@ import Button from '@mui/material/Button';
 import { QueryParameterView } from '../QueryParameterView/QueryParameterView';
 import { createQuery } from '@/utils/functions/createQuery';
 import type { SyntheticEvent } from 'react';
-import type { contentArray, CustomTabPanelProps, TabPanelProps } from './types';
+import type { contentArray, AccordionContentProps } from './types';
 import type { Query } from '@typesfolder/types';
 
-function CustomTabPanel({
-  children,
-  value,
-  index,
-  blurHandler,
-  ...other
-}: CustomTabPanelProps) {
-  return (
-    <div
-      role="tabpanel"
-      hidden={value !== index}
-      id={`simple-tabpanel-${index}`}
-      aria-labelledby={`simple-tab-${index}`}
-      onBlur={blurHandler}
-      {...other}
-    >
-      {value === index && <div>{children}</div>}
-    </div>
-  );
-}
-
-export const TabPanel: FC<TabPanelProps> = ({
+export const AccordionContent: FC<AccordionContentProps> = ({
   queries,
-  value,
-  index,
   addText = '+',
 }) => {
   const router = useRouter();
@@ -78,7 +55,7 @@ export const TabPanel: FC<TabPanelProps> = ({
     const { action, state } = e.detail;
     const isHas = queriesState.some((q) => q.id === state.id);
 
-    if (action === 'add' && !isHas) {
+    if (action === 'add') {
       setQueriesState(
         [...queriesState, state].filter((it, idx, arr) => {
           return arr.findLastIndex((el) => el.name === it.name) === idx;
@@ -98,7 +75,7 @@ export const TabPanel: FC<TabPanelProps> = ({
   });
 
   return (
-    <CustomTabPanel value={value} index={index} blurHandler={blurHandler}>
+    <div onBlur={blurHandler}>
       <Button
         variant="outlined"
         onClick={() => {
@@ -121,6 +98,6 @@ export const TabPanel: FC<TabPanelProps> = ({
           isChecked={!!parameters.length}
         />
       ))}
-    </CustomTabPanel>
+    </div>
   );
 };

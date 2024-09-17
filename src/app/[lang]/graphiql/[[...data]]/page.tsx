@@ -7,7 +7,17 @@ import { QueryResponsePanel } from '@/components/QueryResponsePanel/QueryRespons
 import { GraphqlSpoller } from '@/components/GraphqlSpoller/GraphqlSpoller';
 import Card from '@mui/material/Card';
 import { Params } from './types';
+import { Spoller } from '@typesfolder/types';
 import styles from './page.module.scss';
+
+const spollers = [
+  {
+    addButtontext: 'Add the parameter',
+    placeholder: 'parameter',
+    title: 'Headers',
+  },
+  { addButtontext: 'Add the variable', placeholder: 'var', title: 'Variables' },
+];
 
 function GraphiQL({ params }: Params): JSX.Element {
   const { data } = params;
@@ -30,7 +40,9 @@ function GraphiQL({ params }: Params): JSX.Element {
 
         <hr className={styles.graphiql_editors_separator} />
 
-        <GraphqlSpoller />
+        {spollers.map((spoller: Spoller, index) => (
+          <GraphqlSpoller key={spoller.title} spoller={spoller} index={index} />
+        ))}
       </Card>
 
       <Card
