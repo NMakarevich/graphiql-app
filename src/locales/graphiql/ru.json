@@ -1,0 +1,11 @@
+{
+  "graphqlTitle": "GraphiQL Клиент",
+  "graphiqlHeadersSectionTitle": "Заголовки",
+  "graphiqlAddHeadersButton": "ДОБАВИТЬ ПАРАМЕТР",
+  "graphiqlHeadersKey": "параметр",
+  "graphiqlHeadersValue": "значение",
+  "graphiqlVariablesSectionTitle": "Переменные",
+  "graphiqlAddVariablesButton": "ДОБАВИТЬ ПЕРЕМЕННУЮ",
+  "graphiqlVariablesKey": "переменная",
+  "graphiqlVariablesValue": "значение"
+}

@@ -1,0 +1,11 @@
+{
+  "graphqlTitle": "GraphiQL Client",
+  "graphiqlHeadersSectionTitle": "Headers",
+  "graphiqlAddHeadersButton": "ADD THE PARAMETER",
+  "graphiqlHeadersKey": "parameter",
+  "graphiqlHeadersValue": "value",
+  "graphiqlVariablesSectionTitle": "Variables",
+  "graphiqlAddVariablesButton": "ADD THE VARIABLE",
+  "graphiqlVariablesKey": "var",
+  "graphiqlVariablesValue": "value"
+}
