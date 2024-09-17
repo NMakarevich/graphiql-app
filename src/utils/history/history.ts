@@ -5,6 +5,7 @@ import { getCookie } from '@/utils/cookies/getCookie.ts';
 import { ECookies } from '@/utils/cookies/types.ts';
 
 const UNKNOWN_USER = 'UnknownUser';
+export const LOCALSTORAGE_HISTORY_KEY = 'history';
 
 export function saveToHistory(data: RESTful, localStorage: string) {
   const history: HistoryUser = JSON.parse(localStorage);

@@ -9,7 +9,10 @@ import { generateURL, parseURL, prettify } from '@/utils/restful/restful.ts';
 import { useState } from 'react';
 import request from '@/utils/request/request.ts';
 import { useLocalStorage } from '@hooks/useLocalStorage.ts';
-import { saveToHistory } from '@/utils/history/history.ts';
+import {
+  LOCALSTORAGE_HISTORY_KEY,
+  saveToHistory,
+} from '@/utils/history/history.ts';
 import RestfulHeader from '@components/restfulHeader/restfulHeader.tsx';
 import RestfulRequestHeaders from '@components/restfulRequestHeaders/restfulRequestHeaders.tsx';
 import RestfulVariables from '@components/restfulVariables/restfulVariables.tsx';
@@ -20,7 +23,10 @@ function RestfulLayout(): JSX.Element {
   const searchParams = useSearchParams();
   const [responseStatus, setResponseStatus] = useState(0);
   const [response, setResponse] = useState('');
-  const [localStorage, setLocalStorage] = useLocalStorage('history', '{}');
+  const [localStorage, setLocalStorage] = useLocalStorage(
+    LOCALSTORAGE_HISTORY_KEY,
+    '{}'
+  );
 
   const { control, handleSubmit, getValues, setValue } = useForm<RESTful>({
     defaultValues: { ...parseURL(pathname, searchParams) },
