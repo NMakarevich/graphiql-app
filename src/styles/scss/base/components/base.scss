@@ -53,3 +53,7 @@ html {
   overflow: hidden !important;
   touch-action: none !important;
 }
+
+::selection {
+  background-color: vars.$darkSlateBlue;
+}

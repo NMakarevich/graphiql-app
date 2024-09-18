@@ -1,5 +1,5 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest';
-import getData from './getData';
+import { getData } from './getData';
 import getSchema from '../getSchema/getSchema';
 
 beforeEach((): void => {
@@ -62,6 +62,8 @@ describe('getData: ', (): void => {
       mode: 'cors',
       body: JSON.stringify({ query }),
     });
-    await expect(fetchPromise).rejects.toThrow('401 - Unauthorized');
+    await expect(fetchPromise).rejects.toThrow(
+      '{"code":401,"text":"Unauthorized"}'
+    );
   });
 });

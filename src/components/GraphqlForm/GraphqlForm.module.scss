@@ -1,0 +1,52 @@
+.graphql {
+  &_form {
+    padding: f.rem(5px) f.rem(5px) f.rem(10px);
+    flex: 0 1 46.5%;
+    @include m.flex(null, center);
+    gap: 5px;
+
+    & &_code {
+      @include m.flex(null, center);
+      gap: 5px;
+      padding: f.rem(5px);
+      font-size: 24px;
+
+      &_number {
+        font-size: 24px;
+      }
+
+      &_succes {
+        color: v.$succesColor;
+        @include m.luxtext(v.$succesColor, green);
+      }
+
+      &_warning {
+        color: v.$warningColor;
+        @include m.luxtext(v.$warningColor, yellow);
+      }
+
+      &_error {
+        color: v.$errorColor;
+        @include m.luxtext(v.$errorColor, red);
+      }
+    }
+
+    & &_url {
+      color: v.$thistlePurpleLight;
+      max-width: 384px;
+
+      fieldset {
+        border-color: v.$brownLight;
+      }
+    }
+
+    [type='text'],
+    [data-shrink='true'] {
+      color: v.$thistlePurpleLight;
+    }
+
+    [data-shrink='false'] {
+      color: v.$brownLight;
+    }
+  }
+}

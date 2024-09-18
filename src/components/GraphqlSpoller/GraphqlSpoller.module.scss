@@ -1,0 +1,42 @@
+.graphiql {
+  &_spoller {
+    background-color: v.$codeEditorBg;
+    color: v.$thistlePurpleLight;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+    @include m.focused {
+      outline: none;
+    }
+
+    & &_summary {
+      background-color: v.$codeEditorBg !important;
+      color: v.$thistlePurpleLight;
+      border-bottom: 1px solid v.$darkSlateBlue;
+      max-height: fit-content;
+
+      &_content {
+        margin: 0 !important;
+      }
+
+      [aria-selected='false'] {
+        color: v.$brownLight;
+      }
+    }
+
+    &_details {
+      background-color: v.$codeEditorBg;
+      color: v.$thistlePurpleLight;
+      max-height: 180px;
+      overflow-y: auto;
+    }
+
+    &_icon {
+      color: v.$thistlePurpleLight;
+    }
+
+    &_button {
+      background-color: v.$darkSlateBlue;
+      color: v.$thistlePurpleLight;
+    }
+  }
+}
