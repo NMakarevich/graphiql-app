@@ -74,87 +74,83 @@ export default function Home(): JSX.Element {
         {t('mainTitle')}
         {authorized && user ? `, ${user}` : ''}!
       </Typography>
+      <Typography
+        variant={'body1'}
+        component="section"
+        className={`${styles.Section} ${styles.About}`}
+      >
+        <Typography variant={'h4'}>{t('mainAboutApp')}</Typography>
+        <Typography component={'p'}>{t('mainContent')}</Typography>
+      </Typography>
+      <Divider />
+      <Typography
+        variant={'body1'}
+        component="section"
+        className={`${styles.Section} ${styles.Team}`}
+      >
+        <Typography variant={'h4'}>{t('mainAboutTeam')}</Typography>
+        <Typography component={'p'}>{t('mainTeamIntro')}</Typography>
+        <ul>
+          {contributors.map(({ name, role }) => (
+            <li key={name}>
+              <Typography component={'p'} className={styles.ListItem}>
+                <CheckIcon fontSize={'small'} />
+                {t(name)} - {t(role)}
+              </Typography>
+            </li>
+          ))}
+        </ul>
+      </Typography>
+      <Divider />
+      <Typography
+        variant={'body1'}
+        component="section"
+        className={`${styles.Section} ${styles.About}`}
+      >
+        <Typography variant={'h4'}>{t('mainAboutCourse')}</Typography>
+        <Typography component={'p'}>{t('mainCourseIntro')}</Typography>
+        <ul>
+          <li>
+            <Typography component={'span'} className={styles.ListItem}>
+              <CheckIcon fontSize={'small'} /> JavaScript
+            </Typography>
+          </li>
+          <li>
+            <Typography component={'span'} className={styles.ListItem}>
+              <CheckIcon fontSize={'small'} /> TypeScript
+            </Typography>
+          </li>
+          <li>
+            <Typography component={'span'} className={styles.ListItem}>
+              <CheckIcon fontSize={'small'} /> Git, GitHub (clone, add, commit,
+              push, pull, merge, rebase, pull request flow)
+            </Typography>
+          </li>
+          <li>
+            <Typography component={'span'} className={styles.ListItem}>
+              <CheckIcon fontSize={'small'} /> NPM
+            </Typography>
+          </li>
+          <li>
+            <Typography component={'span'} className={styles.ListItem}>
+              <CheckIcon fontSize={'small'} /> CSS3 / HTML5
+            </Typography>
+          </li>
+          <li>
+            <Typography component={'span'} className={styles.ListItem}>
+              <CheckIcon fontSize={'small'} />
+              {t('mainAPIInteraction')}
+            </Typography>
+          </li>
+        </ul>
+      </Typography>
+      <Divider />
       {authorized ? (
-        <>
-          <Typography
-            variant={'body1'}
-            component="section"
-            className={`${styles.Section} ${styles.About}`}
-          >
-            <Typography variant={'h4'}>{t('mainAboutApp')}</Typography>
-            <Typography component={'p'}>{t('mainContent')}</Typography>
-          </Typography>
-          <Divider />
-          <Typography
-            variant={'body1'}
-            component="section"
-            className={`${styles.Section} ${styles.Team}`}
-          >
-            <Typography variant={'h4'}>{t('mainAboutTeam')}</Typography>
-            <Typography component={'p'}>{t('mainTeamIntro')}</Typography>
-            <ul>
-              {contributors.map(({ name, role }) => (
-                <li key={name}>
-                  <Typography component={'p'} className={styles.ListItem}>
-                    <CheckIcon fontSize={'small'} />
-                    {t(name)} - {t(role)}
-                  </Typography>
-                </li>
-              ))}
-            </ul>
-          </Typography>
-          <Divider />
-          <Typography
-            variant={'body1'}
-            component="section"
-            className={`${styles.Section} ${styles.About}`}
-          >
-            <Typography variant={'h4'}>{t('mainAboutCourse')}</Typography>
-            <Typography component={'p'}>{t('mainCourseIntro')}</Typography>
-            <ul>
-              <li>
-                <Typography component={'span'} className={styles.ListItem}>
-                  <CheckIcon fontSize={'small'} /> JavaScript
-                </Typography>
-              </li>
-              <li>
-                <Typography component={'span'} className={styles.ListItem}>
-                  <CheckIcon fontSize={'small'} /> TypeScript
-                </Typography>
-              </li>
-              <li>
-                <Typography component={'span'} className={styles.ListItem}>
-                  <CheckIcon fontSize={'small'} /> Git, GitHub (clone, add,
-                  commit, push, pull, merge, rebase, pull request flow)
-                </Typography>
-              </li>
-              <li>
-                <Typography component={'span'} className={styles.ListItem}>
-                  <CheckIcon fontSize={'small'} /> NPM
-                </Typography>
-              </li>
-              <li>
-                <Typography component={'span'} className={styles.ListItem}>
-                  <CheckIcon fontSize={'small'} /> CSS3 / HTML5
-                </Typography>
-              </li>
-              <li>
-                <Typography component={'span'} className={styles.ListItem}>
-                  <CheckIcon fontSize={'small'} />
-                  {t('mainAPIInteraction')}
-                </Typography>
-              </li>
-            </ul>
-          </Typography>
-          <Divider />
-          <div className={styles.Nav}>
-            <Link href={ROUTES.RESTFUL_CLIENT_PATH}>
-              {t('mainRestfulPath')}
-            </Link>
-            <Link href={ROUTES.GRAPHIQL_PATH}>{t('mainGraphQLPath')}</Link>
-            <Link href={ROUTES.HISTORY_PATH}>{t('mainHistoryPath')}</Link>
-          </div>
-        </>
+        <div className={styles.Nav}>
+          <Link href={ROUTES.RESTFUL_CLIENT_PATH}>{t('mainRestfulPath')}</Link>
+          <Link href={ROUTES.GRAPHIQL_PATH}>{t('mainGraphQLPath')}</Link>
+          <Link href={ROUTES.HISTORY_PATH}>{t('mainHistoryPath')}</Link>
+        </div>
       ) : (
         <>
           <Typography variant={'body1'} className={styles.Paragraph}>
