@@ -1,25 +1,4 @@
-const schemaQuery = `
-  query IntrospectionQuery {
-    __schema {
-      types {
-        name
-        kind
-        description
-        fields {
-          name
-          type {
-            name
-            kind
-            ofType {
-              name
-              kind
-            }
-          }
-        }
-      }
-    }
-  }
-`;
+import { defaultSchemaQuery } from '@/utils/constants/graphQLDefaultTemplates';
 
 const getSchema = async (endpoint: string) => {
   const response = await fetch(endpoint, {
@@ -28,7 +7,7 @@ const getSchema = async (endpoint: string) => {
       'Content-Type': 'application/json',
     },
     mode: 'cors',
-    body: JSON.stringify({ query: schemaQuery }),
+    body: JSON.stringify({ query: defaultSchemaQuery }),
   });
 
   const statusCode = response.status;

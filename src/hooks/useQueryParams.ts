@@ -6,11 +6,13 @@ export const useQueryParams = (key: string, value: string) => {
 
   useEffect(() => {
     const params = new URLSearchParams(searchParams.toString());
+
     if (value) {
       params.set(key, encodeURIComponent(value));
     } else {
       params.delete(key);
     }
+
     window.history.pushState(null, '', `?${params.toString()}`);
   }, [value, searchParams, key]);
 };
