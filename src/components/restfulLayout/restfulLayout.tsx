@@ -35,19 +35,10 @@ function RestfulLayout(): JSX.Element {
 
   async function onSubmit(data: RESTful) {
     setResponseStatus(0);
-    try {
-      setLocalStorage(saveToHistory(data, localStorage));
-      const response = await request(data);
-      const status = response.status;
-      const json = await response.json();
-      setResponseStatus(status);
-      setResponse(JSON.stringify(json, null, 2));
-    } catch (error) {
-      if (error instanceof Error) {
-        setResponseStatus(500);
-        setResponse(JSON.stringify({ error: error.message }, null, 2));
-      }
-    }
+    const response = await request(data);
+    setLocalStorage(saveToHistory(data, localStorage));
+    setResponseStatus(response.status);
+    setResponse(JSON.stringify(response.data, null, 2));
   }
 
   function onBlur() {
