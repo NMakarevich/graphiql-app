@@ -8,7 +8,7 @@ export function useLocalStorage(key: string, initValue: string = '') {
       return item !== null ? item : initValue;
     }
 
-    return '';
+    return initValue;
   };
 
   const [localStorageValue, setLocalStorageValue] = useState<string>(

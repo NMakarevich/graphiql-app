@@ -6,8 +6,14 @@
     gap: 5px;
 
     & &_code {
+      @include m.flex(null, center);
+      gap: 5px;
       padding: f.rem(5px);
       font-size: 24px;
+
+      &_number {
+        font-size: 24px;
+      }
 
       &_succes {
         color: v.$succesColor;
@@ -27,6 +33,7 @@
 
     & &_url {
       color: v.$thistlePurpleLight;
+      max-width: 384px;
 
       fieldset {
         border-color: v.$brownLight;

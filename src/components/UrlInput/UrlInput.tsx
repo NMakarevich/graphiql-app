@@ -18,7 +18,7 @@ export const UrlInput: FC<UrlInputProps> = ({
   const blurHandler = (e: SyntheticEvent) => {
     e.stopPropagation();
     const sqParams = searchParams.toString();
-    const url = `${ROUTES.GRAPHIQL_PATH}/${value ? encodeURIComponent(btoa(value)) : ''}/${codeSegment ? encodeURIComponent(btoa(codeSegment)) : ''}${sqParams ? '?' + sqParams : ''}`;
+    const url = `${ROUTES.GRAPHIQL_PATH}${value ? '/' + encodeURIComponent(btoa(value)) : ''}${codeSegment ? '/' + encodeURIComponent(btoa(codeSegment)) : ''}${sqParams ? '?' + sqParams : ''}`;
 
     router.push(url, { scroll: false });
   };

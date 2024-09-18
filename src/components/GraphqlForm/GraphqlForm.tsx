@@ -1,8 +1,13 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 'use client';
 import { FC, useEffect, useState } from 'react';
 import { useFormState } from 'react-dom';
+import { useSearchParams } from 'next/navigation';
 import classNames from 'classnames';
 import { UrlInput } from '../UrlInput/UrlInput';
+import { useLocalStorage } from '@/hooks/useLocalStorage';
+import { ROUTES } from '@/utils/constants/routes';
+import { getHistoryItem, getGraphQLForHistory } from '@/utils/history/history';
 import type { EditorSegmentsProp } from '@/types/interfaces';
 import styles from './GraphqlForm.module.scss';
 
@@ -14,7 +19,9 @@ export const GraphqlForm: FC<EditorSegmentsProp> = ({
   graphqlFormAction,
 }) => {
   const [formState, formAction] = useFormState(graphqlFormAction, '');
-  const [code, setCode] = useState<number>(defaultCode);
+  const [code, setCode] = useState<number>(0);
+  const [localStorage, setLocalStorage] = useLocalStorage('history', '{}');
+  const searchParams = useSearchParams();
 
   useEffect(() => {
     if (formState) {
@@ -27,6 +34,20 @@ export const GraphqlForm: FC<EditorSegmentsProp> = ({
       new CustomEvent('submitresponse', { detail: formState })
     );
   }, [formState]);
+
+  useEffect(() => {
+    if (urlSegment && formState) {
+      const sqParams = searchParams.toString();
+      const url = `${ROUTES.GRAPHIQL_PATH}${urlSegment ? '/' + encodeURIComponent(btoa(urlSegment)) : ''}${codeSegment ? '/' + encodeURIComponent(btoa(codeSegment)) : ''}${sqParams ? '?' + sqParams : ''}`;
+      const newHistoryValue = getGraphQLForHistory(
+        getHistoryItem('GRAPHQL', urlSegment || '', url),
+        localStorage
+      );
+
+      setLocalStorage(newHistoryValue);
+    }
+  }, [formState]);
+
   return (
     <form
       action={formAction}
@@ -40,18 +61,23 @@ export const GraphqlForm: FC<EditorSegmentsProp> = ({
         codeSegment={codeSegment}
       />
 
-      <span
-        className={classNames([
-          {
-            [styles.graphql_form_code]: true,
-            [styles.graphql_form_code_succes]: code >= 200 && code < 300,
-            [styles.graphql_form_code_warning]: code >= 300 && code < 400,
-            [styles.graphql_form_code_error]: code >= 400 && code < 600,
-          },
-        ])}
-      >
-        {code}
-      </span>
+      {formState && (
+        <span className={styles.graphql_form_code}>
+          <span>status:</span>
+          <span
+            className={classNames([
+              {
+                [styles.graphql_form_code_number]: true,
+                [styles.graphql_form_code_succes]: code >= 200 && code < 300,
+                [styles.graphql_form_code_warning]: code >= 300 && code < 400,
+                [styles.graphql_form_code_error]: code >= 400 && code < 600,
+              },
+            ])}
+          >
+            {code}
+          </span>
+        </span>
+      )}
     </form>
   );
 };

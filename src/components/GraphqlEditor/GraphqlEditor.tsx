@@ -3,8 +3,6 @@ import { FC, useEffect, useState } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { CodeEditor } from '@/components/CodeEditor/CodeEditor';
 import { prettierGraphqlFormater } from '@/utils/functions/prettierGraphqlFormater';
-import { useLocalStorage } from '@/hooks/useLocalStorage';
-import { debounce } from '@/utils/functions/debounce';
 import { ROUTES } from '@/utils/constants/routes';
 import { defaultSchemaQuery } from '@/utils/constants/graphQLDefaultTemplates';
 import type { SyntheticEvent } from 'react';
@@ -20,11 +18,6 @@ export const GraphqlEditor: FC<SegmentsProp> = ({
   const [editorValue, setEditorValue] = useState<string>(
     queryCode || defaultSchemaQuery
   );
-  const [, setLocalStorageValue] = useLocalStorage(
-    'graphqlActiveRequest',
-    editorValue
-  );
-  const saveContent = debounce(setLocalStorageValue);
 
   const codeChangeHandler = (value: string) => {
     setEditorValue(value);
@@ -33,14 +26,10 @@ export const GraphqlEditor: FC<SegmentsProp> = ({
   const editorBlurHandler = (e: SyntheticEvent) => {
     e.stopPropagation();
     const sqParams = searchParams.toString();
-    const url = `${ROUTES.GRAPHIQL_PATH}/${urlSegment ? encodeURIComponent(btoa(urlSegment)) : ''}/${editorValue ? encodeURIComponent(btoa(editorValue)) : ''}${sqParams ? '?' + sqParams : ''}`;
+    const url = `${ROUTES.GRAPHIQL_PATH}${urlSegment ? '/' + encodeURIComponent(btoa(urlSegment)) : ''}${editorValue ? '/' + encodeURIComponent(btoa(editorValue)) : ''}${sqParams ? '?' + sqParams : ''}`;
 
     router.push(url, { scroll: false });
   };
-
-  useEffect(() => {
-    saveContent(editorValue);
-  });
 
   useEffect(() => {
     const formatCodeHandler = (e: Event) => {
