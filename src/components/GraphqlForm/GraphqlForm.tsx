@@ -10,6 +10,8 @@ import { ROUTES } from '@/utils/constants/routes';
 import { getHistoryItem, getGraphQLForHistory } from '@/utils/history/history';
 import type { EditorSegmentsProp } from '@/types/interfaces';
 import styles from './GraphqlForm.module.scss';
+import { useTranslation } from 'react-i18next';
+import '@/utils/localization/i18n';
 
 const defaultCode = 418;
 
@@ -20,8 +22,14 @@ export const GraphqlForm: FC<EditorSegmentsProp> = ({
 }) => {
   const [formState, formAction] = useFormState(graphqlFormAction, '');
   const [code, setCode] = useState<number>(0);
-  const [localStorage, setLocalStorage] = useLocalStorage('history', '{}');
+  const [localStorageHook, setLocalStorage] = useLocalStorage('history', '{}');
   const searchParams = useSearchParams();
+  const { t, i18n } = useTranslation();
+
+  useEffect(() => {
+    const savedLocale = localStorage.getItem('LOCALE') || 'en';
+    i18n.changeLanguage(savedLocale);
+  }, [i18n]);
 
   useEffect(() => {
     if (formState) {
@@ -41,7 +49,7 @@ export const GraphqlForm: FC<EditorSegmentsProp> = ({
       const url = `${ROUTES.GRAPHIQL_PATH}${urlSegment ? '/' + encodeURIComponent(btoa(urlSegment)) : ''}${codeSegment ? '/' + encodeURIComponent(btoa(codeSegment)) : ''}${sqParams ? '?' + sqParams : ''}`;
       const newHistoryValue = getGraphQLForHistory(
         getHistoryItem('GRAPHQL', urlSegment || '', url),
-        localStorage
+        localStorageHook
       );
 
       setLocalStorage(newHistoryValue);
@@ -63,7 +71,7 @@ export const GraphqlForm: FC<EditorSegmentsProp> = ({
 
       {formState && (
         <span className={styles.graphql_form_code}>
-          <span>status:</span>
+          <span>{t('graphiqlResponseStatus')}:</span>
           <span
             className={classNames([
               {

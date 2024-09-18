@@ -1,11 +1,15 @@
 {
   "graphqlTitle": "GraphiQL Client",
-  "graphiqlHeadersSectionTitle": "Headers",
-  "graphiqlAddHeadersButton": "ADD THE PARAMETER",
-  "graphiqlHeadersKey": "parameter",
-  "graphiqlHeadersValue": "value",
-  "graphiqlVariablesSectionTitle": "Variables",
-  "graphiqlAddVariablesButton": "ADD THE VARIABLE",
-  "graphiqlVariablesKey": "var",
-  "graphiqlVariablesValue": "value"
+  "graphiqlResponseStatus": "status",
+  "graphqlRequestButton": "Send a request",
+  "graphqlFormatButton": "Format code",
+  "graphqlDocButton": "Open the documentation",
+  "headers": {
+    "title": "Headers",
+    "button": "ADD THE PARAMETER"
+  },
+  "variables": {
+    "title": "Variables",
+    "button": "ADD THE VARIABLE"
+  }
 }

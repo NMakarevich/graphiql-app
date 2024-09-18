@@ -1,11 +1,15 @@
 {
   "graphqlTitle": "GraphiQL Клиент",
-  "graphiqlHeadersSectionTitle": "Заголовки",
-  "graphiqlAddHeadersButton": "ДОБАВИТЬ ПАРАМЕТР",
-  "graphiqlHeadersKey": "параметр",
-  "graphiqlHeadersValue": "значение",
-  "graphiqlVariablesSectionTitle": "Переменные",
-  "graphiqlAddVariablesButton": "ДОБАВИТЬ ПЕРЕМЕННУЮ",
-  "graphiqlVariablesKey": "переменная",
-  "graphiqlVariablesValue": "значение"
+  "graphiqlResponseStatus": "статус",
+  "graphqlRequestButton": "Отправить запрос",
+  "graphqlFormatButton": "Форматировать код",
+  "graphqlDocButton": "Открыть документацию",
+  "headers": {
+    "title": "Заголовки",
+    "button": "ДОБАВИТЬ ПАРАМЕТР"
+  },
+  "variables": {
+    "title": "Переменные",
+    "button": "ДОБАВИТЬ ПЕРЕМЕННУЮ"
+  }
 }

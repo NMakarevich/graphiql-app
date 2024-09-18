@@ -12,11 +12,15 @@ import styles from './page.module.scss';
 
 const spollers = [
   {
-    addButtontext: 'Add the parameter',
+    addButtontext: 'headers.button',
     placeholder: 'parameter',
-    title: 'Headers',
+    title: 'headers.title',
   },
-  { addButtontext: 'Add the variable', placeholder: 'var', title: 'Variables' },
+  {
+    addButtontext: 'variables.button',
+    placeholder: 'var',
+    title: 'variables.title',
+  },
 ];
 
 function GraphiQL({ params }: Params): JSX.Element {
