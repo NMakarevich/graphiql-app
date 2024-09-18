@@ -69,12 +69,13 @@ export const loginWithGoogle = async () => {
       const errorMessage = error.message;
       const email = error.customData.email;
       const credential = GoogleAuthProvider.credentialFromError(error);
-      console.error(
-        'Error signing in with Google:',
-        errorCode,
-        errorMessage,
-        email,
-        credential
+      throw new Error(
+        `Error signing in with Google:\n ${JSON.stringify({
+          errorCode,
+          errorMessage,
+          email,
+          credential,
+        })}`
       );
     });
 
@@ -91,12 +92,13 @@ export const loginWithGoogle = async () => {
       const errorMessage = error.message;
       const email = error.customData.email;
       const credential = GoogleAuthProvider.credentialFromError(error);
-      console.error(
-        'Error signing in with Google:',
-        errorCode,
-        errorMessage,
-        email,
-        credential
+      throw new Error(
+        `Error signing in with Google:\n ${JSON.stringify({
+          errorCode,
+          errorMessage,
+          email,
+          credential,
+        })}`
       );
     });
 };

@@ -74,7 +74,6 @@ export default function SignInForm(): JSX.Element {
           router.push(ROUTES.HOME_PATH);
         }
       } catch (error) {
-        console.error('Error signing in:', error);
         if (error && error instanceof FirebaseError) {
           setErrorSignIn(error.message);
         }

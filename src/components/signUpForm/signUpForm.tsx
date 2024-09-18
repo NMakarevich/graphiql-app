@@ -77,7 +77,6 @@ export default function SignUpForm(): JSX.Element {
           }
         });
       } catch (error) {
-        console.error('Error sign up:', error);
         if (error && error instanceof FirebaseError) {
           setErrorSignUp(error.message);
         }
