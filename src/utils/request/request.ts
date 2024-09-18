@@ -25,6 +25,7 @@ export default async function request(data: RESTful) {
         'Content-Type': 'application/json',
         ...generateRequestHeaders(headers),
       },
+      mode: 'cors',
       body: requestBody,
     });
     const data = await response.json();
