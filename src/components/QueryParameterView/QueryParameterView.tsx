@@ -1,5 +1,5 @@
 'use client';
-import { useCallback, useEffect, useId, useState } from 'react';
+import { useCallback, useEffect, useId, useRef, useState } from 'react';
 import Checkbox from '@mui/material/Checkbox';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
@@ -23,6 +23,7 @@ export const QueryParameterView: FC<QueryParameterViewProps> = ({
   const [queryTitle, setQueryTitle] = useState<string>(name);
   const [queryValue, setQueryValue] = useState<string>(value);
   const [isActive, setIsActive] = useState<boolean>(isChecked);
+  const lineRef = useRef<HTMLDivElement>(null);
   const removeHandler = () => {
     changeQueries('delete');
     onRemove((state: stateArray) => state.filter((it) => it.id !== id));
@@ -46,7 +47,7 @@ export const QueryParameterView: FC<QueryParameterViewProps> = ({
   }
 
   function blurHandler(e: SyntheticEvent) {
-    if (!(isActive && queryTitle && queryValue)) {
+    if (placeholderText !== 'parameter' || (!queryTitle && !queryValue)) {
       e.stopPropagation();
     }
   }
@@ -82,7 +83,7 @@ export const QueryParameterView: FC<QueryParameterViewProps> = ({
   }, [changeQueries]);
 
   return (
-    <div className={styles.query_box}>
+    <div className={styles.query_box} ref={lineRef}>
       <Checkbox
         onChange={changeCheckboxHandler}
         onBlur={blurHandler}

@@ -1,4 +1,4 @@
-const getData = async (
+export const getData = async (
   endpoint: string,
   headers: Record<string, string>,
   query: string
@@ -28,9 +28,7 @@ const getData = async (
       statusText,
     };
   } else {
-    const errorMessage = `${statusCode} ${statusText ? '- ' : ''}${statusText}`;
+    const errorMessage = JSON.stringify({ code: statusCode, text: statusText });
     throw new Error(errorMessage);
   }
 };
-
-export default getData;

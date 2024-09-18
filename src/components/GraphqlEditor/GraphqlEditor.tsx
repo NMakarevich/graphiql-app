@@ -6,18 +6,9 @@ import { prettierGraphqlFormater } from '@/utils/functions/prettierGraphqlFormat
 import { useLocalStorage } from '@/hooks/useLocalStorage';
 import { debounce } from '@/utils/functions/debounce';
 import { ROUTES } from '@/utils/constants/routes';
+import { defaultSchemaQuery } from '@/utils/constants/graphQLDefaultTemplates';
 import type { SyntheticEvent } from 'react';
 import type { SegmentsProp } from '@/types/interfaces';
-
-const defaultCode = `query  {
-allPeople {
-edges {
-node {
-   id
-}
-}
-} 
-}`;
 
 export const GraphqlEditor: FC<SegmentsProp> = ({
   urlSegment,
@@ -25,9 +16,9 @@ export const GraphqlEditor: FC<SegmentsProp> = ({
 }) => {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const queryCode = codeSegment ? codeSegment : defaultCode;
+  const queryCode = codeSegment ? codeSegment : defaultSchemaQuery;
   const [editorValue, setEditorValue] = useState<string>(
-    queryCode || defaultCode
+    queryCode || defaultSchemaQuery
   );
   const [, setLocalStorageValue] = useLocalStorage(
     'graphqlActiveRequest',
@@ -49,9 +40,6 @@ export const GraphqlEditor: FC<SegmentsProp> = ({
 
   useEffect(() => {
     saveContent(editorValue);
-    document.body.dispatchEvent(
-      new CustomEvent('delivery', { detail: editorValue })
-    );
   });
 
   useEffect(() => {

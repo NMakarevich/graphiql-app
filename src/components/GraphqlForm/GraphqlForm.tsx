@@ -1,32 +1,35 @@
-import { FC } from 'react';
-// import { graphqlSubmit } from '@/utils/actions/grapgql';
+'use client';
+import { FC, useEffect, useState } from 'react';
+import { useFormState } from 'react-dom';
+import classNames from 'classnames';
 import { UrlInput } from '../UrlInput/UrlInput';
-import { getParamsEntries } from '@/utils/functions/getParamsEntries';
-import { varReplace } from '@/utils/functions/varReplace';
-import type { SegmentsProp } from '@/types/interfaces';
+import type { EditorSegmentsProp } from '@/types/interfaces';
 import styles from './GraphqlForm.module.scss';
 
-export const GraphqlForm: FC<SegmentsProp> = ({ urlSegment, codeSegment }) => {
-  async function graphqlSubmit(data: FormData) {
-    'use server';
-    const dataEntries = Object.fromEntries(data);
-    const dataArray = Object.entries(dataEntries);
-    const { url } = dataEntries;
-    const headersParams = getParamsEntries(dataArray, 'parameter');
-    const varsParams = getParamsEntries(dataArray, 'var');
-    const body = varReplace(codeSegment, varsParams);
+const defaultCode = 418;
 
-    // ! ===========================Log====================================================
-    console.log('data: ', data); // ! test
-    console.log('url: ', url); // ! test
-    console.log('headersObject: ', headersParams); // ! test
-    console.log('varsParams: ', varsParams); // ! test
-    console.log('body: ', body); // ! test
-    // ! ===================================================================================
-  }
+export const GraphqlForm: FC<EditorSegmentsProp> = ({
+  urlSegment,
+  codeSegment,
+  graphqlFormAction,
+}) => {
+  const [formState, formAction] = useFormState(graphqlFormAction, '');
+  const [code, setCode] = useState<number>(defaultCode);
+
+  useEffect(() => {
+    if (formState) {
+      const { statusCode } = JSON.parse(formState);
+
+      setCode(statusCode || defaultCode);
+    }
+
+    document.body.dispatchEvent(
+      new CustomEvent('submitresponse', { detail: formState })
+    );
+  }, [formState]);
   return (
     <form
-      action={graphqlSubmit}
+      action={formAction}
       id="graphql"
       name="graphql"
       className={styles.graphql_form}
@@ -36,6 +39,19 @@ export const GraphqlForm: FC<SegmentsProp> = ({ urlSegment, codeSegment }) => {
         urlSegment={urlSegment}
         codeSegment={codeSegment}
       />
+
+      <span
+        className={classNames([
+          {
+            [styles.graphql_form_code]: true,
+            [styles.graphql_form_code_succes]: code >= 200 && code < 300,
+            [styles.graphql_form_code_warning]: code >= 300 && code < 400,
+            [styles.graphql_form_code_error]: code >= 400 && code < 600,
+          },
+        ])}
+      >
+        {code}
+      </span>
     </form>
   );
 };

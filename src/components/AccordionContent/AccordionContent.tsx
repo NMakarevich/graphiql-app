@@ -19,6 +19,7 @@ export const AccordionContent: FC<AccordionContentProps> = ({
   );
   const searchParams = useSearchParams();
   const parameters: Query[] = [];
+  const [{ placeholderText }] = queries;
 
   searchParams.forEach((v, k) => {
     parameters.push(
@@ -79,7 +80,7 @@ export const AccordionContent: FC<AccordionContentProps> = ({
       <Button
         variant="outlined"
         onClick={() => {
-          setContent([...content, createQuery('parameter')]);
+          setContent([...content, createQuery(placeholderText || 'key')]);
         }}
         fullWidth
       >
