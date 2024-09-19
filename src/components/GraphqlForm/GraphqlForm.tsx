@@ -8,6 +8,7 @@ import { UrlInput } from '../UrlInput/UrlInput';
 import { useLocalStorage } from '@/hooks/useLocalStorage';
 import { getGraphQLPath } from '@/utils/functions/getGraphQLPath';
 import { getHistoryItem, getGraphQLForHistory } from '@/utils/history/history';
+import { getIsStringJSON } from '@/utils/functions/getIsStringJSON';
 import type { EditorSegmentsProp } from '@/types/interfaces';
 import styles from './GraphqlForm.module.scss';
 import { useTranslation } from 'react-i18next';
@@ -34,9 +35,18 @@ export const GraphqlForm: FC<EditorSegmentsProp> = ({
 
   useEffect(() => {
     if (formState) {
-      const { statusCode } = JSON.parse(formState);
+      const { statusCode, error } = JSON.parse(formState);
+      const isJSON = getIsStringJSON(error);
 
-      setCode(statusCode || defaultCode);
+      if (isJSON) {
+        const { code: status } = JSON.parse(error);
+
+        if (status) {
+          setCode(status);
+        }
+      } else {
+        setCode(statusCode || defaultCode);
+      }
     }
 
     document.body.dispatchEvent(
