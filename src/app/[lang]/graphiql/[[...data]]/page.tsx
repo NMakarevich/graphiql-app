@@ -11,20 +11,18 @@ import styles from './page.module.scss';
 
 const spollers = [
   {
-    addButtontext: 'Add the parameter',
+    addButtontext: 'headers.button',
     placeholder: 'parameter',
-    title: 'Headers',
+    title: 'headers.title',
   },
-  { addButtontext: 'Add the variable', placeholder: 'var', title: 'Variables' },
+  {
+    addButtontext: 'variables.button',
+    placeholder: 'var',
+    title: 'variables.title',
+  },
 ];
 
-export default function GraphiQL({
-  params,
-}: {
-  params: {
-    data: string[];
-  };
-}): JSX.Element {
+function GraphiQL({ params }: { params: { data: string[] } }): JSX.Element {
   const { data } = params;
   const decodedData = data
     ? data.map((param) => atob(decodeURIComponent(param)))
@@ -71,3 +69,5 @@ export default function GraphiQL({
     </div>
   );
 }
+
+export default GraphiQL;

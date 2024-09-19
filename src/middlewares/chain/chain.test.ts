@@ -36,22 +36,4 @@ describe('chain:', () => {
     expect(mockMiddleware1).toHaveBeenCalled();
     expect(mockMiddleware2).toHaveBeenCalled();
   });
-  //   const mockMiddleware: CustomMiddleware = vi.fn(async (req, event, res) => {
-  //     return res;
-  //   });
-
-  //   // Create middleware chain with a single middleware
-  //   const middlewareChain = chain([mockMiddleware]);
-
-  //   const request = {} as NextRequest;
-  //   const event = {} as NextFetchEvent;
-  //   const response = NextResponse.next();
-
-  //   // Call middleware chain
-  //   // const result = await middlewareChain(request, event, response);
-
-  //   // Verify final response
-  //   // expect(result).toBe(response);
-  //   expect(mockMiddleware).toHaveBeenCalledWith(request, event, response);
-  // });
 });

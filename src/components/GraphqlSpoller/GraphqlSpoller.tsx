@@ -1,5 +1,5 @@
 'use client';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Accordion from '@mui/material/Accordion';
 import AccordionDetails from '@mui/material/AccordionDetails';
 import AccordionSummary from '@mui/material/AccordionSummary';
@@ -9,8 +9,17 @@ import { createQuery } from '@/utils/functions/createQuery';
 import type { FC, SyntheticEvent } from 'react';
 import type { GraphqlSpollerProps } from './types';
 import styles from './GraphqlSpoller.module.scss';
+import { useTranslation } from 'react-i18next';
+import '@/utils/localization/i18n';
 
 export const GraphqlSpoller: FC<GraphqlSpollerProps> = ({ spoller, index }) => {
+  const { t, i18n } = useTranslation();
+
+  useEffect(() => {
+    const savedLocale = localStorage.getItem('LOCALE') || 'en';
+    i18n.changeLanguage(savedLocale);
+  }, [i18n]);
+
   const defaultPanelsContent = Array.from({ length: 2 }, () =>
     createQuery(spoller.placeholder)
   );
@@ -48,11 +57,14 @@ export const GraphqlSpoller: FC<GraphqlSpollerProps> = ({ spoller, index }) => {
           content: styles.graphiql_spoller_summary_content,
         }}
       >
-        {spoller.title}
+        {t(spoller.title)}
       </AccordionSummary>
 
       <AccordionDetails classes={{ root: styles.graphiql_spoller_details }}>
-        <AccordionContent queries={content} addText={spoller.addButtontext} />
+        <AccordionContent
+          queries={content}
+          addText={t(spoller.addButtontext)}
+        />
       </AccordionDetails>
     </Accordion>
   );

@@ -7,6 +7,7 @@ import { getParamsEntries } from '@/utils/functions/getParamsEntries';
 import { defaultSchemaQuery } from '@/utils/constants/graphQLDefaultTemplates';
 import type { Params } from './types';
 import styles from './layout.module.scss';
+import UseTranslateComponent from '@components/useTranslateComponent/useTranslateComponent.tsx';
 
 export const metadata: Metadata = {
   title: 'GraphQL',
@@ -53,7 +54,7 @@ export default function GraphQLLayout({
     <section className={styles.graphiql}>
       <section className={styles.graphiql_header}>
         <Typography component="h1" classes={{ root: styles.graphiql_title }}>
-          GraphiQL Client
+          <UseTranslateComponent translation={'graphqlTitle'} />
         </Typography>
 
         <GraphqlForm

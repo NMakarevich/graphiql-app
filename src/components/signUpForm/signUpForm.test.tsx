@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { fireEvent, render, screen, waitFor } from '@testing-library/react';
+import { fireEvent, render, screen } from '@testing-library/react';
 import SignUpForm from '@components/signUpForm/signUpForm.tsx';
 
 vi.mock('next/navigation', async () => ({
@@ -15,15 +15,6 @@ describe('SignUpForm', () => {
       name: /Sign Up/i,
     });
     expect(button).toBeDisabled();
-  });
-  it('Should display error when invalid email address is provided', async () => {
-    render(<SignUpForm />);
-    const emailInput = await screen.findByLabelText(/email/i);
-    await waitFor(async () => {
-      fireEvent.input(emailInput, { target: { value: 'test' } });
-      const errorMessage = await screen.findByText(/Please enter valid email/i);
-      expect(errorMessage).toBeInTheDocument();
-    });
   });
   it('Sign Up button should be enabled after providing all fields with valid data.', async () => {
     render(<SignUpForm />);

@@ -63,8 +63,10 @@ export default function middlewareWithAuth(middleware: CustomMiddleware) {
 
       return middleware(request, event, response);
     } catch (error) {
-      console.error('Error in authentication middleware:', error);
-      return new NextResponse('Internal Server Error', { status: 500 });
+      if (error instanceof Error)
+        return new NextResponse(`Internal Server Error: ${error.message}`, {
+          status: 500,
+        });
     }
   };
 }

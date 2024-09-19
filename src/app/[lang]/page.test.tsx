@@ -11,6 +11,10 @@ vi.mock('next/font/google', () => ({
   }),
 }));
 
+vi.mock('next/navigation', async () => ({
+  useRouter: vi.fn(),
+}));
+
 describe('Home:', (): void => {
   it('- renders without crashing.', async (): Promise<void> => {
     await act(async (): Promise<void> => {
