@@ -34,7 +34,9 @@
       background-color: v.$darkSlateBlue;
       color: v.$codeEditorText;
       flex: 0 1 f.rem(50px);
-      @include m.flex(space-evenly, center, column);
+      @include m.flex(null, center, column);
+      gap: 10%;
+      padding-top: f.rem(25px);
     }
   }
 }
