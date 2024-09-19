@@ -4,6 +4,7 @@
     color: v.$thistlePurpleLight;
     border-top-left-radius: 0;
     border-top-right-radius: 0;
+
     @include m.focused {
       outline: none;
     }
@@ -28,6 +29,32 @@
       color: v.$thistlePurpleLight;
       max-height: 180px;
       overflow-y: auto;
+      scrollbar-width: thin;
+      scrollbar-color: v.$headerFooterViolet v.$headerFooterViolet;
+
+      &::-webkit-scrollbar {
+        width: 7px;
+      }
+
+      &::-webkit-scrollbar-thumb,
+      &::-webkit-scrollbar-thumb:vertical {
+        background: -webkit-gradient(
+          linear,
+          left top,
+          left bottom,
+          from(v.$headerFooterViolet),
+          to(v.$headerFooterViolet)
+        );
+        box-shadow:
+          inset 2px 2px 2px v.$queryParameterborderTransparent,
+          inset -2px -2px 2px v.$queryParameterborderTransparent;
+      }
+
+      &::-webkit-scrollbar-track,
+      &::-webkit-scrollbar-track-piece {
+        background-color: v.$queryParameterborderTransparent;
+        background: v.$queryParameterborderTransparent;
+      }
     }
 
     &_icon {
