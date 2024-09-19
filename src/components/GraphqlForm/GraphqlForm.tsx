@@ -2,7 +2,7 @@
 'use client';
 import { FC, useEffect, useState } from 'react';
 import { useFormState } from 'react-dom';
-import { usePathname, useSearchParams } from 'next/navigation';
+import { useSearchParams } from 'next/navigation';
 import classNames from 'classnames';
 import { UrlInput } from '../UrlInput/UrlInput';
 import { useLocalStorage } from '@/hooks/useLocalStorage';
@@ -24,7 +24,6 @@ export const GraphqlForm: FC<EditorSegmentsProp> = ({
   const [code, setCode] = useState<number>(0);
   const [localStorageHook, setLocalStorage] = useLocalStorage('history', '{}');
   const searchParams = useSearchParams();
-  const pathName = usePathname();
   const { t, i18n } = useTranslation();
 
   useEffect(() => {
@@ -47,8 +46,7 @@ export const GraphqlForm: FC<EditorSegmentsProp> = ({
   useEffect(() => {
     if (urlSegment && formState) {
       const sqParams = searchParams.toString();
-      const [, lang] = pathName.split('/');
-      const url = `/${lang}${ROUTES.GRAPHIQL_PATH}${urlSegment ? '/' + encodeURIComponent(btoa(urlSegment)) : ''}${codeSegment ? '/' + encodeURIComponent(btoa(codeSegment)) : ''}${sqParams ? '?' + sqParams : ''}`;
+      const url = `${ROUTES.GRAPHIQL_PATH}${urlSegment ? '/' + encodeURIComponent(btoa(urlSegment)) : ''}${codeSegment ? '/' + encodeURIComponent(btoa(codeSegment)) : ''}${sqParams ? '?' + sqParams : ''}`;
       const newHistoryValue = getGraphQLForHistory(
         getHistoryItem('GRAPHQL', urlSegment || '', url),
         localStorageHook

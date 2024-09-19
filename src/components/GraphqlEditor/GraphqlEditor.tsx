@@ -1,6 +1,6 @@
 'use client';
 import { FC, useEffect, useState } from 'react';
-import { usePathname, useRouter, useSearchParams } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { CodeEditor } from '@/components/CodeEditor/CodeEditor';
 import { prettierGraphqlFormater } from '@/utils/functions/prettierGraphqlFormater';
 import { ROUTES } from '@/utils/constants/routes';
@@ -14,7 +14,6 @@ export const GraphqlEditor: FC<SegmentsProp> = ({
 }) => {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const pathName = usePathname();
   const queryCode = codeSegment ? codeSegment : defaultSchemaQuery;
   const [editorValue, setEditorValue] = useState<string>(
     queryCode || defaultSchemaQuery
@@ -27,8 +26,7 @@ export const GraphqlEditor: FC<SegmentsProp> = ({
   const editorBlurHandler = (e: SyntheticEvent) => {
     e.stopPropagation();
     const sqParams = searchParams.toString();
-    const [, lang] = pathName.split('/');
-    const url = `/${lang}${ROUTES.GRAPHIQL_PATH}${urlSegment ? '/' + encodeURIComponent(btoa(urlSegment)) : ''}${editorValue ? '/' + encodeURIComponent(btoa(editorValue)) : ''}${sqParams ? '?' + sqParams : ''}`;
+    const url = `${ROUTES.GRAPHIQL_PATH}${urlSegment ? '/' + encodeURIComponent(btoa(urlSegment)) : ''}${editorValue ? '/' + encodeURIComponent(btoa(editorValue)) : ''}${sqParams ? '?' + sqParams : ''}`;
 
     router.replace(url, { scroll: false });
   };
