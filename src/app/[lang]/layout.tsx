@@ -13,7 +13,6 @@ const montserrat = Montserrat({
   subsets: ['cyrillic', 'latin'],
   display: 'swap',
 });
-
 export const metadata: Metadata = {
   title: 'REST/GraphiQL Client',
   description: 'REST/GraphiQL Client App',
