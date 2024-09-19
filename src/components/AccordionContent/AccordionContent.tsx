@@ -38,6 +38,7 @@ export const AccordionContent: FC<AccordionContentProps> = ({
   const blurHandler = (e: SyntheticEvent) => {
     e.stopPropagation();
     const newParams = new URLSearchParams();
+    const [, lang] = path.split('/');
 
     queriesState
       .filter((it, idx, arr) => {
@@ -47,7 +48,7 @@ export const AccordionContent: FC<AccordionContentProps> = ({
         newParams.set(it.name, it.value);
       });
 
-    const fullPath = `${path}${queriesState.length ? '?' + newParams.toString() : ''}`;
+    const fullPath = `/${lang}${path}${queriesState.length ? '?' + newParams.toString() : ''}`;
 
     router.replace(fullPath, { scroll: false });
   };

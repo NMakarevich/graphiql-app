@@ -1,6 +1,6 @@
 'use client';
 import { FC, useState } from 'react';
-import { useRouter, useSearchParams } from 'next/navigation';
+import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import TextField from '@mui/material/TextField';
 import { ROUTES } from '@/utils/constants/routes';
 import type { ChangeEvent, SyntheticEvent } from 'react';
@@ -12,13 +12,15 @@ export const UrlInput: FC<UrlInputProps> = ({
   codeSegment,
 }) => {
   const router = useRouter();
+  const pathName = usePathname();
   const searchParams = useSearchParams();
   const [value, setValue] = useState<string>(urlSegment || '');
 
   const blurHandler = (e: SyntheticEvent) => {
     e.stopPropagation();
     const sqParams = searchParams.toString();
-    const url = `${ROUTES.GRAPHIQL_PATH}${value ? '/' + encodeURIComponent(btoa(value)) : ''}${codeSegment ? '/' + encodeURIComponent(btoa(codeSegment)) : ''}${sqParams ? '?' + sqParams : ''}`;
+    const [, lang] = pathName.split('/');
+    const url = `/${lang}${ROUTES.GRAPHIQL_PATH}${value ? '/' + encodeURIComponent(btoa(value)) : ''}${codeSegment ? '/' + encodeURIComponent(btoa(codeSegment)) : ''}${sqParams ? '?' + sqParams : ''}`;
 
     router.replace(url, { scroll: false });
   };

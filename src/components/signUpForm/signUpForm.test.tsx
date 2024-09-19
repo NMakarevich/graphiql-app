@@ -29,7 +29,6 @@ describe('SignUpForm', () => {
     const button: HTMLButtonElement = await screen.findByRole('button', {
       name: /Sign Up/i,
     });
-    screen.debug();
     expect(button.disabled).toBeFalsy();
   });
 });
