@@ -28,7 +28,7 @@ export const GraphqlEditor: FC<SegmentsProp> = ({
     const sqParams = searchParams.toString();
     const url = `${ROUTES.GRAPHIQL_PATH}${urlSegment ? '/' + encodeURIComponent(btoa(urlSegment)) : ''}${editorValue ? '/' + encodeURIComponent(btoa(editorValue)) : ''}${sqParams ? '?' + sqParams : ''}`;
 
-    router.push(url, { scroll: false });
+    router.replace(url, { scroll: false });
   };
 
   useEffect(() => {

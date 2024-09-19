@@ -49,7 +49,7 @@ export const AccordionContent: FC<AccordionContentProps> = ({
 
     const fullPath = `${path}${queriesState.length ? '?' + newParams.toString() : ''}`;
 
-    router.push(fullPath, { scroll: false });
+    router.replace(fullPath, { scroll: false });
   };
 
   const qUpdateHandler = (e: CustomEventInit) => {

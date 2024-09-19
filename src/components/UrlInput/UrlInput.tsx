@@ -20,7 +20,7 @@ export const UrlInput: FC<UrlInputProps> = ({
     const sqParams = searchParams.toString();
     const url = `${ROUTES.GRAPHIQL_PATH}${value ? '/' + encodeURIComponent(btoa(value)) : ''}${codeSegment ? '/' + encodeURIComponent(btoa(codeSegment)) : ''}${sqParams ? '?' + sqParams : ''}`;
 
-    router.push(url, { scroll: false });
+    router.replace(url, { scroll: false });
   };
 
   function changeValueHandler(e: ChangeEvent) {

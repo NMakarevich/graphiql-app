@@ -6,7 +6,6 @@ import { Prettify } from '@/components/Prettify/Prettify';
 import { QueryResponsePanel } from '@/components/QueryResponsePanel/QueryResponsePanel';
 import { GraphqlSpoller } from '@/components/GraphqlSpoller/GraphqlSpoller';
 import Card from '@mui/material/Card';
-import { Params } from './types';
 import { Spoller } from '@typesfolder/types';
 import styles from './page.module.scss';
 
@@ -19,7 +18,13 @@ const spollers = [
   { addButtontext: 'Add the variable', placeholder: 'var', title: 'Variables' },
 ];
 
-function GraphiQL({ params }: Params): JSX.Element {
+export default function GraphiQL({
+  params,
+}: {
+  params: {
+    data: string[];
+  };
+}): JSX.Element {
   const { data } = params;
   const decodedData = data
     ? data.map((param) => atob(decodeURIComponent(param)))
@@ -66,5 +71,3 @@ function GraphiQL({ params }: Params): JSX.Element {
     </div>
   );
 }
-
-export default GraphiQL;
