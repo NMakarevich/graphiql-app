@@ -33,6 +33,7 @@ export const GraphqlEditor: FC<SegmentsProp> = ({
   useEffect(() => {
     const formatCodeHandler = (e: Event) => {
       e.stopPropagation();
+
       prettierGraphqlFormater(editorValue)
         .then((data) => {
           setEditorValue(data);
