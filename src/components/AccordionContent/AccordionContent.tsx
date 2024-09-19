@@ -86,7 +86,6 @@ export const AccordionContent: FC<AccordionContentProps> = ({
       >
         {addText}
       </Button>
-
       {content.map((item, idx) => (
         <QueryParameterView
           key={item.id}

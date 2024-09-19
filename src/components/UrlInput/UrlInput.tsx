@@ -19,7 +19,6 @@ export const UrlInput: FC<UrlInputProps> = ({
     e.stopPropagation();
     const sqParams = searchParams.toString();
     const url = `${ROUTES.GRAPHIQL_PATH}${value ? '/' + encodeURIComponent(btoa(value)) : ''}${codeSegment ? '/' + encodeURIComponent(btoa(codeSegment)) : ''}${sqParams ? '?' + sqParams : ''}`;
-
     router.replace(url, { scroll: false });
   };
 

@@ -27,14 +27,12 @@ export const GraphqlEditor: FC<SegmentsProp> = ({
     e.stopPropagation();
     const sqParams = searchParams.toString();
     const url = `${ROUTES.GRAPHIQL_PATH}${urlSegment ? '/' + encodeURIComponent(btoa(urlSegment)) : ''}${editorValue ? '/' + encodeURIComponent(btoa(editorValue)) : ''}${sqParams ? '?' + sqParams : ''}`;
-
     router.replace(url, { scroll: false });
   };
 
   useEffect(() => {
     const formatCodeHandler = (e: Event) => {
       e.stopPropagation();
-
       prettierGraphqlFormater(editorValue)
         .then((data) => {
           setEditorValue(data);
