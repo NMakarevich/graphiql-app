@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 'use client';
 
 import { Typography } from '@mui/material';
@@ -21,7 +20,7 @@ function RESTfullClient({
   useEffect(() => {
     const savedLocale = localStorage.getItem('LOCALE') || 'en';
     i18n.changeLanguage(savedLocale);
-  }, []);
+  }, [i18n]);
 
   if (!methods.includes(params.method)) notFound();
 

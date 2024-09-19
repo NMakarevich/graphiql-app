@@ -1,6 +1,6 @@
 'use client';
 
-import { FC, useEffect, useState } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 import Button from '@mui/material/Button';
 import { useRouter } from 'next/navigation';
 import { ROUTES } from '@/utils/constants/routes.ts';
@@ -13,10 +13,13 @@ import { ECookies } from '@/utils/cookies/types';
 import { EUserEvent } from '@/utils/eventBus/types';
 import { useTranslation } from 'react-i18next';
 import '@/utils/localization/i18n';
+import { FirebaseError } from 'firebase/app';
+import { Modal } from '@components/Modal/Modal.tsx';
 
 const AuthControl: FC = (): JSX.Element => {
   const [isAuth, setIsAuth] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(true);
+  const [errorAuthSignOut, setErrorAuthSignOut] = useState<string | null>(null);
   const router = useRouter();
 
   const { t } = useTranslation();
@@ -62,9 +65,13 @@ const AuthControl: FC = (): JSX.Element => {
         router.push(ROUTES.HOME_PATH);
       }
     } catch (error) {
-      console.error('Error signing out:', error);
+      if (error && error instanceof FirebaseError) {
+        setErrorAuthSignOut(error.message);
+      }
     }
   };
+
+  const closeModal = (): void => setErrorAuthSignOut(null);
 
   const handleSignIn = (): void => router.push(ROUTES.SIGN_IN_PATH);
   const handleSignUp = (): void => router.push(ROUTES.SIGN_UP_PATH);
@@ -74,9 +81,16 @@ const AuthControl: FC = (): JSX.Element => {
   }
 
   return isAuth ? (
-    <Button variant="outlined" onClick={handleSignOut}>
-      {t('headerButtonSignOut')}
-    </Button>
+    <>
+      <Button variant="outlined" onClick={handleSignOut}>
+        {t('headerButtonSignOut')}
+      </Button>
+      {errorAuthSignOut && (
+        <Modal isOpenModal onClose={closeModal}>
+          {errorAuthSignOut}
+        </Modal>
+      )}
+    </>
   ) : (
     <div className={styles.Auth}>
       <Button variant="contained" onClick={handleSignIn}>

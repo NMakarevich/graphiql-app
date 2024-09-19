@@ -14,7 +14,9 @@ class ErrorBoundary extends Component<IProps, IState> {
   }
 
   componentDidCatch(error: Error, errorInfo: ErrorInfo): void {
-    console.error('ErrorBoundary caught an error: ', error, errorInfo);
+    throw new Error(
+      `ErrorBoundary caught an error:\n ${error.message},\n ${errorInfo}`
+    );
   }
 
   render() {

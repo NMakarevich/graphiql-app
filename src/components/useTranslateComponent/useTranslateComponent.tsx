@@ -1,12 +1,14 @@
 'use client';
 
-import { Button } from '@mui/material';
-import PlayCircleIcon from '@mui/icons-material/PlayCircle';
 import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import '@/utils/localization/i18n';
 
-export const Submit = () => {
+export default function UseTranslateComponent({
+  translation,
+}: {
+  translation: string;
+}) {
   const { t, i18n } = useTranslation();
 
   useEffect(() => {
@@ -14,9 +16,5 @@ export const Submit = () => {
     i18n.changeLanguage(savedLocale);
   }, [i18n]);
 
-  return (
-    <Button type="submit" form="graphql" title={t('graphqlRequestButton')}>
-      <PlayCircleIcon />
-    </Button>
-  );
-};
+  return t(translation);
+}

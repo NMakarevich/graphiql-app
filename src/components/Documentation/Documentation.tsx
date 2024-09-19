@@ -2,11 +2,20 @@
 import { Button } from '@mui/material';
 import Drawer from '@mui/material/Drawer';
 import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import styles from './Documentation.module.scss';
+import { useTranslation } from 'react-i18next';
+import '@/utils/localization/i18n';
 
 export const Documentation = () => {
   const [state, setState] = useState<boolean>(false);
+
+  const { t, i18n } = useTranslation();
+
+  useEffect(() => {
+    const savedLocale = localStorage.getItem('LOCALE') || 'en';
+    i18n.changeLanguage(savedLocale);
+  }, [i18n]);
 
   const toggleDrawer =
     (open: boolean) => (event: React.KeyboardEvent | React.MouseEvent) => {
@@ -23,7 +32,7 @@ export const Documentation = () => {
 
   return (
     <>
-      <Button onClick={toggleDrawer(true)} title="Open the documentation">
+      <Button onClick={toggleDrawer(true)} title={t('graphqlDocButton')}>
         <HelpOutlineIcon />
       </Button>
 

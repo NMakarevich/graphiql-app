@@ -1,5 +1,6 @@
 .graphiql {
   padding: f.rem(10px);
+  flex: 1 1 auto;
 
   & &_header {
     @include m.flex(space-between, center);

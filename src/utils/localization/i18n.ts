@@ -12,6 +12,8 @@ import historyEn from '@/locales/history/en.json';
 import historyRu from '@/locales/history/ru.json';
 import restfulEn from '@/locales/restful/en.json';
 import restfulRu from '@/locales/restful/ru.json';
+import graphqlEn from '@/locales/graphiql/en.json';
+import graphqlRu from '@/locales/graphiql/ru.json';
 
 const resources = {
   en: {
@@ -22,6 +24,7 @@ const resources = {
       ...signUpPageEn,
       ...historyEn,
       ...restfulEn,
+      ...graphqlEn,
     },
   },
   ru: {
@@ -32,6 +35,7 @@ const resources = {
       ...signUpPageRu,
       ...historyRu,
       ...restfulRu,
+      ...graphqlRu,
     },
   },
 };

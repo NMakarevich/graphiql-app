@@ -1,10 +1,12 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 'use client';
 
 import { Link, List, Paper, Typography } from '@mui/material';
 import styles from './historyList.module.scss';
 import { useLocalStorage } from '@hooks/useLocalStorage.ts';
-import { getHistoryList } from '@/utils/history/history.ts';
+import {
+  getHistoryList,
+  LOCALSTORAGE_HISTORY_KEY,
+} from '@/utils/history/history.ts';
 import HistoryListItem from '@components/historyListItem/historyListItem.tsx';
 import { ROUTES } from '@/utils/constants/routes.ts';
 import { useEffect, useState } from 'react';
@@ -14,7 +16,7 @@ import { useTranslation } from 'react-i18next';
 import '@/utils/localization/i18n';
 
 function HistoryList(): JSX.Element {
-  const [localStorageHook] = useLocalStorage('history', '{}');
+  const [localStorageHook] = useLocalStorage(LOCALSTORAGE_HISTORY_KEY, '{}');
   const [historyList, setHistoryList] = useState<HistoryItem[]>([]);
   const [isLoaded, setIsLoaded] = useState(false);
   const { t, i18n } = useTranslation();
@@ -22,7 +24,7 @@ function HistoryList(): JSX.Element {
   useEffect(() => {
     const savedLocale = localStorage.getItem('LOCALE') || 'en';
     i18n.changeLanguage(savedLocale);
-  }, []);
+  }, [i18n]);
 
   useEffect(() => {
     const historyList = getHistoryList(JSON.parse(localStorageHook));

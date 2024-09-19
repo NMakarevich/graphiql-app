@@ -7,7 +7,6 @@ export function useLocalStorage(key: string, initValue: string = '') {
       const item = localStorage.getItem(key);
       return item !== null ? item : initValue;
     }
-
     return initValue;
   };
 
@@ -23,7 +22,7 @@ export function useLocalStorage(key: string, initValue: string = '') {
         localStorage.removeItem(key);
       }
     }
-  }, [isUserClient, key, localStorageValue]);
+  }, [key, localStorageValue, isUserClient]);
 
   return [localStorageValue, setLocalStorageValue] as const;
 }

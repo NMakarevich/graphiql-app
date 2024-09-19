@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 'use client';
 
 import { FC, useEffect, useState } from 'react';
@@ -41,7 +40,7 @@ const LanguageToggle: FC<ILanguageToggleProps> = ({
         i18n.changeLanguage(savedLocale);
       }
     }
-  }, [router]);
+  }, [router, i18n]);
 
   const toggleLanguage = (locale: string): void => {
     const currentPath = window.location.pathname;
