@@ -1,6 +1,6 @@
 'use client';
 import { FC, useState } from 'react';
-import { usePathname, useRouter, useSearchParams } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import TextField from '@mui/material/TextField';
 import { getGraphQLPath } from '@/utils/functions/getGraphQLPath';
 import type { ChangeEvent, SyntheticEvent } from 'react';
@@ -10,17 +10,16 @@ export const UrlInput: FC<UrlInputProps> = ({
   classes,
   urlSegment,
   codeSegment,
+  lang,
 }) => {
   const router = useRouter();
-  const pathName = usePathname();
   const searchParams = useSearchParams();
   const [value, setValue] = useState<string>(urlSegment || '');
 
   const blurHandler = (e: SyntheticEvent) => {
     e.stopPropagation();
     const sqParams = searchParams.toString();
-    const [, lang] = pathName.split('/');
-    const url = getGraphQLPath(lang, value, codeSegment, sqParams);
+    const url = getGraphQLPath(lang || '', value, codeSegment, sqParams);
 
     router.replace(url, { scroll: false });
   };
