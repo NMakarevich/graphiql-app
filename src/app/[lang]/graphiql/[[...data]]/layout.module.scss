@@ -1,0 +1,13 @@
+.graphiql {
+  padding: f.rem(10px);
+  flex: 1 1 auto;
+
+  & &_header {
+    @include m.flex(space-between, center);
+  }
+
+  &_title {
+    padding-bottom: f.rem(10px);
+    font-size: xx-large !important;
+  }
+}

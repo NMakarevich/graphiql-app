@@ -1,0 +1,59 @@
+@use '../../tools/functions' as f;
+@use '../../tools/mixins' as mix;
+@use '../../tools/vars' as vars;
+@use '../../tools/extends';
+@use 'sass:math';
+
+html {
+  @extend %smoothscroll;
+}
+
+.wrapper {
+  height: 100%;
+  // @include mix.flex(null, null, column);
+  @extend %layout;
+  overflow-x: clip;
+
+  // Фикс для слайдеров
+  > * {
+    min-width: 0;
+  }
+}
+
+@if (vars.$responsiveType) {
+  // Отзывчивая верстка без брейк-поинтов
+  .container,
+  [class*='_container'] {
+    @if (vars.$container>0) {
+      box-sizing: content-box;
+      max-width: f.rem(vars.$container);
+      margin: 0 auto;
+    }
+    @if (vars.$containerPadding>0) {
+      width: calc(100% - #{vars.$containerPadding}px);
+      padding: 0 f.rem(math.div(vars.$containerPadding, 2));
+    } @else {
+      width: 100%;
+    }
+    height: 100%;
+  }
+} @else {
+  // Верстка адаптива вручную по брейк-поинтам
+  .container,
+  [class*='_container'] {
+    margin: 0 auto;
+    @if (vars.$container>0) {
+      max-width: f.rem(vars.$container);
+    }
+  }
+}
+
+// Блокировка прокрутки контента
+.lock {
+  overflow: hidden !important;
+  touch-action: none !important;
+}
+
+::selection {
+  background-color: vars.$darkSlateBlue;
+}

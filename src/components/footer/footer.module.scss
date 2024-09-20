@@ -1,0 +1,33 @@
+@import 'src/styles/scss/tools/mixins/components/breakpoints';
+@import 'src/styles/scss/tools/vars/components/colors';
+
+.Footer {
+  background-color: v.$headerFooterViolet;
+  height: fit-content;
+}
+
+.Toolbar {
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  padding: 10px;
+  color: v.$gainsboroLightShadow;
+}
+
+.Contributors {
+  flex: 0;
+  display: flex;
+  gap: 15px;
+
+  @include mobile {
+    flex-direction: column;
+    gap: 10px;
+  }
+}
+
+.Image {
+  @include mobile {
+    width: 64px;
+    height: 64px;
+  }
+}

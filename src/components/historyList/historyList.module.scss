@@ -1,0 +1,24 @@
+.Paper {
+  width: 100%;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
+
+.Paper:not(:has(.List)) {
+  margin: auto;
+}
+
+.List {
+  width: 100%;
+  max-height: 550px;
+  overflow: scroll;
+}
+
+.Nav {
+  display: flex;
+  gap: 25px;
+  justify-content: center;
+}

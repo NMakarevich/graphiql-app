@@ -1,0 +1,16 @@
+//Опции адаптивной сетки на флексах
+$cardsOptions: (
+  parent: 'cards',
+  child: 'item',
+  bigDesktopGap: 30px,
+  bigDesktopElems: 4,
+  desktop: '1280px',
+  desktopGap: 30px,
+  desktopElems: 3,
+  tablet: '1024px',
+  tabletElems: 2,
+  tabletGap: 30px,
+  mobile: '600px',
+  mobileElems: 1,
+  mobileGap: 20px,
+);

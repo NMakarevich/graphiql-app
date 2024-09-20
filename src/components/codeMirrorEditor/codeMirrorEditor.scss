@@ -1,0 +1,23 @@
+.cm-theme {
+  height: 250px;
+  border-radius: 4px;
+}
+
+.cm-editor {
+  background: transparent;
+  border: 2px solid rgba(81, 81, 81, 1);
+  border-radius: 4px;
+
+  &:hover {
+    border-color: #e6e0e9;
+  }
+}
+
+.cm-focused {
+  border-color: #d0bcff;
+  border-width: 2px;
+}
+
+.cm-scroller {
+  border-radius: 4px;
+}

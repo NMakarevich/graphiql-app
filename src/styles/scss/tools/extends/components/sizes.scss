@@ -1,0 +1,26 @@
+@use '../../mixins' as mix;
+
+// Размеры
+%fullwh {
+  @include mix.fullwh;
+}
+
+%mfullwh {
+  @include mix.mfullwh;
+}
+
+%fullwhp {
+  @include mix.fullwhp;
+}
+
+%fullscreen {
+  min-height: 100vh;
+
+  [class^='page--'] & {
+    min-height: calc(var(--vh, 1vh) * 100);
+
+    @include mix.smalltablet {
+      transition: height 0.2s;
+    }
+  }
+}
