@@ -6,8 +6,9 @@ import { useSearchParams } from 'next/navigation';
 import classNames from 'classnames';
 import { UrlInput } from '../UrlInput/UrlInput';
 import { useLocalStorage } from '@/hooks/useLocalStorage';
-import { ROUTES } from '@/utils/constants/routes';
+import { getGraphQLPath } from '@/utils/functions/getGraphQLPath';
 import { getHistoryItem, getGraphQLForHistory } from '@/utils/history/history';
+import { getIsStringJSON } from '@/utils/functions/getIsStringJSON';
 import type { EditorSegmentsProp } from '@/types/interfaces';
 import styles from './GraphqlForm.module.scss';
 import { useTranslation } from 'react-i18next';
@@ -18,6 +19,7 @@ const defaultCode = 418;
 export const GraphqlForm: FC<EditorSegmentsProp> = ({
   urlSegment,
   codeSegment,
+  lang,
   graphqlFormAction,
 }) => {
   const [formState, formAction] = useFormState(graphqlFormAction, '');
@@ -33,9 +35,18 @@ export const GraphqlForm: FC<EditorSegmentsProp> = ({
 
   useEffect(() => {
     if (formState) {
-      const { statusCode } = JSON.parse(formState);
+      const { statusCode, error } = JSON.parse(formState);
+      const isJSON = getIsStringJSON(error);
 
-      setCode(statusCode || defaultCode);
+      if (isJSON) {
+        const { code: status } = JSON.parse(error);
+
+        if (status) {
+          setCode(status);
+        }
+      } else {
+        setCode(statusCode || defaultCode);
+      }
     }
 
     document.body.dispatchEvent(
@@ -46,9 +57,9 @@ export const GraphqlForm: FC<EditorSegmentsProp> = ({
   useEffect(() => {
     if (urlSegment && formState) {
       const sqParams = searchParams.toString();
-      const url = `${ROUTES.GRAPHIQL_PATH}${urlSegment ? '/' + encodeURIComponent(btoa(urlSegment)) : ''}${codeSegment ? '/' + encodeURIComponent(btoa(codeSegment)) : ''}${sqParams ? '?' + sqParams : ''}`;
+      const url = getGraphQLPath('', urlSegment, codeSegment || '', sqParams);
       const newHistoryValue = getGraphQLForHistory(
-        getHistoryItem('GRAPHQL', urlSegment || '', url),
+        getHistoryItem('GRAPHQL', urlSegment, url),
         localStorageHook
       );
 
@@ -67,6 +78,7 @@ export const GraphqlForm: FC<EditorSegmentsProp> = ({
         classes={styles.graphql_form_url}
         urlSegment={urlSegment}
         codeSegment={codeSegment}
+        lang={lang}
       />
 
       {formState && (

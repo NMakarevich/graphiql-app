@@ -18,7 +18,7 @@ export default function GraphQLLayout({
   children,
   params,
 }: Params): JSX.Element {
-  const { data } = params;
+  const { data, lang } = params;
   const decodedData = data
     ? data.map((param) => atob(decodeURIComponent(param)))
     : [];
@@ -60,6 +60,7 @@ export default function GraphQLLayout({
         <GraphqlForm
           urlSegment={urlSegment}
           codeSegment={codeSegment}
+          lang={lang}
           graphqlFormAction={graphqlSubmit}
         />
       </section>

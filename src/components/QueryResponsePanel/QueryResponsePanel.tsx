@@ -14,21 +14,23 @@ export const QueryResponsePanel = () => {
 
   useEffect(() => {
     const valueChangeHandler = (e: CustomEventInit) => {
-      const { data, error, statusText } = JSON.parse(e.detail);
+      if (e.detail) {
+        const { data, error, statusText } = JSON.parse(e.detail);
 
-      if (data) {
-        setValue(JSON.stringify(data, null, 2));
-      } else if (error) {
-        setValue(
-          JSON.stringify(
-            {
-              error,
-              info: statusText,
-            },
-            null,
-            2
-          )
-        );
+        if (data) {
+          setValue(JSON.stringify(data, null, 2));
+        } else if (error) {
+          setValue(
+            JSON.stringify(
+              {
+                error,
+                info: statusText,
+              },
+              null,
+              2
+            )
+          );
+        }
       }
     };
 

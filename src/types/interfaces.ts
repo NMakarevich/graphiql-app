@@ -11,6 +11,7 @@ export type GraphQLresponse = {
 export interface SegmentsProp {
   urlSegment?: string;
   codeSegment?: string;
+  lang?: string;
 }
 
 export interface EditorSegmentsProp extends SegmentsProp {

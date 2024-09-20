@@ -3,7 +3,7 @@ import { FC, useEffect, useState } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { CodeEditor } from '@/components/CodeEditor/CodeEditor';
 import { prettierGraphqlFormater } from '@/utils/functions/prettierGraphqlFormater';
-import { ROUTES } from '@/utils/constants/routes';
+import { getGraphQLPath } from '@/utils/functions/getGraphQLPath';
 import { defaultSchemaQuery } from '@/utils/constants/graphQLDefaultTemplates';
 import type { SyntheticEvent } from 'react';
 import type { SegmentsProp } from '@/types/interfaces';
@@ -11,6 +11,7 @@ import type { SegmentsProp } from '@/types/interfaces';
 export const GraphqlEditor: FC<SegmentsProp> = ({
   urlSegment,
   codeSegment,
+  lang,
 }) => {
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -26,7 +27,7 @@ export const GraphqlEditor: FC<SegmentsProp> = ({
   const editorBlurHandler = (e: SyntheticEvent) => {
     e.stopPropagation();
     const sqParams = searchParams.toString();
-    const url = `${ROUTES.GRAPHIQL_PATH}${urlSegment ? '/' + encodeURIComponent(btoa(urlSegment)) : ''}${editorValue ? '/' + encodeURIComponent(btoa(editorValue)) : ''}${sqParams ? '?' + sqParams : ''}`;
+    const url = getGraphQLPath(lang || '', urlSegment, editorValue, sqParams);
 
     router.replace(url, { scroll: false });
   };
