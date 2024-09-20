@@ -22,8 +22,12 @@ const spollers = [
   },
 ];
 
-function GraphiQL({ params }: { params: { data: string[] } }): JSX.Element {
-  const { data } = params;
+function GraphiQL({
+  params,
+}: {
+  params: { data: string[]; lang: string };
+}): JSX.Element {
+  const { data, lang } = params;
   const decodedData = data
     ? data.map((param) => atob(decodeURIComponent(param)))
     : [];
@@ -39,7 +43,11 @@ function GraphiQL({ params }: { params: { data: string[] } }): JSX.Element {
           [styles.graphiql_editors_card_non_bottom]
         )}
       >
-        <GraphqlEditor urlSegment={urlSegment} codeSegment={codeSegment} />
+        <GraphqlEditor
+          urlSegment={urlSegment}
+          codeSegment={codeSegment}
+          lang={lang}
+        />
 
         <hr className={styles.graphiql_editors_separator} />
 
