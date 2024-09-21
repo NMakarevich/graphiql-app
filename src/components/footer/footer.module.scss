@@ -7,11 +7,18 @@
 }
 
 .Toolbar {
-  justify-content: space-between;
-  align-items: center;
+  @include m.flex(space-between, center);
   gap: 10px;
   padding: 10px;
   color: v.$gainsboroLightShadow;
+
+  @media (max-width: 659.5px) {
+    flex-direction: column;
+  }
+
+  @media (max-width: 512.5px) {
+    flex-direction: row;
+  }
 }
 
 .Contributors {
@@ -19,15 +26,50 @@
   display: flex;
   gap: 15px;
 
-  @include mobile {
+  @media (max-width: 659.5px) {
+    flex: 0 1 100%;
+    justify-content: space-between;
+    width: 100%;
+  }
+
+  @media (max-width: (512.5px)) {
     flex-direction: column;
     gap: 10px;
   }
 }
 
-.Image {
-  @include mobile {
-    width: 64px;
-    height: 64px;
+.copyright {
+  @include m.flex(space-between, center);
+  gap: 10px;
+
+  @media (max-width: 659.5px) {
+    flex: 0 1 100%;
+    @include m.flex(space-evenly, center);
+    width: 100%;
+  }
+
+  @media (max-width: 512.5px) {
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    flex: 0 1 content;
+    gap: 5px;
+  }
+
+  .Team {
+    @media (max-width: 512.5px) {
+      order: 2;
+    }
+  }
+
+  .Image {
+    @media (max-width: 512.5px) {
+      order: 1;
+    }
+
+    @include mobile {
+      width: 64px;
+      height: 64px;
+    }
   }
 }

@@ -4,6 +4,10 @@
   flex: 1 1 auto;
   padding: f.rem(20px);
   @extend %fullwhp;
+
+  @include m.smalltablet {
+    padding: f.rem(10px);
+  }
 }
 
 .Paper:not(:has(.List)) {
