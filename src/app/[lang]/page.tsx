@@ -74,6 +74,7 @@ export default function Home(): JSX.Element {
         {t('mainTitle')}
         {authorized && user ? `, ${user}` : ''}!
       </Typography>
+
       <Typography
         variant={'body1'}
         component="section"
@@ -82,7 +83,9 @@ export default function Home(): JSX.Element {
         <Typography variant={'h4'}>{t('mainAboutApp')}</Typography>
         <Typography component={'p'}>{t('mainContent')}</Typography>
       </Typography>
+
       <Divider />
+
       <Typography
         variant={'body1'}
         component="section"
@@ -101,7 +104,9 @@ export default function Home(): JSX.Element {
           ))}
         </ul>
       </Typography>
+
       <Divider />
+
       <Typography
         variant={'body1'}
         component="section"
@@ -109,33 +114,39 @@ export default function Home(): JSX.Element {
       >
         <Typography variant={'h4'}>{t('mainAboutCourse')}</Typography>
         <Typography component={'p'}>{t('mainCourseIntro')}</Typography>
+
         <ul>
           <li>
             <Typography component={'span'} className={styles.ListItem}>
               <CheckIcon fontSize={'small'} /> JavaScript
             </Typography>
           </li>
+
           <li>
             <Typography component={'span'} className={styles.ListItem}>
               <CheckIcon fontSize={'small'} /> TypeScript
             </Typography>
           </li>
+
           <li>
             <Typography component={'span'} className={styles.ListItem}>
               <CheckIcon fontSize={'small'} /> Git, GitHub (clone, add, commit,
               push, pull, merge, rebase, pull request flow)
             </Typography>
           </li>
+
           <li>
             <Typography component={'span'} className={styles.ListItem}>
               <CheckIcon fontSize={'small'} /> NPM
             </Typography>
           </li>
+
           <li>
             <Typography component={'span'} className={styles.ListItem}>
               <CheckIcon fontSize={'small'} /> CSS3 / HTML5
             </Typography>
           </li>
+
           <li>
             <Typography component={'span'} className={styles.ListItem}>
               <CheckIcon fontSize={'small'} />
@@ -144,6 +155,7 @@ export default function Home(): JSX.Element {
           </li>
         </ul>
       </Typography>
+
       <Divider />
       {authorized ? (
         <div className={styles.Nav}>
@@ -156,6 +168,7 @@ export default function Home(): JSX.Element {
           <Typography variant={'body1'} className={styles.Paragraph}>
             {t('mainAuthRequired')}
           </Typography>
+
           <div className={styles.Nav}>
             <Link href={ROUTES.SIGN_IN_PATH}>{t('mainSignIn')}</Link>
             <Link href={ROUTES.SIGN_UP_PATH}>{t('mainSignUp')}</Link>

@@ -8,15 +8,17 @@ function HistoryListItem({ item }: { item: HistoryItem }): JSX.Element {
   const lang = pathname.split('/')[1];
 
   return (
-    <ListItem key={item.executedAt}>
+    <ListItem key={item.executedAt} classes={{ root: styles.list_item }}>
       <ListItemButton component="a" href={`/${lang}${item.url}`}>
         <p className={styles.ListItem}>
           <Typography component="span" className={styles.Source}>
             {item.source}
           </Typography>
+
           <Typography component="span" className={styles.Date}>
             {new Date(item.executedAt).toLocaleString()}
           </Typography>
+
           <Typography component="span" className={styles.Url}>
             {item.baseUrl}
           </Typography>

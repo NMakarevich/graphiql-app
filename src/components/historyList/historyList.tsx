@@ -53,10 +53,12 @@ function HistoryList(): JSX.Element {
               <Typography variant={'body1'} className={styles.Paragraph}>
                 {t('historyEmptyMessage')}
               </Typography>
+
               <div className={styles.Nav}>
                 <Link href={ROUTES.RESTFUL_CLIENT_PATH}>
                   {t('historyNavigateToRestfulClient')}
                 </Link>
+
                 <Link href={ROUTES.GRAPHIQL_PATH}>
                   {t('historyNavigateToGraphQL')}
                 </Link>

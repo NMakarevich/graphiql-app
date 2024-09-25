@@ -4,6 +4,10 @@
 
   & &_header {
     @include m.flex(space-between, center);
+
+    @include m.smalltablet {
+      flex-direction: column;
+    }
   }
 
   &_title {

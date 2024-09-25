@@ -9,10 +9,13 @@
       font-size: 14px;
       letter-spacing: 2px;
       resize: none;
-      // pointer-events: none;
 
       &::selection {
         background-color: v.$darkSlateBlue;
+      }
+
+      @include m.smalltablet {
+        height: 250px;
       }
     }
   }

@@ -5,11 +5,24 @@
     @include m.flex(null, center);
     gap: 5px;
 
+    @include m.smallmobile {
+      flex-direction: column;
+    }
+
+    @include m.smalltablet {
+      width: 100%;
+      flex: 0 1 auto;
+    }
+
     & &_code {
       @include m.flex(null, center);
       gap: 5px;
       padding: f.rem(5px);
       font-size: 24px;
+
+      @include m.smallmobile {
+        order: 1;
+      }
 
       &_number {
         font-size: 24px;
@@ -34,6 +47,15 @@
     & &_url {
       color: v.$thistlePurpleLight;
       max-width: 384px;
+
+      @include m.smalltablet {
+        max-width: 80%;
+      }
+
+      @include m.smallmobile {
+        order: 2;
+        max-width: 100%;
+      }
 
       fieldset {
         border-color: v.$brownLight;
