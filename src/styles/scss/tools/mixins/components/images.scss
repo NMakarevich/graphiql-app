@@ -1,0 +1,21 @@
+@use 'effects' as em;
+@use 'sizes' as sm;
+@use 'sass:meta';
+
+// Адаптивная графика
+@mixin responsiveImage($membrane: false, $of: cover) {
+  position: relative;
+  overflow: hidden;
+
+  img {
+    position: absolute;
+    @include sm.fullwhp;
+    top: 0;
+    left: 0;
+    object-fit: $of;
+  }
+
+  @if $membrane {
+    @include em.membrane();
+  }
+}

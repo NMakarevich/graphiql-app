@@ -1,0 +1,10 @@
+@import 'src/styles/scss/tools/mixins/components/breakpoints';
+
+.Auth {
+  display: flex;
+  gap: 20px;
+
+  @include mobile {
+    flex-direction: column;
+  }
+}

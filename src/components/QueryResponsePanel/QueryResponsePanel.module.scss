@@ -1,0 +1,22 @@
+.graphiql {
+  &_editors {
+    &_result {
+      width: 100%;
+      height: 100%;
+      padding: 0 f.rem(5px);
+      background-color: v.$codeEditorBg;
+      color: v.$codeEditorText;
+      font-size: 14px;
+      letter-spacing: 2px;
+      resize: none;
+
+      &::selection {
+        background-color: v.$darkSlateBlue;
+      }
+
+      @include m.smalltablet {
+        height: 250px;
+      }
+    }
+  }
+}

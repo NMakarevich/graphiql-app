@@ -1,0 +1,52 @@
+.Paper {
+  @include m.flex(null, center, column);
+  gap: 20px;
+  flex: 1 1 auto;
+  padding: f.rem(20px);
+  @extend %fullwhp;
+
+  @include m.smalltablet {
+    padding: f.rem(10px);
+  }
+}
+
+.Paper:not(:has(.List)) {
+  margin: auto;
+}
+
+.List {
+  max-height: 33rem;
+  overflow: auto;
+  scrollbar-width: thin;
+  scrollbar-color: v.$headerFooterViolet v.$headerFooterViolet;
+  @extend %fullwhp;
+
+  &::-webkit-scrollbar {
+    width: 7px;
+  }
+
+  &::-webkit-scrollbar-thumb,
+  &::-webkit-scrollbar-thumb:vertical {
+    background: -webkit-gradient(
+      linear,
+      left top,
+      left bottom,
+      from(v.$headerFooterViolet),
+      to(v.$headerFooterViolet)
+    );
+    box-shadow:
+      inset 2px 2px 2px v.$queryParameterborderTransparent,
+      inset -2px -2px 2px v.$queryParameterborderTransparent;
+  }
+
+  &::-webkit-scrollbar-track,
+  &::-webkit-scrollbar-track-piece {
+    background-color: v.$queryParameterborderTransparent;
+    background: v.$queryParameterborderTransparent;
+  }
+}
+
+.Nav {
+  @include m.flex(center, null);
+  gap: 25px;
+}

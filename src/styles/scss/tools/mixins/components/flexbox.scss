@@ -1,0 +1,17 @@
+@use '../../vars' as vars;
+@use 'sass:map';
+
+// Флексы
+@mixin flex($js: null, $ai: $js, $dir: null) {
+  display: flex;
+  flex-direction: $dir;
+  justify-content: $js;
+  align-items: $ai;
+}
+
+@mixin iflex($js: stretch, $ai: $js, $dir: null) {
+  display: inline-flex;
+  flex-direction: $dir;
+  justify-content: $js;
+  align-items: $ai;
+}

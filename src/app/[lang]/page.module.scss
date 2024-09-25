@@ -1,0 +1,47 @@
+.Paper {
+  margin-bottom: f.rem(12px);
+}
+
+.Paper:before {
+  content: '';
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 105%;
+  background: fixed url('../../../public/background.jpg') center center / cover
+    no-repeat;
+  z-index: -2;
+}
+
+.Paper:after {
+  content: '';
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 105%;
+  background: fixed rgba(9, 0, 31, 0.15) center center / cover no-repeat;
+  z-index: -1;
+}
+
+.Paragraph {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.Nav {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
+
+.ListItem {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}

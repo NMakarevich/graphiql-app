@@ -1,0 +1,57 @@
+//==========================================Цвета====================================================//
+
+$black: #000000;
+$blackLight: #1d1b20;
+$blackLightShadow: #1d192b;
+$blackUltraLight: #322f35;
+$brownLight: #383541;
+$white: #ffffff;
+$snow: #fef7ff;
+$lavender: #eaddff;
+$lavenderLight: #e8def8;
+$lavenderBlush: #f5eff7;
+$gainsboro: #e7e0ec;
+$gainsboroShadow: #ded8e1;
+$gainsboroLight: #ece6f0;
+$gainsboroLightShadow: #e6e0e9;
+$ghostWhite: #f3edf7;
+$ghostWhiteLight: #f7f2fa;
+$slateBlue: #6750a4;
+$darkSlateBlue: #4f378b;
+$midnightBlue: #21005d;
+$dimGrey: #4a4458;
+$dimGrayLight: #625b71;
+$saddleBrownDark: #7d5260;
+$saddleBrownDarkUltra: #633b48;
+$lightPink: #ffd8e4;
+$lightPinkShadow: #efb8c8;
+$mistyRose: #f9dedc;
+$fireBrick: #b3261e;
+$brown: #8c1d18;
+$maroonUltraDark: #31111d;
+$grey: #79747e;
+$greyDark: #49454f;
+$silver: #cac4d0;
+$thistlePurple: #ccc2dc;
+$thistlePurpleLight: #d0bcff;
+$codeEditorBg: #1e1e1e;
+$codeEditorText: #9cdcfe;
+$headerFooterViolet: #381e72;
+$documentationVioletTransparent: rgba(12, 0, 33, 0.65);
+$queryParameterborderTransparent: rgba(0, 0, 0, 0.6);
+$succesColor: #04a404;
+$warningColor: #d3d304;
+$errorColor: #e10707;
+$succesLuxColor: #00c000;
+$warningLuxColor: #e8e800;
+$errorLuxColor: #dd0000;
+
+//==========================================Настройки===============================================//
+
+// Цвет текста по-умолчанию
+$defaultTextColor: $white;
+
+// Цвета модалки
+$modalBg: $blackUltraLight;
+$modalContentBg: $blackUltraLight;
+$modalBorder: $blackLightShadow;

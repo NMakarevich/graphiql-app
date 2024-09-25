@@ -1,0 +1,9 @@
+{
+  "signInTitle": "Sign In",
+  "signInEmailLabel": "Email",
+  "signInPasswordLabel": "Password",
+  "signInButton": "Sign In",
+  "signInNotRegisteredText": "Not registered yet? ",
+  "signInHintLinkText": "Sign Up",
+  "signInErrorSignIn": "Error signing in:"
+}
