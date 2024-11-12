@@ -14,7 +14,6 @@ import styles from './Documentation.module.scss';
 import '@/utils/localization/i18n';
 
 export const Documentation = () => {
-  const noUrlMessage = 'To receive the documentation, enter the URL.';
   const [state, setState] = useState<boolean>(false);
   const [currentDoca, setCurrentDoca] = useState<DocaLine[][]>([]);
   const [level, setLevel] = useState<number>(1);
@@ -107,18 +106,21 @@ export const Documentation = () => {
           {level > 1 && (
             <button className={styles.doc_back_button} onClick={backtLevel}>
               <ReplyIcon />
-              Back
+              {t('graphqlCloseDocButtonTitle')}
             </button>
           )}
 
           {level === 1 && (
-            <span className={styles.doc_back_button}>Documentation</span>
+            <span className={styles.doc_back_button}>
+              {t('graphqlDocTitle')}
+            </span>
           )}
 
           <button
             className={styles.doc_close_button}
             onClick={toggleDrawer(false)}
-            aria-label="Close the documentation"
+            aria-label={t('graphqlCloseDocButton')}
+            title={t('graphqlCloseDocButton')}
           >
             <HighlightOffIcon />
           </button>
@@ -178,7 +180,7 @@ export const Documentation = () => {
             ))}
 
           {!localStorageValue && (
-            <p className={styles.doc_no_url}>{noUrlMessage}</p>
+            <p className={styles.doc_no_url}>{t('noUrlMessage')}</p>
           )}
         </div>
       </Drawer>

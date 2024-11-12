@@ -4,6 +4,10 @@
   "graphqlRequestButton": "Send a request",
   "graphqlFormatButton": "Format code",
   "graphqlDocButton": "Open the documentation",
+  "graphqlCloseDocButton": "Close the documentation",
+  "graphqlCloseDocButtonTitle": "Back",
+  "graphqlDocTitle": "Documentation",
+  "noUrlMessage": "To receive the documentation, enter the URL.",
   "headers": {
     "title": "Headers",
     "button": "ADD THE PARAMETER"

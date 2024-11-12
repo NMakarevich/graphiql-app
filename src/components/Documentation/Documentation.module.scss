@@ -49,13 +49,20 @@
   &_header {
     @include m.flex(space-between, center);
     width: 100%;
-    padding-bottom: f.rem(5px);
+    min-height: 45px;
+    padding: 0 0 f.rem(10px) f.rem(5px);
     border-bottom: 1px solid v.$gainsboroLightShadow;
   }
 
   &_back_button {
     @include m.flex(null, center);
+    font-size: 20px !important;
+    font-weight: 500;
     gap: 5px;
+  }
+
+  &_close_button {
+    @include m.flex(center);
   }
 
   &_back_button,
@@ -90,7 +97,6 @@
   }
 
   &_button {
-    padding: 5px 0;
     background: none;
     border: none;
     color: inherit;
