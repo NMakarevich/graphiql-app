@@ -6,17 +6,19 @@ import Drawer from '@mui/material/Drawer';
 import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
 import ReplyIcon from '@mui/icons-material/Reply';
 import HighlightOffIcon from '@mui/icons-material/HighlightOff';
+import { useLocalStorage } from '@/hooks/useLocalStorage';
 import getSchema from '@/utils/graphQL/getSchema/getSchema';
-import { endpointThree } from '@/utils/constants/graphiQLParams';
 import type { MouseEvent, KeyboardEvent } from 'react';
 import type { DocaLine, DocumentationBodyResponse } from './types';
 import styles from './Documentation.module.scss';
 import '@/utils/localization/i18n';
 
 export const Documentation = () => {
+  const noUrlMessage = 'To receive the documentation, enter the URL.';
   const [state, setState] = useState<boolean>(false);
   const [currentDoca, setCurrentDoca] = useState<DocaLine[][]>([]);
   const [level, setLevel] = useState<number>(1);
+  const [localStorageValue] = useLocalStorage('url', '');
   const { t, i18n } = useTranslation();
 
   useEffect(() => {
@@ -24,34 +26,45 @@ export const Documentation = () => {
     i18n.changeLanguage(savedLocale);
   }, [i18n]);
 
+  const labelReplace = (m: string) => {
+    const [label, url] = m.split('](');
+    return `<a href="${url.slice(0, url.length - 1)}" target="_blank" title="Go to url">${label.slice(1)}</a>`;
+  };
+
+  const codeReplace = (m: string) => `<code>${m.slice(1, m.length - 1)}</code>`;
+
   const toggleDrawer =
     (open: boolean) => (event: KeyboardEvent | MouseEvent) => {
       if (open) {
-        getSchema(endpointThree)
-          .then(
-            ({ data, statusCode, statusText }: DocumentationBodyResponse) => {
-              if (statusCode === 200) {
-                setCurrentDoca([data.__schema.types]);
+        if (localStorageValue) {
+          getSchema(localStorageValue)
+            .then(
+              ({ data, statusCode, statusText }: DocumentationBodyResponse) => {
+                if (statusCode === 200) {
+                  setCurrentDoca([data.__schema.types]);
 
-                if (
-                  event.type === 'keydown' &&
-                  ((event as KeyboardEvent).key === 'Tab' ||
-                    (event as KeyboardEvent).key === 'Shift')
-                ) {
-                  return;
+                  if (
+                    event.type === 'keydown' &&
+                    ((event as KeyboardEvent).key === 'Tab' ||
+                      (event as KeyboardEvent).key === 'Shift')
+                  ) {
+                    return;
+                  }
+
+                  setState(open);
+                } else {
+                  throw new Error(statusText);
                 }
-
-                setState(open);
-              } else {
-                throw new Error(statusText);
               }
-            }
-          )
-          .catch((err) => {
-            console.error(
-              `Error! Text: ${(err as Error).message}. Cause: ${(err as Error).cause}`
-            );
-          });
+            )
+            .catch((err) => {
+              console.error(
+                `Error! Text: ${(err as Error).message}. Cause: ${(err as Error).cause}`
+              );
+            });
+        } else {
+          setState(open);
+        }
       } else {
         setState(open);
         setCurrentDoca([]);
@@ -117,58 +130,56 @@ export const Documentation = () => {
             transform: `translateX(calc(-100% * ${level - 1} - 15px * ${level - 1}))`,
           }}
         >
-          {currentDoca.map((it, idx) => (
-            <div key={idx} className={styles.doc_level}>
-              {it.map((m, i) => (
-                <div key={`${m.name}-${i}`} className={styles.doc_line}>
-                  {m.description && (
-                    <button
-                      className={styles.doc_button}
-                      onClick={() => {
-                        selectLevel(level + 1, [
-                          { name: 'text', text: m.description },
-                        ]);
-                      }}
-                    >
-                      {m.name}
-                    </button>
-                  )}
+          {localStorageValue &&
+            currentDoca.map((it, idx) => (
+              <div key={idx} className={styles.doc_level}>
+                {it.map((m, i) => (
+                  <div key={`${m.name}-${i}`} className={styles.doc_line}>
+                    {m.description && (
+                      <button
+                        className={styles.doc_button}
+                        onClick={() => {
+                          selectLevel(level + 1, [
+                            { name: 'text', text: m.description },
+                          ]);
+                        }}
+                      >
+                        {m.name}
+                      </button>
+                    )}
 
-                  {!m.description && m.fields && (
-                    <button
-                      className={styles.doc_button}
-                      onClick={() => {
-                        selectLevel(level + 1, m.fields);
-                      }}
-                    >
-                      {m.name}
-                    </button>
-                  )}
+                    {!m.description && m.fields && (
+                      <button
+                        className={styles.doc_button}
+                        onClick={() => {
+                          selectLevel(level + 1, m.fields);
+                        }}
+                      >
+                        {m.name}
+                      </button>
+                    )}
 
-                  {m.text && (
-                    <p
-                      className={styles.doc_text}
-                      dangerouslySetInnerHTML={{
-                        __html: m.text
-                          .replaceAll(
-                            /(`).+?\1/gi,
-                            (m: string) =>
-                              `<code>${m.slice(1, m.length - 1)}</code>`
-                          )
-                          .replaceAll(
-                            /\[[\w\s]+\]\(http.+\)/gi,
-                            (m: string) => {
-                              const [label, url] = m.split('](');
-                              return `<a href="${url.slice(0, url.length - 1)}" target="_blank" title="Go to url">${label.slice(1)}</a>`;
-                            }
-                          ),
-                      }}
-                    />
-                  )}
-                </div>
-              ))}
-            </div>
-          ))}
+                    {m.text && (
+                      <p
+                        className={styles.doc_text}
+                        dangerouslySetInnerHTML={{
+                          __html: m.text
+                            .replaceAll(/(`).+?\1/gi, codeReplace)
+                            .replaceAll(
+                              /\[[\w\s]+\]\(http.+\)/gi,
+                              labelReplace
+                            ),
+                        }}
+                      />
+                    )}
+                  </div>
+                ))}
+              </div>
+            ))}
+
+          {!localStorageValue && (
+            <p className={styles.doc_no_url}>{noUrlMessage}</p>
+          )}
         </div>
       </Drawer>
     </>

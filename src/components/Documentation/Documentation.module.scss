@@ -23,7 +23,6 @@
 
   &::-webkit-scrollbar-track,
   &::-webkit-scrollbar-track-piece {
-    // background-color: v.$queryParameterborderTransparent;
     background: v.$queryParameterborderTransparent;
   }
 }
@@ -98,15 +97,18 @@
     font-size: 18px;
   }
 
-  &_text {
+  &_text,
+  &_no_url {
     width: fit-content;
     max-width: 100%;
     font-size: 16px;
+    line-height: 1.75;
 
     a {
       color: inherit;
       font-size: inherit;
       font-weight: bold;
+      line-height: 1.75;
     }
   }
 }
