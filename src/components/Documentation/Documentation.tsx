@@ -17,7 +17,7 @@ export const Documentation = () => {
   const [state, setState] = useState<boolean>(false);
   const [currentDoca, setCurrentDoca] = useState<DocaLine[][]>([]);
   const [level, setLevel] = useState<number>(1);
-  const [localStorageValue] = useLocalStorage('url', '');
+  const [localStorageValue] = useLocalStorage('docUrl', '');
   const { t, i18n } = useTranslation();
 
   useEffect(() => {

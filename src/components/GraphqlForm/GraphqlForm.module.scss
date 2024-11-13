@@ -1,27 +1,36 @@
 .graphql {
   &_form {
-    padding: f.rem(5px) f.rem(5px) f.rem(10px);
-    flex: 0 1 46.5%;
     @include m.flex(null, center);
+    flex-wrap: wrap;
     gap: 5px;
+    width: 100%;
+    padding: f.rem(5px) f.rem(5px) f.rem(10px);
 
-    @include m.smallmobile {
-      flex-direction: column;
-    }
-
-    @include m.smalltablet {
+    & &_body {
+      @include m.flex(null, center);
+      gap: f.rem(70px);
       width: 100%;
-      flex: 0 1 auto;
+
+      @include m.smalltablet {
+        gap: f.rem(15px);
+      }
+
+      @include m.mobile {
+        flex-direction: column;
+      }
     }
 
     & &_code {
       @include m.flex(null, center);
       gap: 5px;
-      padding: f.rem(5px);
+      width: 100%;
+      padding: f.rem(5px) f.rem(5px) f.rem(10px);
       font-size: 24px;
 
-      @include m.smallmobile {
-        order: 1;
+      &_body {
+        @include m.flex(center);
+        gap: f.rem(10px);
+        width: 100%;
       }
 
       &_number {
@@ -46,16 +55,7 @@
 
     & &_url {
       color: v.$thistlePurpleLight;
-      max-width: 384px;
-
-      @include m.smalltablet {
-        max-width: 80%;
-      }
-
-      @include m.smallmobile {
-        order: 2;
-        max-width: 100%;
-      }
+      max-width: 100%;
 
       fieldset {
         border-color: v.$brownLight;

@@ -1,9 +1,7 @@
 'use client';
-import { FC, useEffect, useState } from 'react';
+import { FC, useState } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
-import { useDebounce } from 'use-debounce';
 import TextField from '@mui/material/TextField';
-import { useLocalStorage } from '@/hooks/useLocalStorage';
 import { getGraphQLPath } from '@/utils/functions/getGraphQLPath';
 import type { ChangeEvent, SyntheticEvent } from 'react';
 import { UrlInputProps } from './types';
@@ -17,8 +15,6 @@ export const UrlInput: FC<UrlInputProps> = ({
   const router = useRouter();
   const searchParams = useSearchParams();
   const [value, setValue] = useState<string>(urlSegment || '');
-  const [fullUrl] = useDebounce<string>(value, 650);
-  const [, setLocalStorageValue] = useLocalStorage('url', '');
 
   const blurHandler = (e: SyntheticEvent) => {
     e.stopPropagation();
@@ -33,10 +29,6 @@ export const UrlInput: FC<UrlInputProps> = ({
     const input = e.currentTarget as HTMLInputElement;
     setValue(input.value);
   }
-
-  useEffect(() => {
-    setLocalStorageValue(fullUrl);
-  });
 
   return (
     <TextField

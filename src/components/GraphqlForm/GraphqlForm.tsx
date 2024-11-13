@@ -5,6 +5,7 @@ import { useFormState } from 'react-dom';
 import { useSearchParams } from 'next/navigation';
 import classNames from 'classnames';
 import { UrlInput } from '../UrlInput/UrlInput';
+import { DocUrlInput } from '../DocUrlInput/DocUrlInput';
 import { useLocalStorage } from '@/hooks/useLocalStorage';
 import { getGraphQLPath } from '@/utils/functions/getGraphQLPath';
 import { getHistoryItem, getGraphQLForHistory } from '@/utils/history/history';
@@ -74,30 +75,41 @@ export const GraphqlForm: FC<EditorSegmentsProp> = ({
       name="graphql"
       className={styles.graphql_form}
     >
-      <UrlInput
-        classes={styles.graphql_form_url}
-        urlSegment={urlSegment}
-        codeSegment={codeSegment}
-        lang={lang}
-      />
-
       {formState && (
-        <span className={styles.graphql_form_code}>
-          <span>{t('graphiqlResponseStatus')}:</span>
-          <span
-            className={classNames([
-              {
-                [styles.graphql_form_code_number]: true,
-                [styles.graphql_form_code_succes]: code >= 200 && code < 300,
-                [styles.graphql_form_code_warning]: code >= 300 && code < 400,
-                [styles.graphql_form_code_error]: code >= 400 && code < 600,
-              },
-            ])}
-          >
-            {code}
-          </span>
-        </span>
+        <div className={styles.graphql_form_code}>
+          <div className={styles.graphql_form_code_body}>
+            <span>{t('graphiqlResponseStatus')}:</span>
+
+            <span
+              className={classNames([
+                {
+                  [styles.graphql_form_code_number]: true,
+                  [styles.graphql_form_code_succes]: code >= 200 && code < 300,
+                  [styles.graphql_form_code_warning]: code >= 300 && code < 400,
+                  [styles.graphql_form_code_error]: code >= 400 && code < 600,
+                },
+              ])}
+            >
+              {code}
+            </span>
+          </div>
+        </div>
       )}
+
+      <div className={styles.graphql_form_body}>
+        <UrlInput
+          classes={styles.graphql_form_url}
+          urlSegment={urlSegment}
+          codeSegment={codeSegment}
+          lang={lang}
+        />
+
+        <DocUrlInput
+          classes={styles.graphql_form_url}
+          urlSegment={urlSegment}
+          lang={lang}
+        />
+      </div>
     </form>
   );
 };
