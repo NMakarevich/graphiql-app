@@ -1,25 +1,4 @@
-const query = `
-  query IntrospectionQuery {
-    __schema {
-      types {
-        name
-        kind
-        description
-        fields {
-          name
-          type {
-            name
-            kind
-            ofType {
-              name
-              kind
-            }
-          }
-        }
-      }
-    }
-  }
-`;
+import { getIntrospectionQuery } from 'graphql';
 
 const getSchema = async (endpoint: string) => {
   const response = await fetch(endpoint, {
@@ -28,7 +7,7 @@ const getSchema = async (endpoint: string) => {
       'Content-Type': 'application/json',
     },
     mode: 'cors',
-    body: JSON.stringify({ query: query }),
+    body: JSON.stringify({ query: getIntrospectionQuery() }),
   });
 
   const statusCode = response.status;
