@@ -137,12 +137,21 @@ export const Documentation = () => {
               <div key={idx} className={styles.doc_level}>
                 {it.map((m, i) => (
                   <div key={`${m.name}-${i}`} className={styles.doc_line}>
-                    {m.description && (
+                    {(m.description ||
+                      (m.description === '' &&
+                        !m.fields &&
+                        !m.inputFields)) && (
                       <button
                         className={styles.doc_button}
                         onClick={() => {
                           selectLevel(level + 1, [
-                            { name: 'text', text: m.description },
+                            {
+                              name: 'text',
+                              text:
+                                m.description ||
+                                `<span class="${styles.doc_text_type}">type:</span>&nbsp;<em>${m.type?.name ? m.type.name : m.type?.kind ? m.type.kind : m?.kind ? m.kind : 'unknown'}</em>` ||
+                                '',
+                            },
                           ]);
                         }}
                       >
@@ -155,6 +164,17 @@ export const Documentation = () => {
                         className={styles.doc_button}
                         onClick={() => {
                           selectLevel(level + 1, m.fields);
+                        }}
+                      >
+                        {m.name}
+                      </button>
+                    )}
+
+                    {!m.description && m.inputFields && (
+                      <button
+                        className={styles.doc_button}
+                        onClick={() => {
+                          selectLevel(level + 1, m.inputFields);
                         }}
                       >
                         {m.name}
