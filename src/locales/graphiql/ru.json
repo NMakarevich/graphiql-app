@@ -4,6 +4,10 @@
   "graphqlRequestButton": "Отправить запрос",
   "graphqlFormatButton": "Форматировать код",
   "graphqlDocButton": "Открыть документацию",
+  "graphqlCloseDocButton": "Закрыть документацию",
+  "graphqlCloseDocButtonTitle": "Назад",
+  "graphqlDocTitle": "Документация",
+  "noUrlMessage": "Чтобы получить документацию введите URL.",
   "headers": {
     "title": "Заголовки",
     "button": "ДОБАВИТЬ ПАРАМЕТР"

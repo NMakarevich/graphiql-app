@@ -1,29 +1,42 @@
-import { useEffect, useState } from 'react';
+import { useSyncExternalStore } from 'react';
 
 export function useLocalStorage(key: string, initValue: string = '') {
-  const isUserClient = typeof window !== 'undefined';
-  const readLocalStorageValue = () => {
-    if (isUserClient) {
-      const item = localStorage.getItem(key);
-      return item !== null ? item : initValue;
-    }
-
-    return initValue;
+  const getSnapshot = () => {
+    const item = localStorage.getItem(key);
+    return item !== null ? item : initValue;
   };
 
-  const [localStorageValue, setLocalStorageValue] = useState<string>(
-    readLocalStorageValue()
+  const getServerSnapshot = () => initValue;
+
+  const subscribe = (cb: () => void) => {
+    const handleStorageChsnge = (e: StorageEvent) => {
+      if (e.key === key) {
+        cb();
+      }
+    };
+
+    window.addEventListener('storage', handleStorageChsnge);
+
+    return () => {
+      window.removeEventListener('storage', handleStorageChsnge);
+    };
+  };
+
+  const localStorageValue = useSyncExternalStore(
+    subscribe,
+    getSnapshot,
+    getServerSnapshot
   );
 
-  useEffect(() => {
-    if (isUserClient) {
-      if (localStorageValue) {
-        localStorage.setItem(key, localStorageValue);
-      } else {
-        localStorage.removeItem(key);
-      }
+  const setLocalStorageValue = (newValue: string) => {
+    if (newValue) {
+      const value =
+        typeof newValue === 'string' ? newValue : JSON.stringify(newValue);
+      localStorage.setItem(key, value);
+    } else {
+      localStorage.removeItem(key);
     }
-  }, [isUserClient, key, localStorageValue]);
+  };
 
   return [localStorageValue, setLocalStorageValue] as const;
 }

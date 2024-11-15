@@ -3,15 +3,11 @@
   flex: 1 1 auto;
 
   & &_header {
-    @include m.flex(space-between, center);
-
-    @include m.smalltablet {
-      flex-direction: column;
-    }
+    @include m.flex(space-between, center, column);
+    width: 100%;
   }
 
   &_title {
-    padding-bottom: f.rem(10px);
     font-size: xx-large !important;
   }
 }

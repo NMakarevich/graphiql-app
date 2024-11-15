@@ -1,16 +1,126 @@
-.doc {
-  &_container {
-    background-color: v.$documentationVioletTransparent !important;
-    padding: f.rem(15px);
+%scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: v.$headerFooterViolet v.$headerFooterViolet;
+
+  &::-webkit-scrollbar {
+    width: 7px;
+    height: 7px;
   }
 
-  &_container,
-  &_content {
-    max-width: f.rem(300px);
-    @extend %fullwhp;
+  &::-webkit-scrollbar-thumb,
+  &::-webkit-scrollbar-thumb:vertical {
+    background: -webkit-gradient(
+      linear,
+      left top,
+      left bottom,
+      from(v.$headerFooterViolet),
+      to(v.$headerFooterViolet)
+    );
+    box-shadow:
+      inset 2px 2px 2px v.$queryParameterborderTransparent,
+      inset -2px -2px 2px v.$queryParameterborderTransparent;
+  }
+
+  &::-webkit-scrollbar-track,
+  &::-webkit-scrollbar-track-piece {
+    background: v.$queryParameterborderTransparent;
+  }
+}
+
+.doc {
+  &_container {
+    box-sizing: border-box;
+    color: v.$gainsboroLightShadow;
+    background-color: v.$documentationVioletTransparent !important;
+    background-image: none !important;
+    padding: f.rem(15px);
+    height: 100%;
+    width: 100% !important;
+    max-width: f.rem(320px);
+    max-height: 100vh;
+    overflow-x: hidden;
+    @extend %scrollbar;
 
     @include m.smallmobile {
-      max-width: 80%;
+      max-width: 100%;
+    }
+  }
+
+  &_header {
+    @include m.flex(space-between, center);
+    width: 100%;
+    min-height: 45px;
+    padding: 0 0 f.rem(10px) f.rem(5px);
+    border-bottom: 1px solid v.$gainsboroLightShadow;
+  }
+
+  &_back_button {
+    @include m.flex(null, center);
+    font-size: 20px !important;
+    font-weight: 500;
+    gap: 5px;
+  }
+
+  &_close_button {
+    @include m.flex(center);
+  }
+
+  &_back_button,
+  &_close_button {
+    background: none;
+    border: none;
+    color: inherit;
+    font-size: 18px;
+  }
+
+  &_content {
+    @extend %scrollbar;
+    display: flex;
+    padding-top: 5px;
+    width: 100%;
+    transition: all 0.2s ease 0s;
+  }
+
+  &_level {
+    min-width: calc(100% + 15px);
+  }
+
+  &_content,
+  &_container {
+    height: 100%;
+  }
+
+  &_line {
+    @include m.flex(null, center);
+    height: fit-content;
+    padding: 5px;
+  }
+
+  &_button {
+    background: none;
+    border: none;
+    color: inherit;
+    font-size: 18px;
+  }
+
+  &_text,
+  &_no_url {
+    width: fit-content;
+    max-width: 100%;
+    font-size: 16px;
+    line-height: 1.75;
+
+    a {
+      color: inherit;
+      font-size: inherit;
+      font-weight: bold;
+      line-height: 1.75;
+    }
+  }
+
+  &_text {
+    &_type {
+      font-weight: 500;
     }
   }
 }

@@ -19,6 +19,7 @@ describe('GraphiQL: ', (): void => {
         <GraphiQL
           params={{
             data: [],
+            lang: 'en',
           }}
         />
       );
