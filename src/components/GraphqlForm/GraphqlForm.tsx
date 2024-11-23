@@ -3,7 +3,6 @@
 import { FC, useEffect, useState } from 'react';
 import { useFormState } from 'react-dom';
 import { useSearchParams } from 'next/navigation';
-import classNames from 'classnames';
 import { UrlInput } from '../UrlInput/UrlInput';
 import { useLocalStorage } from '@/hooks/useLocalStorage';
 import { getGraphQLPath } from '@/utils/functions/getGraphQLPath';
@@ -23,10 +22,10 @@ export const GraphqlForm: FC<EditorSegmentsProp> = ({
   graphqlFormAction,
 }) => {
   const [formState, formAction] = useFormState(graphqlFormAction, '');
-  const [code, setCode] = useState<number>(0);
+  const [, setCode] = useState<number>(0);
   const [localStorageHook, setLocalStorage] = useLocalStorage('history', '{}');
   const searchParams = useSearchParams();
-  const { t, i18n } = useTranslation();
+  const { i18n } = useTranslation();
 
   useEffect(() => {
     const savedLocale = localStorage.getItem('LOCALE') || 'en';
@@ -67,6 +66,10 @@ export const GraphqlForm: FC<EditorSegmentsProp> = ({
     }
   }, [formState]);
 
+  function setUrlSchema() {
+    return urlSegment ? `${urlSegment}?sdl` : '';
+  }
+
   return (
     <form
       action={formAction}
@@ -78,26 +81,32 @@ export const GraphqlForm: FC<EditorSegmentsProp> = ({
         classes={styles.graphql_form_url}
         urlSegment={urlSegment}
         codeSegment={codeSegment}
+        label="url"
         lang={lang}
       />
 
-      {formState && (
-        <span className={styles.graphql_form_code}>
-          <span>{t('graphiqlResponseStatus')}:</span>
-          <span
-            className={classNames([
-              {
-                [styles.graphql_form_code_number]: true,
-                [styles.graphql_form_code_succes]: code >= 200 && code < 300,
-                [styles.graphql_form_code_warning]: code >= 300 && code < 400,
-                [styles.graphql_form_code_error]: code >= 400 && code < 600,
-              },
-            ])}
-          >
-            {code}
-          </span>
-        </span>
-      )}
+      <UrlInput
+        classes={styles.graphql_form_url}
+        label="url schema"
+        urlSegment={setUrlSchema()}
+        lang={lang}
+      />
+
+      {/*<span className={styles.graphql_form_code}>*/}
+      {/*  <span>{t('graphiqlResponseStatus')}:</span>*/}
+      {/*  <span*/}
+      {/*    className={classNames([*/}
+      {/*      {*/}
+      {/*        [styles.graphql_form_code_number]: true,*/}
+      {/*        [styles.graphql_form_code_succes]: code >= 200 && code < 300,*/}
+      {/*        [styles.graphql_form_code_warning]: code >= 300 && code < 400,*/}
+      {/*        [styles.graphql_form_code_error]: code >= 400 && code < 600,*/}
+      {/*      },*/}
+      {/*    ])}*/}
+      {/*  >*/}
+      {/*    {code > 0 && code}*/}
+      {/*  </span>*/}
+      {/*</span>*/}
     </form>
   );
 };

@@ -1,13 +1,11 @@
 .graphql {
   &_form {
+    flex-direction: column;
     padding: f.rem(5px) f.rem(5px) f.rem(10px);
-    flex: 0 1 46.5%;
-    @include m.flex(null, center);
-    gap: 5px;
+    width: 100%;
 
-    @include m.smallmobile {
-      flex-direction: column;
-    }
+    @include m.flex(null, center);
+    gap: 10px;
 
     @include m.smalltablet {
       width: 100%;
@@ -46,7 +44,6 @@
 
     & &_url {
       color: v.$thistlePurpleLight;
-      max-width: 384px;
 
       @include m.smalltablet {
         max-width: 80%;

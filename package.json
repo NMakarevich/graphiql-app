@@ -25,6 +25,7 @@
     "@mui/material-nextjs": "^6.0.0",
     "@typescript-eslint/eslint-plugin": "^8.5.0",
     "firebase": "^10.13.1",
+    "graphql": "^16.9.0",
     "negotiator": "^0.6.3",
     "next": "14.2.5",
     "next-i18next": "^15.3.1",
