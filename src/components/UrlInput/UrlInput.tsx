@@ -1,12 +1,11 @@
 'use client';
-import { FC, useContext, useState } from 'react';
+import { FC, useContext, useEffect, useState } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import TextField from '@mui/material/TextField';
 import { getGraphQLPath } from '@/utils/functions/getGraphQLPath';
 import type { ChangeEvent, SyntheticEvent } from 'react';
 import { UrlInputProps } from './types';
-import getSchema from '@/utils/graphQL/getSchema/getSchema.ts';
-import { DocumentationContext } from '@/providers/documentationProvider/documentation.tsx';
+import { UrlDocumentationContext } from '@/providers/UrlDocumentationProvider.tsx';
 
 export const UrlInput: FC<UrlInputProps> = ({
   classes,
@@ -18,9 +17,13 @@ export const UrlInput: FC<UrlInputProps> = ({
   const router = useRouter();
   const searchParams = useSearchParams();
   const [value, setValue] = useState<string>(urlSegment || '');
-  const { setDocumentation } = useContext(DocumentationContext);
+  const { setUrl } = useContext(UrlDocumentationContext);
 
-  const blurHandler = async (e: SyntheticEvent) => {
+  useEffect(() => {
+    value ? setUrl(value) : null;
+  }, [value, setUrl]);
+
+  const blurHandler = (e: SyntheticEvent) => {
     e.stopPropagation();
 
     const sqParams = searchParams.toString();
@@ -30,10 +33,7 @@ export const UrlInput: FC<UrlInputProps> = ({
 
     if (value) {
       const schemaUrl = label === 'url' ? `${value}?sdl` : value;
-      const data = await getSchema(schemaUrl);
-      const schema = data.data.__schema;
-      console.log(schema);
-      setDocumentation(schema);
+      setUrl(schemaUrl);
     }
   };
 
@@ -45,7 +45,7 @@ export const UrlInput: FC<UrlInputProps> = ({
 
   return (
     <TextField
-      id="url"
+      id={label === 'url' ? 'url' : 'schemaUrl'}
       label={label}
       variant="outlined"
       name="url"

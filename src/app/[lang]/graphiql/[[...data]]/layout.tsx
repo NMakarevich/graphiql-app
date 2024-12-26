@@ -8,7 +8,7 @@ import { defaultSchemaQuery } from '@/utils/constants/graphQLDefaultTemplates';
 import type { Params } from './types';
 import styles from './layout.module.scss';
 import UseTranslateComponent from '@components/useTranslateComponent/useTranslateComponent.tsx';
-import DocumentationProvider from '@/providers/documentationProvider/documentation.tsx';
+import { UrlDocumentationProvider } from '@/providers/UrlDocumentationProvider.tsx';
 
 export const metadata: Metadata = {
   title: 'GraphQL',
@@ -52,7 +52,7 @@ export default function GraphQLLayout({
   }
 
   return (
-    <DocumentationProvider>
+    <UrlDocumentationProvider>
       <section className={styles.graphiql}>
         <section className={styles.graphiql_header}>
           <Typography component="h1" classes={{ root: styles.graphiql_title }}>
@@ -69,6 +69,6 @@ export default function GraphQLLayout({
 
         {children}
       </section>
-    </DocumentationProvider>
+    </UrlDocumentationProvider>
   );
 }

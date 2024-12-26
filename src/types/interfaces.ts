@@ -8,58 +8,9 @@ export type GraphQLresponse = {
   statusText: string;
 };
 
-export interface GraphQLDoc {
-  queryType?: {
-    name: string;
-  };
-  mutationType?: null;
-  subscriptionType?: null;
-  types?: GraphQLDocType[];
-}
-
-export interface IDocumentationContext {
-  documentation?: GraphQLDoc;
-  setDocumentation: (documentation: {}) => void;
-}
-
-export type Kind =
-  | 'OBJECT'
-  | 'SCALAR'
-  | 'ENUM'
-  | 'LIST'
-  | 'NON_NULL'
-  | 'INPUT_OBJECT';
-
-export interface GraphQLDocType {
-  name: string;
-  description: string;
-  kind: Kind;
-  fields: GraphQLDocField[] | null;
-}
-
-export interface GraphQLDocField {
-  name: string;
-  description: string;
-  type: GraphQLDocFieldType;
-  args: GraphQLDocArg[];
-}
-
-export interface GraphQLDocFieldType {
-  kind: Kind;
-  name: string | null;
-  ofType: GraphQLDocOfType | null;
-}
-
-export interface GraphQLDocArg {
-  name: string;
-  description: string;
-  type: GraphQLDocFieldType;
-}
-
-export interface GraphQLDocOfType {
-  kind: Kind;
-  name: string | null;
-  ofType: GraphQLDocOfType | null;
+export interface IUrlDocumentationContext {
+  url: string;
+  setUrl: (url: string) => void;
 }
 
 export interface SegmentsProp {

@@ -1,19 +1,16 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 'use client';
-import { FC, useEffect, useState } from 'react';
+import { FC, useEffect } from 'react';
 import { useFormState } from 'react-dom';
 import { useSearchParams } from 'next/navigation';
 import { UrlInput } from '../UrlInput/UrlInput';
 import { useLocalStorage } from '@/hooks/useLocalStorage';
 import { getGraphQLPath } from '@/utils/functions/getGraphQLPath';
 import { getHistoryItem, getGraphQLForHistory } from '@/utils/history/history';
-import { getIsStringJSON } from '@/utils/functions/getIsStringJSON';
 import type { EditorSegmentsProp } from '@/types/interfaces';
 import styles from './GraphqlForm.module.scss';
 import { useTranslation } from 'react-i18next';
 import '@/utils/localization/i18n';
-
-const defaultCode = 418;
 
 export const GraphqlForm: FC<EditorSegmentsProp> = ({
   urlSegment,
@@ -22,7 +19,6 @@ export const GraphqlForm: FC<EditorSegmentsProp> = ({
   graphqlFormAction,
 }) => {
   const [formState, formAction] = useFormState(graphqlFormAction, '');
-  const [, setCode] = useState<number>(0);
   const [localStorageHook, setLocalStorage] = useLocalStorage('history', '{}');
   const searchParams = useSearchParams();
   const { i18n } = useTranslation();
@@ -33,21 +29,6 @@ export const GraphqlForm: FC<EditorSegmentsProp> = ({
   }, [i18n]);
 
   useEffect(() => {
-    if (formState) {
-      const { statusCode, error } = JSON.parse(formState);
-      const isJSON = getIsStringJSON(error);
-
-      if (isJSON) {
-        const { code: status } = JSON.parse(error);
-
-        if (status) {
-          setCode(status);
-        }
-      } else {
-        setCode(statusCode || defaultCode);
-      }
-    }
-
     document.body.dispatchEvent(
       new CustomEvent('submitresponse', { detail: formState })
     );
