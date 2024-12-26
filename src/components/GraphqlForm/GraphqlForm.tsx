@@ -72,22 +72,6 @@ export const GraphqlForm: FC<EditorSegmentsProp> = ({
         urlSegment={setUrlSchema()}
         lang={lang}
       />
-
-      {/*<span className={styles.graphql_form_code}>*/}
-      {/*  <span>{t('graphiqlResponseStatus')}:</span>*/}
-      {/*  <span*/}
-      {/*    className={classNames([*/}
-      {/*      {*/}
-      {/*        [styles.graphql_form_code_number]: true,*/}
-      {/*        [styles.graphql_form_code_succes]: code >= 200 && code < 300,*/}
-      {/*        [styles.graphql_form_code_warning]: code >= 300 && code < 400,*/}
-      {/*        [styles.graphql_form_code_error]: code >= 400 && code < 600,*/}
-      {/*      },*/}
-      {/*    ])}*/}
-      {/*  >*/}
-      {/*    {code > 0 && code}*/}
-      {/*  </span>*/}
-      {/*</span>*/}
     </form>
   );
 };
