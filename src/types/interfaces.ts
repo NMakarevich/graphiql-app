@@ -8,6 +8,11 @@ export type GraphQLresponse = {
   statusText: string;
 };
 
+export interface IUrlDocumentationContext {
+  url: string;
+  setUrl: (url: string) => void;
+}
+
 export interface SegmentsProp {
   urlSegment?: string;
   codeSegment?: string;

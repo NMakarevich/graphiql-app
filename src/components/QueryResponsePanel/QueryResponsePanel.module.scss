@@ -20,3 +20,14 @@
     }
   }
 }
+
+.wrapper {
+  height: 100%;
+  position: relative;
+}
+
+.statusCode {
+  position: absolute;
+  top: -4px;
+  right: 6px;
+}

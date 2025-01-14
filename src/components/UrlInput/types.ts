@@ -3,4 +3,5 @@ export interface UrlInputProps {
   urlSegment?: string;
   codeSegment?: string;
   lang?: string;
+  label: string;
 }

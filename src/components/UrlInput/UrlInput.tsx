@@ -1,27 +1,40 @@
 'use client';
-import { FC, useState } from 'react';
+import { FC, useContext, useEffect, useState } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import TextField from '@mui/material/TextField';
 import { getGraphQLPath } from '@/utils/functions/getGraphQLPath';
 import type { ChangeEvent, SyntheticEvent } from 'react';
 import { UrlInputProps } from './types';
+import { UrlDocumentationContext } from '@/providers/UrlDocumentationProvider.tsx';
 
 export const UrlInput: FC<UrlInputProps> = ({
   classes,
   urlSegment,
   codeSegment,
+  label,
   lang,
 }) => {
   const router = useRouter();
   const searchParams = useSearchParams();
   const [value, setValue] = useState<string>(urlSegment || '');
+  const { setUrl } = useContext(UrlDocumentationContext);
+
+  useEffect(() => {
+    value ? setUrl(value) : null;
+  }, [value, setUrl]);
 
   const blurHandler = (e: SyntheticEvent) => {
     e.stopPropagation();
+
     const sqParams = searchParams.toString();
     const url = getGraphQLPath(lang || '', value, codeSegment, sqParams);
 
-    router.replace(url, { scroll: false });
+    if (label === 'url') router.replace(url, { scroll: false });
+
+    if (value) {
+      const schemaUrl = label === 'url' ? `${value}?sdl` : value;
+      setUrl(schemaUrl);
+    }
   };
 
   function changeValueHandler(e: ChangeEvent) {
@@ -32,8 +45,8 @@ export const UrlInput: FC<UrlInputProps> = ({
 
   return (
     <TextField
-      id="url"
-      label="url"
+      id={label === 'url' ? 'url' : 'schemaUrl'}
+      label={label}
       variant="outlined"
       name="url"
       value={value}

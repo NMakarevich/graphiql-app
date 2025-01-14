@@ -6,10 +6,10 @@ import { useEffect, useState } from 'react';
 import styles from './Documentation.module.scss';
 import { useTranslation } from 'react-i18next';
 import '@/utils/localization/i18n';
+import DocExplorerWrapper from '@components/docExplorerWrapper/docExplorerWrapper.tsx';
 
 export const Documentation = () => {
   const [state, setState] = useState<boolean>(false);
-
   const { t, i18n } = useTranslation();
 
   useEffect(() => {
@@ -41,7 +41,9 @@ export const Documentation = () => {
         onClose={toggleDrawer(false)}
         classes={{ paperAnchorLeft: styles.doc_container }}
       >
-        <div className={styles.doc_content}></div>
+        <div className={styles.doc_content}>
+          <DocExplorerWrapper />
+        </div>
       </Drawer>
     </>
   );
