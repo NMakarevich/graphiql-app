@@ -1,0 +1,33 @@
+.query {
+  &_box {
+    @include m.flex(null, center);
+    padding: f.rem(5px);
+    color: v.$thistlePurpleLight;
+    gap: 5px;
+
+    & &_input {
+      width: 100%;
+      color: v.$thistlePurpleLight;
+    }
+
+    & &_activated {
+      padding: f.rem(2px);
+      align-self: flex-end;
+    }
+
+    & &_remove {
+      min-width: auto;
+      padding: f.rem(2px) f.rem(5px);
+      align-self: flex-end;
+    }
+
+    [type='text'],
+    [data-shrink='true'] {
+      color: v.$thistlePurpleLight;
+    }
+
+    [data-shrink='false'] {
+      color: v.$brownLight;
+    }
+  }
+}

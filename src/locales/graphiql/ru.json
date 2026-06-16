@@ -1,0 +1,15 @@
+{
+  "graphqlTitle": "GraphiQL Клиент",
+  "graphiqlResponseStatus": "статус",
+  "graphqlRequestButton": "Отправить запрос",
+  "graphqlFormatButton": "Форматировать код",
+  "graphqlDocButton": "Открыть документацию",
+  "headers": {
+    "title": "Заголовки",
+    "button": "ДОБАВИТЬ ПАРАМЕТР"
+  },
+  "variables": {
+    "title": "Переменные",
+    "button": "ДОБАВИТЬ ПЕРЕМЕННУЮ"
+  }
+}

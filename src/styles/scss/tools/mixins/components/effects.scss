@@ -1,0 +1,55 @@
+@use 'others' as om;
+@use 'sizes' as sm;
+@use '../../functions' as f;
+@use '../../vars' as vars;
+@use 'sass:meta';
+
+// Анимирование кнопки
+@mixin animatebtn($smax: 1, $smin: 0.98) {
+  transform-origin: center center;
+  transition: all ease-out 255ms;
+
+  &:active {
+    transform: scale($smin);
+  }
+}
+
+// Серый фильтр
+@mixin grayfilter {
+  transition: all 0.3s ease 0s;
+  filter: grayscale(1);
+
+  @include om.hover {
+    filter: grayscale(0);
+  }
+}
+
+// Эффект пленки над объектом
+@mixin membrane($opacity: 1, $color: black) {
+  &::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    @include sm.fullwhp;
+    background-color: $color;
+    opacity: $opacity * 0.1;
+    z-index: 1;
+    pointer-events: none;
+  }
+}
+
+// Эффект плодсветки по периметру блока
+@mixin luxbox($color: #e4e4e4) {
+  box-shadow:
+    0 0 f.rem(10px) $color,
+    0 0 f.rem(30px) $color,
+    0 0 f.rem(80px) $color,
+    0 0 f.rem(120px) $color,
+    0 0 f.rem(200px) $color;
+}
+
+// Эффект плодсветки по контуру изображения
+@mixin luximage($color: #e4e4e4) {
+  filter: drop-shadow(0 0 f.rem(10px) $color);
+}

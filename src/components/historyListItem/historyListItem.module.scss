@@ -1,0 +1,51 @@
+.ListItem {
+  width: 100%;
+  display: flex;
+  gap: 10px;
+
+  @include m.smalltablet {
+    flex-wrap: wrap;
+    row-gap: 5px;
+  }
+
+  & span {
+    width: fit-content;
+    min-width: fit-content;
+    @include m.adaptiveValue('font-size', 16px, 14px);
+
+    &:not(:last-child) {
+      padding-right: f.rem(5px);
+    }
+
+    &:nth-child(n) {
+      @include m.smalltablet {
+        padding-right: 0;
+      }
+    }
+
+    &:last-child {
+      @include m.smalltablet {
+        word-break: break-word;
+      }
+    }
+  }
+}
+
+.list_item {
+  &,
+  & > a {
+    @include m.smalltablet {
+      padding-left: 8px !important;
+      padding-right: 8px !important;
+    }
+  }
+}
+
+.Source {
+  width: 64px;
+}
+
+.Url {
+  flex: 1;
+  display: flex;
+}

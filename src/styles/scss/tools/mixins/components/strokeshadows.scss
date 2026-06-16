@@ -1,0 +1,77 @@
+@use '../../functions' as f;
+@use '../../vars' as vars;
+
+// Имитация жирного шрифта с подтверждением цвета
+@mixin lboldtext($color: black) {
+  color: $color;
+  text-shadow: 0 0 0.65px $color;
+}
+
+@mixin lboldtextb($color: black) {
+  color: $color;
+  text-shadow: 0 0 0.9px $color;
+}
+
+@mixin dboldtext($color: black) {
+  color: $color;
+  text-shadow:
+    0 0 0.65px $color,
+    0 0 0.65px $color;
+}
+
+@mixin dboldtextb($color: black) {
+  color: $color;
+  text-shadow:
+    0 0 0.9px $color,
+    0 0 0.9px $color;
+}
+
+@mixin uboldtext($color: black) {
+  color: $color;
+  text-shadow:
+    0 0 0.65px $color,
+    0 0 0.65px $color,
+    0 0 0.65px $color;
+}
+
+@mixin uboldtextb($color: black) {
+  color: $color;
+  text-shadow:
+    0 0 0.9px $color,
+    0 0 0.9px $color,
+    0 0 0.9px $color;
+}
+
+// Имитация обводдки текста
+@mixin outlinetext($color: white, $shadow: black) {
+  color: $color;
+  text-shadow:
+    0px 1px 1px $shadow 0px -1px 1px $shadow,
+    1px 0px 1px $shadow,
+    -1px 0px 1px $shadow;
+}
+
+// Имитация светящегося текста
+@mixin neontext($shadow: #ff00de, $color: white, $bg: null) {
+  color: $color;
+  background-color: $bg;
+  text-shadow:
+    0px 0px f.rem(10px) $color,
+    0px 0px f.rem(20px) $color,
+    0px 0px f.rem(30px) $color,
+    0px 0px f.rem(40px) $shadow,
+    0px 0px f.rem(70px) $shadow,
+    0px 0px f.rem(80px) $shadow,
+    0px 0px f.rem(100px) $shadow,
+    $shadow 0px 0px f.rem(150px);
+}
+
+@mixin luxtext($shadow: #e4e4e4, $color: white, $bg: null) {
+  color: $color;
+  text-shadow:
+    0 0 f.rem(10px) $shadow,
+    0 0 f.rem(30px) $shadow,
+    0 0 f.rem(80px) $shadow,
+    0 0 f.rem(120px) $shadow,
+    0 0 f.rem(200px) $shadow;
+}
