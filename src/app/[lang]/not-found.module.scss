@@ -1,0 +1,58 @@
+@import '@/styles/scss/tools/vars/components/colors.scss';
+@import '@/styles/scss/tools/mixins/components/others.scss';
+
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 2rem;
+  padding-top: 3rem;
+
+  &__title {
+    display: inline-flex;
+    height: auto;
+    margin-top: 0;
+    font-size: 100px;
+    font-weight: 700;
+    line-height: 1;
+    color: rgba($mistyRose, 0.6);
+
+    &_code {
+      display: inline-block;
+      border-left: 0.05em solid;
+      padding-left: 0.25em;
+      margin-left: 0.25em;
+      color: $mistyRose;
+      font-weight: bold;
+      border-left: 0.05em;
+      border-color: $mistyRose;
+      border-style: solid;
+    }
+    &__description {
+      line-height: 1.2;
+      color: rgba($mistyRose, 0.6);
+    }
+  }
+
+  &__button {
+    width: auto;
+    height: auto;
+    margin-top: 2rem;
+    background-color: $thistlePurpleLight;
+    transition: background-color 1s ease;
+    & > a {
+      color: $black;
+      transition: color 1s ease;
+    }
+
+    @include hover {
+      background-color: $dimGrey;
+
+      & > a {
+        color: $snow;
+      }
+    }
+  }
+}

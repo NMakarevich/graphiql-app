@@ -1,0 +1,16 @@
+.doc {
+  &_container {
+    background-color: v.$documentationVioletTransparent !important;
+    padding: f.rem(15px);
+  }
+
+  &_container,
+  &_content {
+    max-width: f.rem(300px);
+    @extend %fullwhp;
+
+    @include m.smallmobile {
+      max-width: 80%;
+    }
+  }
+}

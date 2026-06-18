@@ -1,0 +1,7 @@
+.Page {
+  @include m.flex(null, center, column);
+  gap: 10px;
+  padding: f.rem(10px);
+  box-sizing: border-box;
+  @extend %fullwhp;
+}

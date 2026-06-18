@@ -1,0 +1,9 @@
+{
+  "signInTitle": "Вход",
+  "signInEmailLabel": "Электронная почта",
+  "signInPasswordLabel": "Пароль",
+  "signInButton": "Войти",
+  "signInNotRegisteredText": "Еще не зарегистрированы?",
+  "signInHintLinkText": "Зарегистрироваться",
+  "signInErrorSignIn": "Ошибка входа:"
+}

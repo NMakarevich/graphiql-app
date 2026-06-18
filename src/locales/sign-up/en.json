@@ -1,0 +1,11 @@
+{
+  "signUpTitle": "Sign Up",
+  "signUpNameLabel": "Name",
+  "signUpEmailLabel": "Email",
+  "signUpPasswordLabel": "Password",
+  "signUpConfirmPasswordLabel": "Confirm Password",
+  "signUpButton": "Sign Up",
+  "signUpAlreadyRegisteredText": "Already registered? ",
+  "signUpHintLinkText": "Sign In",
+  "signUpErrorSignUp": "Registration error:"
+}

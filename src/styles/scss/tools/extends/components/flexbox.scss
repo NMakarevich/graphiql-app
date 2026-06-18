@@ -1,0 +1,22 @@
+@use '../../mixins' as mix;
+
+// Флексы
+%centerflex {
+  @include mix.flex(center);
+}
+
+%icenterflex {
+  @include mix.iflex(center);
+}
+
+%centercolflex {
+  @include mix.flex(center, center, column);
+}
+
+%icentercolflex {
+  @include mix.iflex(center, center, column);
+}
+
+%columnflex {
+  @include mix.flex(null, null, column);
+}

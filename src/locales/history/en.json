@@ -1,0 +1,6 @@
+{
+  "requestsHistory": "Requests history",
+  "historyEmptyMessage": "History is empty. Make first request: ",
+  "historyNavigateToRestfulClient": "RESTful client",
+  "historyNavigateToGraphQL": "GraphQL"
+}

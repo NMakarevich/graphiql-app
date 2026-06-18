@@ -1,0 +1,15 @@
+.graphiql {
+  padding: f.rem(10px);
+  flex: 1 1 auto;
+
+  & &_header {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+  }
+
+  &_title {
+    padding-bottom: f.rem(10px);
+    font-size: xx-large !important;
+  }
+}
